@@ -869,9 +869,13 @@ function applyLang(lang) {
 document.addEventListener('DOMContentLoaded', () => {
   let initLang = 'en';
   try {
-    const saved = localStorage.getItem('cgaviria-lang');
-    if (saved === 'en' || saved === 'es') initLang = saved;
-    else if (navigator.language && navigator.language.toLowerCase().startsWith('es')) initLang = 'es';
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang === 'en' || urlLang === 'es') initLang = urlLang;
+    else {
+      const saved = localStorage.getItem('cgaviria-lang');
+      if (saved === 'en' || saved === 'es') initLang = saved;
+      else if (navigator.language && navigator.language.toLowerCase().startsWith('es')) initLang = 'es';
+    }
   } catch(e) {}
 
   applyLang(initLang);
