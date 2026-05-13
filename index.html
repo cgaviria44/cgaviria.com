@@ -356,9 +356,13 @@ footer a:hover { color: #555; }
         <span id="cv-location"></span>
       </div>
       <div class="cv-actions">
-        <a id="cta-pdf" href="cv_en.pdf" target="_blank" rel="noopener">
+        <a href="cv_en.pdf" download="Christian_Gaviria_CV_EN.pdf">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span id="btn-pdf-label">Download PDF</span>
+          PDF (EN)
+        </a>
+        <a href="cv_es.pdf" download="Christian_Gaviria_CV_ES.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF (ES)
         </a>
       </div>
     </div>
@@ -436,8 +440,6 @@ const I18N = {
   en: {
     title: 'Senior Site Reliability Engineer · Cloud, Telco & Security · AI-Augmented Infrastructure',
     location: 'Medellín, Colombia (GMT-5)',
-    btnPdf: 'Download PDF',
-    pdfFile: 'cv_en.pdf',
     secProfile: 'Profile',
     secAchievements: 'Key Achievements',
     secExperience: 'Experience',
@@ -594,8 +596,6 @@ const I18N = {
   es: {
     title: 'Senior Site Reliability Engineer · Cloud, Telco y Seguridad · Infraestructura con IA',
     location: 'Medellín, Colombia (GMT-5)',
-    btnPdf: 'Descargar PDF',
-    pdfFile: 'cv_es.pdf',
     secProfile: 'Perfil',
     secAchievements: 'Logros Clave',
     secExperience: 'Experiencia',
@@ -826,7 +826,6 @@ function applyLang(lang) {
 
   document.getElementById('cv-title').textContent = t.title;
   document.getElementById('cv-location').textContent = t.location;
-  document.getElementById('btn-pdf-label').textContent = t.btnPdf;
   document.getElementById('cta-pdf').href = t.pdfFile;
 
   document.getElementById('sec-profile').textContent = t.secProfile;
