@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Christian Camilo Gaviria Castro — Senior SRE</title>
+<meta name="description" content="Senior Site Reliability Engineer with nearly a decade architecting cloud, telco and Kubernetes-based infrastructure." />
+<meta name="author" content="Christian Camilo Gaviria Castro" />
+<meta name="theme-color" content="#0a0e14" />
+
+<meta property="og:type" content="profile" />
+<meta property="og:title" content="Christian Camilo Gaviria Castro — Senior SRE" />
+<meta property="og:description" content="Cloud, Telco & Security · AI-Augmented Infrastructure. Based in Medellín, Colombia (GMT-5)." />
+<meta property="og:url" content="https://cgaviria.com" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0a0e14;
+  --bg-elev: #0f141c;
+  --bg-panel: #131923;
+  --border: #1f2733;
+  --border-strong: #2a3441;
+  --text: #c5cdd9;
+  --text-dim: #8a95a5;
+  --text-muted: #59647a;
+  --accent: #5cc8ff;
+  --accent-2: #7ee787;
+  --accent-3: #ff8b6a;
+  --accent-4: #d2a8ff;
+  --accent-5: #ffd866;
+  --danger: #ff7b72;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 80px;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(92,200,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92,200,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.18s ease;
+}
+.container.fading { opacity: 0; }
+
+/* ===== LANGUAGE SWITCH ===== */
+.lang-switch {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  display: flex;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+.lang-switch button {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 6px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+.lang-switch button:hover { color: var(--text); }
+.lang-switch button.active {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+/* ===== TERMINAL HEADER ===== */
+.terminal {
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  margin-top: 32px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.terminal-bar {
+  background: linear-gradient(180deg, #1a2030, #131923);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-strong);
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+.terminal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-left: 8px;
+}
+.terminal-body {
+  padding: 32px 28px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.prompt { color: var(--accent-2); }
+.command { color: var(--text); }
+.comment { color: var(--text-muted); font-style: italic; }
+.string { color: var(--accent-5); }
+.fn { color: var(--accent); }
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  margin: 18px 0;
+}
+@media (max-width: 640px) {
+  .header-grid { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+}
+.name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+  line-height: 1.15;
+}
+.tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.tagline .sep { color: var(--text-muted); margin: 0 8px; }
+.avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  padding: 3px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.avatar img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* CTA */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border-strong);
+}
+.btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.btn-primary:hover { background: #7dd4ff; }
+.btn-ghost { background: transparent; color: var(--text); }
+.btn-ghost:hover { background: var(--bg-panel); border-color: var(--accent); color: var(--accent); }
+.btn svg { width: 14px; height: 14px; }
+
+/* SECTIONS */
+section { margin-top: 56px; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.section-header .hash { color: var(--accent-2); }
+.section-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.section-header .meta { color: var(--text-muted); margin-left: auto; font-size: 12px; }
+
+.profile-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 26px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.achievement-list { list-style: none; }
+.achievement-list li {
+  padding: 14px 0 14px 28px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.achievement-list li:last-child { border-bottom: none; }
+.achievement-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+.skills-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.skill-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+}
+@media (max-width: 640px) { .skill-row { grid-template-columns: 1fr; gap: 6px; } }
+.skill-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
+.skill-name .label { color: var(--accent); font-weight: 500; }
+.skill-name .detail { color: var(--text-dim); }
+.skill-bar {
+  width: 240px;
+  height: 8px;
+  background: var(--bg-panel);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+@media (max-width: 640px) { .skill-bar { width: 100%; } }
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+.skill-bar-fill::after {
+  content: attr(data-level);
+  position: absolute;
+  right: 4px;
+  top: -22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.stack-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.stack-item {
+  padding: 14px 18px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.stack-item .label {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent);
+  font-weight: 500;
+  margin-right: 8px;
+}
+.stack-item .label::before { content: '> '; color: var(--text-muted); }
+
+.job {
+  border-left: 2px solid var(--border-strong);
+  padding: 4px 0 24px 24px;
+  margin-left: 10px;
+  position: relative;
+}
+.job::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 6px;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+  border-radius: 50%;
+}
+.job-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.job-title { font-size: 17px; font-weight: 600; color: #fff; }
+.job-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
+.job-company {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.job-company .location { color: var(--text-dim); margin-left: 8px; }
+.job ul { list-style: none; margin-top: 8px; }
+.job ul li {
+  padding: 5px 0 5px 18px;
+  position: relative;
+  font-size: 14px;
+  color: var(--text);
+}
+.job ul li::before {
+  content: '└─';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+.simple-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 20px;
+}
+.simple-card .item { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+.simple-card .item:last-child { border-bottom: none; }
+.simple-card strong { color: #fff; }
+.simple-card .meta { color: var(--text-dim); font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent-2);
+  margin-left: 4px;
+  animation: blink 1s infinite;
+  vertical-align: text-bottom;
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch" role="group" aria-label="Language">
+  <button id="btn-en" class="active" type="button" aria-pressed="true">EN</button>
+  <button id="btn-es" type="button" aria-pressed="false">ES</button>
+</div>
+
+<div class="container" id="content-root">
+
+  <!-- TERMINAL HEADER -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">~/cgaviria — zsh — 92×34</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="prompt">christian@cgaviria</span><span class="command">:</span><span class="fn">~</span><span class="command">$ </span><span class="command" id="cmd-whoami">whoami --verbose</span></div>
+
+      <div class="header-grid">
+        <div>
+          <h1 class="name">Christian Camilo Gaviria Castro</h1>
+          <div class="tagline" id="tagline"></div>
+          <div style="margin-top:14px; font-size:13px;">
+            <div><span class="comment"># <span id="lbl-location">location</span></span> <span class="string">"Medellín, Colombia"</span> <span class="comment"># GMT-5</span></div>
+            <div><span class="comment"># <span id="lbl-email">email</span></span>    <a href="mailto:me@cgaviria.com" style="color:var(--accent);text-decoration:none;">me@cgaviria.com</a></div>
+            <div><span class="comment"># linkedin</span> <a href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">linkedin.com/in/cgaviria44</a></div>
+            <div><span class="comment"># <span id="lbl-links">links</span></span>    <a href="https://linktr.ee/cgaviria44" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">linktr.ee/cgaviria44</a></div>
+          </div>
+        </div>
+        <div class="avatar">
+          <img src="photo.jpg" alt="Christian Camilo Gaviria Castro" />
+        </div>
+      </div>
+
+      <div style="margin-top:8px;"><span class="prompt">christian@cgaviria</span><span class="command">:</span><span class="fn">~</span><span class="command">$ </span><span class="command" id="cmd-cat">cat profile.md</span><span class="cursor"></span></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-row">
+    <a class="btn btn-primary" id="cta-pdf" href="cv_en.pdf" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span id="btn-pdf-label">Download PDF</span>
+    </a>
+    <a class="btn btn-ghost" href="cv.docx">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span id="btn-docx-label">Download DOCX</span>
+    </a>
+    <a class="btn btn-ghost" href="mailto:me@cgaviria.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span id="btn-email-label">Email me</span>
+    </a>
+    <a class="btn btn-ghost" href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+      LinkedIn
+    </a>
+  </div>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-profile">Profile</h2></div>
+    <div class="profile-box" id="profile-text"></div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-achievements">Key Achievements</h2></div>
+    <ul class="achievement-list" id="list-achievements"></ul>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-proficiency">Technical Proficiency</h2><span class="meta" id="prof-meta">// out of 10</span></div>
+    <div class="skills-grid" id="list-skills"></div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-stack">Full Technical Stack</h2></div>
+    <div class="stack-grid" id="list-stack"></div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-experience">Professional Experience</h2></div>
+    <div id="list-experience"></div>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div>
+        <div class="section-header"><span class="hash">##</span><h2 id="sec-languages">Languages</h2></div>
+        <div class="simple-card" id="card-languages"></div>
+      </div>
+      <div>
+        <div class="section-header"><span class="hash">##</span><h2 id="sec-education">Education</h2></div>
+        <div class="simple-card" id="card-education"></div>
+      </div>
+    </div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-soft">Soft Skills</h2></div>
+    <div class="stack-grid" id="list-soft"></div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-certs">Certifications</h2></div>
+    <div class="stack-grid" id="list-certs"></div>
+  </section>
+
+  <section><div class="section-header"><span class="hash">##</span><h2 id="sec-honors">Honors &amp; Awards</h2></div>
+    <ul class="achievement-list" id="list-honors"></ul>
+  </section>
+
+  <footer>
+    <div>
+      <span class="prompt">christian@cgaviria</span><span class="command">:</span><span class="fn">~</span><span class="command">$ </span>
+      echo <span class="string" id="footer-echo">"Built with passion. Open to opportunities."</span>
+    </div>
+    <div style="margin-top:8px;">
+      © 2026 Christian Camilo Gaviria Castro · <a href="mailto:me@cgaviria.com">me@cgaviria.com</a> · <a href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const I18N = {
+  en: {
+    cmdWhoami: 'whoami --verbose',
+    cmdCat: 'cat profile.md',
+    lblLocation: 'location',
+    lblEmail: 'email',
+    lblLinks: 'links',
+    btnPdf: 'Download PDF',
+    btnDocx: 'Download DOCX',
+    btnEmail: 'Email me',
+    tagline: 'Senior Site Reliability Engineer <span class="sep">·</span> Cloud, Telco &amp; Security <span class="sep">·</span> AI-Augmented Infrastructure',
+    secProfile: 'Profile',
+    secAchievements: 'Key Achievements',
+    secProficiency: 'Technical Proficiency',
+    profMeta: '// out of 10',
+    secStack: 'Full Technical Stack',
+    secExperience: 'Professional Experience',
+    secLanguages: 'Languages',
+    secEducation: 'Education',
+    secSoft: 'Soft Skills',
+    secCerts: 'Certifications',
+    secHonors: 'Honors &amp; Awards',
+    footerEcho: '"Built with passion. Open to opportunities."',
+    pdfFile: 'cv_en.pdf',
+    profileText: 'Telecommunications Engineer with nearly a decade architecting and operating production-grade cloud, baremetal and telco infrastructure for ISPs, MSPs and SaaS companies. Senior Site Reliability Engineer at US-based <strong>Cuemby</strong> — multi-cloud (AWS, GCP, Azure, CIVO) and on-premise environments, advanced Kubernetes (Cilium, Rook Ceph, Velero, KubeVirt), DevSecOps, observability and AI-augmented engineering. Strong advocate of open-source technologies to reduce operational costs without sacrificing reliability or scale.',
+    achievements: [
+      'Architect and operate production hybrid cloud at US-based Cuemby — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal; 24/7 incident response with bilingual EN/ES client liaison.',
+      'Production Kubernetes at telco scale — Cilium (eBPF networking), Rook Ceph (distributed storage), Velero (backup &amp; DR), KubeVirt; cluster lifecycle and security hardening.',
+      '5G and edge cloud-native — deployed 5G and cellular core functions on Kubernetes and Unikraft unikernels for high-performance edge workloads.',
+      'A decade architecting ISP and MSP telecom networks — BGP, IPv6 (LACNIC), full OSI stack, GPON deployments across Huawei, ZTE, TP-Link and CData, plus IPTV and VoIP for end users.',
+      'Led cloud migrations across multiple US-based clients (Droptek, Evendi, Cuemby) — monolithic to elastic AWS using Terraform/Ansible IaC and blue/green deployments for zero-downtime cutovers.',
+      'Champion of open-source technologies to cut operational costs — Kubernetes + Cilium + Ceph + Velero replacing proprietary alternatives; KVM, Proxmox, Apache CloudStack as cost-effective virtualization.'
+    ],
+    skills: [
+      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: 10 },
+      { label: '5G &amp; Edge', detail: 'Unikraft · K8s-native', level: 10 },
+      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: 9 },
+      { label: 'AWS', detail: 'Solutions Architect Associate', level: 9 },
+      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: 9 },
+      { label: 'Linux &amp; Virtualization', detail: 'KVM · Proxmox · VMware', level: 9 },
+      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: 8 },
+      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: 8 },
+      { label: 'Observability', detail: 'Prom · Grafana · Loki · OTel', level: 8 },
+      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: 8 }
+    ],
+    stack: [
+      ['cloud_platforms', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, DigitalOcean; hybrid, private and public cloud'],
+      ['kubernetes', 'KCNA (CNCF), Cilium (eBPF CNI), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, cluster lifecycle, etcd backups'],
+      ['containers', 'Docker, Docker Compose, containerd, multi-stage builds'],
+      ['virtualization', 'KVM, Proxmox, VMware, KubeVirt, Apache CloudStack'],
+      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, PXE provisioning'],
+      ['cicd', 'Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy, blue/green deployments, canary releases, zero-downtime version migrations'],
+      ['source_control', 'GitHub, GitLab, Bitbucket, Git workflows'],
+      ['atlassian', 'Jira, Confluence, ticket hygiene, technical documentation'],
+      ['observability', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry'],
+      ['security_devsecops', 'Firewalls, UTM, WAF, GitGuardian, SSL/TLS, IAM hardening, audits, Cisco Cybersecurity Essentials'],
+      ['storage_resilience', 'Rook Ceph, RAID, clustering, scheduled backups, Velero, disaster recovery, multi-region'],
+      ['networking', 'BGP, OSPF, IPv4/IPv6, full OSI stack, Wireshark, tcpdump, MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
+      ['wireless_surveillance', 'Enterprise Wi-Fi, MikroTik Hotspot, CCTV / IP surveillance'],
+      ['telco', '5G core on Kubernetes, Unikraft unikernels, GPON (Huawei, ZTE, TP-Link, CData), IPTV, IP telephony (Asterisk, Elastix, Issabel)'],
+      ['databases', 'PostgreSQL, MySQL, SQL Server (administration, backups, performance)'],
+      ['operating_systems', 'Linux server administration, Windows server'],
+      ['ai_engineering', 'Claude Code, ChatGPT, GitHub Copilot, structured prompt engineering, AI-assisted runbooks, IaC review, postmortems and documentation']
+    ],
+    experience: [
+      { title: 'Senior Site Reliability Engineer — Cloud &amp; Security', company: 'Cuemby', location: 'Remote · US-based company', meta: 'Apr 2023 — Present · 3y 2m',
+        bullets: [
+          'Architect and operate hybrid cloud platforms — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal — covering provisioning, network design, observability, security and 24/7 incident response.',
+          'Run advanced Kubernetes workloads in production: Cilium-based networking (eBPF), Rook Ceph distributed storage, Velero backups and disaster recovery, ingress and service mesh, cluster lifecycle, etcd backups and security hardening.',
+          'Deploy and operate emerging stacks including 5G / cellular network functions on Kubernetes and unikernel-based workloads with Unikraft for high-performance edge use cases.',
+          'Manage virtualization across modern (KubeVirt on Kubernetes) and traditional stacks (KVM, Proxmox, VMware, Apache CloudStack); designed and automated baremetal installation pipelines across data centers.',
+          'Built reusable Infrastructure-as-Code modules with Terraform, CloudFormation and Ansible, and own CI/CD pipelines (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — including rollback, progressive delivery and blue/green deployments for zero-downtime version migrations.',
+          'Design data resilience strategy — distributed storage (Ceph), clustering, RAID, scheduled backups and disaster-recovery plans across multi-region setups.',
+          'Lead observability strategy across distributed workloads — metrics (Prometheus, Grafana), logs (Loki), traces (OpenTelemetry, Jaeger, Tempo) — and drive root-cause analysis for production incidents.',
+          'Drive DevSecOps practices: security audits, SSL/TLS, IAM hardening, and secrets scanning with GitGuardian across Git repositories.',
+          'Integrate AI tooling (Claude Code, ChatGPT) with structured prompt engineering into runbooks, IaC reviews and postmortems; lead architecture negotiations, cloud migrations and live incident response with US-based clients as bilingual (EN/ES) technical liaison.'
+        ]
+      },
+      { title: 'Cloud Engineer', company: 'Evendi Digital', location: 'Remote', meta: 'Oct 2019 — Present · 6y 8m · project-based',
+        bullets: [
+          'Designed and implemented cloud network architectures on AWS for digital products.',
+          'Led migration and optimization of legacy infrastructure to AWS, focusing on cost, resilience and security.',
+          'Database administration across PostgreSQL, MySQL and SQL Server.'
+        ]
+      },
+      { title: 'Infrastructure Engineer', company: 'TikAcademy', location: 'Remote', meta: 'Mar 2021 — Dec 2023 · 2y 9m · project-based',
+        bullets: [
+          'Consulted for ISPs and enterprises on modernization of their network stack using MikroTik RouterOS.',
+          'Translated business requirements into technical roadmaps for non-technical stakeholders.'
+        ]
+      },
+      { title: 'Cloud Engineer', company: 'Droptek', location: 'Colombia', meta: 'Jan 2022 — Jul 2023 · 1y 7m',
+        bullets: [
+          'Planned and executed the migration of monolithic systems to elastic, autoscaling AWS architectures.',
+          'Authored Terraform and CloudFormation templates to make environments reproducible and reduce drift.',
+          'Designed and implemented production-grade elastic deployments in AWS for customer workloads.'
+        ]
+      },
+      { title: 'Sysadmin · Network · Wireless · Cloud Engineer', company: 'EJ Soluciones', location: 'Medellín, Colombia', meta: 'Sep 2019 — Dec 2021 · 2y 4m',
+        bullets: [
+          'Designed wired networks, enterprise Wi-Fi and CCTV / IP-surveillance systems for hotels and corporate customers.',
+          'Deployed and operated MSP-scale environments with MikroTik, UniFi, Cisco and Elastix/Issabel PBX (VoIP / IP telephony).',
+          'Trained internal technicians on network device configuration and best practices.'
+        ]
+      },
+      { title: 'Support Coordinator &amp; Engineer', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', meta: 'Aug 2016 — Dec 2021 · 5y 5m',
+        bullets: [
+          'Owned physical and logical design of telecommunications networks for ISP clients, including GPON deployments with Huawei, ZTE, TP-Link and CData OLTs/ONTs.',
+          'Configured and operated core network devices (BGP routers, switches, OLTs) plus IP telephony (VoIP) and IPTV services for end users.',
+          'Produced technical documentation and process runbooks, and trained support technicians on MikroTik, Ubiquiti and major-vendor GPON equipment.'
+        ]
+      },
+      { title: 'Network Administrator &amp; Researcher — Information Security Group (SISSI)', company: 'ITM — Instituto Tecnológico Metropolitano', location: 'Antioquia, Colombia', meta: 'Aug 2016 — Oct 2021 · 5y 3m',
+        bullets: [
+          'Led the Network Security and IoT Security research track (based on the OSI model); assistant on security incident management and digital forensic analysis (Feb 2018 — Oct 2021).',
+          'Network administration for the Information Security research group, supporting research activities on network and IoT security (Aug 2016 — Oct 2021).'
+        ]
+      }
+    ],
+    languages: [
+      { lang: 'Spanish', meta: '// Native', extra: '' },
+      { lang: 'English', meta: '// Advanced conversational', extra: 'CEFR A1 &amp; A2 certified · B1 in progress (Smart Academy Medellín)<br>3+ years working in English at Cuemby (US-based)' }
+    ],
+    education: [
+      { degree: 'Instituto Tecnológico Metropolitano (ITM)', meta: 'Medellín, Colombia' },
+      { degree: "Engineer's degree, Telecommunications", meta: '2016 — 2019' },
+      { degree: "Technologist's degree, Telecommunications", meta: '2013 — 2016' }
+    ],
+    soft: [
+      ['critical_thinking', 'Process optimization, reasoning under pressure'],
+      ['leadership', 'Decision-making, influence, technical mentorship'],
+      ['business_perspective', 'Client-facing communication, requirement translation'],
+      ['negotiation', 'Stakeholder communication across technical and non-technical audiences'],
+      ['product_thinking', 'Continuous improvement mindset, ideas-to-impact'],
+      ['bilingual', 'EN / ES collaboration across distributed teams']
+    ],
+    certs: [
+      ['cloud', 'AWS Certified Solutions Architect — Associate (SAA-C03), AWS Certified Cloud Practitioner (CLF), Open-Source Technologies on Microsoft Azure'],
+      ['kubernetes', 'Kubernetes &amp; Cloud Native Associate (KCNA, CNCF)'],
+      ['observability', 'LFS148 — Getting Started with OpenTelemetry'],
+      ['networking', 'MikroTik MTCNA · MTCTCE · MTCSE · MTCIPv6E · LACNIC IPv6 Advanced · Cisco CCNA Industrial'],
+      ['security', 'Cisco Cybersecurity Essentials'],
+      ['devops_iac', 'Infrastructure as Code with Terraform, Docker, AWS Storage (Platzi)'],
+      ['methodology', 'Scrum Foundation Professional (SFPC)']
+    ],
+    honors: [
+      '<strong>2020</strong> — ITM Engineering Week, Graduate recognition footprint (Egresado Huella)',
+      '<strong>2022</strong> — Speaker at FLISOL Medellín',
+      '<strong>LACNIC 37</strong> — Participation'
+    ]
+  },
+
+  es: {
+    cmdWhoami: 'whoami --verbose',
+    cmdCat: 'cat perfil.md',
+    lblLocation: 'ubicación',
+    lblEmail: 'correo',
+    lblLinks: 'enlaces',
+    btnPdf: 'Descargar PDF',
+    btnDocx: 'Descargar DOCX',
+    btnEmail: 'Escríbeme',
+    tagline: 'Senior Site Reliability Engineer <span class="sep">·</span> Cloud, Telco y Seguridad <span class="sep">·</span> Infraestructura con IA',
+    secProfile: 'Perfil',
+    secAchievements: 'Logros Clave',
+    secProficiency: 'Nivel Técnico',
+    profMeta: '// sobre 10',
+    secStack: 'Stack Técnico Completo',
+    secExperience: 'Experiencia Profesional',
+    secLanguages: 'Idiomas',
+    secEducation: 'Formación Académica',
+    secSoft: 'Habilidades Blandas',
+    secCerts: 'Certificaciones',
+    secHonors: 'Reconocimientos',
+    footerEcho: '"Hecho con pasión. Abierto a oportunidades."',
+    pdfFile: 'cv_es.pdf',
+    profileText: 'Ingeniero de Telecomunicaciones con casi una década diseñando y operando infraestructura cloud, baremetal y telco en producción para ISPs, MSPs y empresas SaaS. Senior Site Reliability Engineer en <strong>Cuemby</strong> (EE.UU.) — multi-cloud (AWS, GCP, Azure, CIVO) y on-premise, Kubernetes avanzado (Cilium, Rook Ceph, Velero, KubeVirt), DevSecOps, observabilidad e ingeniería potenciada con IA. Defensor del uso de tecnologías open source para reducir costos operativos sin sacrificar confiabilidad ni escala.',
+    achievements: [
+      'Diseño y opero nube híbrida en producción en Cuemby (EE.UU.) — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise; respuesta a incidentes 24/7 con enlace bilingüe EN/ES.',
+      'Kubernetes en producción a escala telco — Cilium (networking eBPF), Rook Ceph (almacenamiento distribuido), Velero (backup y DR), KubeVirt; ciclo de vida de clúster y hardening de seguridad.',
+      '5G y edge cloud-native — desplegué funciones de núcleo 5G y red celular sobre Kubernetes y unikernels Unikraft para cargas de alto rendimiento en el borde.',
+      'Una década diseñando redes de telecomunicaciones para ISPs y MSPs — BGP, IPv6 (LACNIC), pila OSI completa, despliegues GPON con Huawei, ZTE, TP-Link y CData, más IPTV y VoIP para usuarios finales.',
+      'Lideré migraciones cloud con múltiples clientes en EE.UU. (Droptek, Evendi, Cuemby) — monolíticas a AWS elástica usando IaC con Terraform y Ansible, y despliegues blue/green para cortes sin downtime.',
+      'Promotor del uso de tecnologías open source para reducir costos operativos — stacks Kubernetes con Cilium, Ceph y Velero como alternativa a soluciones propietarias; KVM, Proxmox y Apache CloudStack como virtualización costo-efectiva en entornos híbridos.'
+    ],
+    skills: [
+      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: 10 },
+      { label: '5G y Edge', detail: 'Unikraft · K8s-native', level: 10 },
+      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: 9 },
+      { label: 'AWS', detail: 'Solutions Architect Associate', level: 9 },
+      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: 9 },
+      { label: 'Linux y Virtualización', detail: 'KVM · Proxmox · VMware', level: 9 },
+      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: 8 },
+      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: 8 },
+      { label: 'Observabilidad', detail: 'Prom · Grafana · Loki · OTel', level: 8 },
+      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: 8 }
+    ],
+    stack: [
+      ['plataformas_cloud', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, DigitalOcean; arquitecturas híbridas, privadas y públicas'],
+      ['kubernetes', 'KCNA (CNCF), Cilium (CNI eBPF), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, ciclo de vida de clúster, backups de etcd'],
+      ['contenedores', 'Docker, Docker Compose, containerd, builds multi-stage'],
+      ['virtualizacion', 'KVM, Proxmox, VMware, KubeVirt, Apache CloudStack'],
+      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, aprovisionamiento PXE'],
+      ['cicd', 'Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy, despliegues blue/green, canary, migraciones sin downtime'],
+      ['control_versiones', 'GitHub, GitLab, Bitbucket, flujos Git'],
+      ['atlassian', 'Jira, Confluence, higiene de tickets, documentación técnica'],
+      ['observabilidad', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry'],
+      ['seguridad_devsecops', 'Firewalls, UTM, WAF, GitGuardian, SSL/TLS, hardening de IAM, auditorías, Cisco Cybersecurity Essentials'],
+      ['almacenamiento', 'Rook Ceph, RAID, clustering, backups programados, Velero, recuperación ante desastres, multi-región'],
+      ['networking', 'BGP, OSPF, IPv4/IPv6, pila OSI completa, Wireshark, tcpdump, MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
+      ['wireless_videovigilancia', 'Wi-Fi empresarial, MikroTik Hotspot, CCTV / videovigilancia IP'],
+      ['telco', 'Funciones núcleo 5G sobre Kubernetes, unikernels Unikraft, GPON (Huawei, ZTE, TP-Link, CData), IPTV, telefonía IP (Asterisk, Elastix, Issabel)'],
+      ['bases_datos', 'PostgreSQL, MySQL, SQL Server (administración, backups, rendimiento)'],
+      ['sistemas_operativos', 'Administración de servidores Linux, servidores Windows'],
+      ['ingenieria_ia', 'Claude Code, ChatGPT, GitHub Copilot, prompt engineering estructurado, runbooks, revisiones de IaC, postmortems y documentación asistidos por IA']
+    ],
+    experience: [
+      { title: 'Senior Site Reliability Engineer — Cloud y Seguridad', company: 'Cuemby', location: 'Remoto · empresa basada en EE.UU.', meta: 'Abr 2023 — Presente · 3a 2m',
+        bullets: [
+          'Diseño y opero plataformas de nube híbrida — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise — cubriendo aprovisionamiento, diseño de red, observabilidad, seguridad y respuesta a incidentes 24/7.',
+          'Ejecuto cargas avanzadas de Kubernetes en producción: networking con Cilium (eBPF), almacenamiento distribuido con Rook Ceph, backups y recuperación ante desastres con Velero, ingress y service mesh, ciclo de vida de clúster, backups de etcd y hardening de seguridad.',
+          'Despliego y opero stacks emergentes incluyendo funciones de red celular y 5G sobre Kubernetes y cargas basadas en unikernels con Unikraft para casos de uso de alto rendimiento en el borde.',
+          'Administro virtualización tanto moderna (KubeVirt sobre Kubernetes) como tradicional (KVM, Proxmox, VMware, Apache CloudStack); diseñé y automaticé pipelines de instalación baremetal entre centros de datos.',
+          'Construí módulos reutilizables de Infraestructura como Código con Terraform, CloudFormation y Ansible, y soy dueño de los pipelines de CI/CD (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — incluyendo rollback, entrega progresiva y despliegues blue/green para migraciones de versiones sin downtime.',
+          'Diseño la estrategia de resiliencia de datos — almacenamiento distribuido (Ceph), clustering, RAID, backups programados y planes de recuperación ante desastres multi-región.',
+          'Lidero la estrategia de observabilidad sobre cargas distribuidas — métricas (Prometheus, Grafana), logs (Loki), trazas (OpenTelemetry, Jaeger, Tempo) — y conduzco el análisis de causa raíz de incidentes en producción.',
+          'Impulso prácticas DevSecOps: auditorías de seguridad, SSL/TLS, hardening de IAM, y escaneo de secretos con GitGuardian sobre repositorios Git.',
+          'Integro herramientas de IA (Claude Code, ChatGPT) con prompt engineering estructurado en runbooks, revisiones de IaC y postmortems; lidero negociaciones de arquitectura, migraciones cloud y respuesta a incidentes en vivo con clientes en EE.UU. como contacto técnico bilingüe (EN/ES).'
+        ]
+      },
+      { title: 'Cloud Engineer', company: 'Evendi Digital', location: 'Remoto', meta: 'Oct 2019 — Presente · 6a 8m · por proyectos',
+        bullets: [
+          'Diseñé e implementé arquitecturas de red en AWS para productos digitales.',
+          'Lideré migración y optimización de infraestructura legacy a AWS, enfocado en costo, resiliencia y seguridad.',
+          'Administración de bases de datos PostgreSQL, MySQL y SQL Server.'
+        ]
+      },
+      { title: 'Infrastructure Engineer', company: 'TikAcademy', location: 'Remoto', meta: 'Mar 2021 — Dic 2023 · 2a 9m · por proyectos',
+        bullets: [
+          'Consultoría a ISPs y empresas para modernizar su stack de red usando MikroTik RouterOS.',
+          'Traducción de requerimientos de negocio en roadmaps técnicos presentables a stakeholders no técnicos.'
+        ]
+      },
+      { title: 'Cloud Engineer', company: 'Droptek', location: 'Colombia', meta: 'Ene 2022 — Jul 2023 · 1a 7m',
+        bullets: [
+          'Planeé y ejecuté la migración de sistemas monolíticos a arquitecturas elásticas con autoscaling en AWS.',
+          'Diseñé plantillas Terraform y CloudFormation para hacer los entornos reproducibles y reducir drift.',
+          'Diseñé e implementé despliegues elásticos en AWS para cargas de trabajo de clientes.'
+        ]
+      },
+      { title: 'Sysadmin · Redes · Wireless · Cloud Engineer', company: 'EJ Soluciones', location: 'Medellín, Colombia', meta: 'Sep 2019 — Dic 2021 · 2a 4m',
+        bullets: [
+          'Diseño de redes cableadas, Wi-Fi empresarial y sistemas de CCTV / videovigilancia IP para hoteles y clientes corporativos.',
+          'Despliegue y operación de entornos a escala MSP con MikroTik, UniFi, Cisco y PBX Elastix/Issabel (VoIP / telefonía IP).',
+          'Capacitación interna a técnicos en configuración de dispositivos de red y buenas prácticas.'
+        ]
+      },
+      { title: 'Coordinador de Soporte e Ingeniero', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', meta: 'Ago 2016 — Dic 2021 · 5a 5m',
+        bullets: [
+          'Responsable del diseño físico y lógico de redes de telecomunicaciones para clientes ISP, incluyendo despliegues GPON con Huawei, ZTE, TP-Link y CData (OLTs/ONTs).',
+          'Configuración y operación de equipos core de red (routers BGP, switches, OLTs) más servicios de telefonía IP (VoIP) e IPTV para usuarios finales.',
+          'Generación de documentación técnica y runbooks de procesos, y capacitación a técnicos de soporte en MikroTik, Ubiquiti y equipos GPON de los principales vendors.'
+        ]
+      },
+      { title: 'Administrador de Red e Investigador — Semillero de Seguridad (SISSI)', company: 'ITM — Instituto Tecnológico Metropolitano', location: 'Antioquia, Colombia', meta: 'Ago 2016 — Oct 2021 · 5a 3m',
+        bullets: [
+          'Líder del track de Seguridad de Redes y Seguridad de IoT (basado en el modelo OSI); auxiliar en gestión de incidentes de seguridad y análisis forense digital (Feb 2018 — Oct 2021).',
+          'Administración de red del semillero de investigación en seguridad informática (Ago 2016 — Oct 2021).'
+        ]
+      }
+    ],
+    languages: [
+      { lang: 'Español', meta: '// Nativo', extra: '' },
+      { lang: 'Inglés', meta: '// Avanzado conversacional', extra: 'CEFR A1 y A2 certificado · B1 en curso (Smart Academy Medellín)<br>3+ años trabajando en inglés en Cuemby (EE.UU.)' }
+    ],
+    education: [
+      { degree: 'Instituto Tecnológico Metropolitano (ITM)', meta: 'Medellín, Colombia' },
+      { degree: 'Ingeniero de Telecomunicaciones', meta: '2016 — 2019' },
+      { degree: 'Tecnólogo en Telecomunicaciones', meta: '2013 — 2016' }
+    ],
+    soft: [
+      ['pensamiento_critico', 'Optimización de procesos, razonamiento bajo presión'],
+      ['liderazgo', 'Toma de decisiones, influencia, mentoría técnica'],
+      ['perspectiva_negocio', 'Comunicación con clientes, traducción de requerimientos'],
+      ['negociacion', 'Comunicación con stakeholders técnicos y no técnicos'],
+      ['mentalidad_producto', 'Mejora continua, de ideas a impacto'],
+      ['bilingue', 'Colaboración EN / ES en equipos distribuidos']
+    ],
+    certs: [
+      ['cloud', 'AWS Certified Solutions Architect — Associate (SAA-C03), AWS Certified Cloud Practitioner (CLF), Open-Source Technologies en Microsoft Azure'],
+      ['kubernetes', 'Kubernetes &amp; Cloud Native Associate (KCNA, CNCF)'],
+      ['observabilidad', 'LFS148 — Getting Started with OpenTelemetry'],
+      ['networking', 'MikroTik MTCNA · MTCTCE · MTCSE · MTCIPv6E · LACNIC IPv6 Advanced · Cisco CCNA Industrial'],
+      ['seguridad', 'Cisco Cybersecurity Essentials'],
+      ['devops_iac', 'Infraestructura como Código con Terraform, Docker, Storage en AWS (Platzi)'],
+      ['metodologia', 'Scrum Foundation Professional (SFPC)']
+    ],
+    honors: [
+      '<strong>2020</strong> — Semana de la Ingeniería, reconocimiento como egresado huella (ITM)',
+      '<strong>2022</strong> — Speaker en FLISOL Medellín',
+      '<strong>LACNIC 37</strong> — Participación'
+    ]
+  }
+};
+
+function renderAchievements(items) {
+  return items.map(text => `<li>${text}</li>`).join('');
+}
+
+function renderSkills(items) {
+  return items.map(s => `
+    <div class="skill-row">
+      <div class="skill-name"><span class="label">${s.label}</span> <span class="detail">— ${s.detail}</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:${s.level*10}%" data-level="${s.level}"></div></div>
+    </div>
+  `).join('');
+}
+
+function renderStack(items) {
+  return items.map(([label, text]) => `
+    <div class="stack-item"><span class="label">${label}</span>${text}</div>
+  `).join('');
+}
+
+function renderExperience(items) {
+  return items.map(j => `
+    <div class="job">
+      <div class="job-header">
+        <div class="job-title">${j.title}</div>
+        <div class="job-meta">${j.meta}</div>
+      </div>
+      <div class="job-company">${j.company} <span class="location">// ${j.location}</span></div>
+      <ul>${j.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+    </div>
+  `).join('');
+}
+
+function renderLanguages(items) {
+  return items.map(l => `
+    <div class="item">
+      <div><strong>${l.lang}</strong> <span class="meta">${l.meta}</span></div>
+      ${l.extra ? `<div style="color:var(--text-dim); font-size:13px; margin-top:4px;">${l.extra}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderEducation(items) {
+  return items.map(e => `<div class="item"><div><strong>${e.degree}</strong></div><div class="meta">${e.meta}</div></div>`).join('');
+}
+
+function renderHonors(items) {
+  return items.map(text => `<li>${text}</li>`).join('');
+}
+
+function applyLang(lang) {
+  const t = I18N[lang];
+
+  // Static text
+  document.getElementById('cmd-whoami').textContent = t.cmdWhoami;
+  document.getElementById('cmd-cat').textContent = t.cmdCat;
+  document.getElementById('lbl-location').textContent = t.lblLocation;
+  document.getElementById('lbl-email').textContent = t.lblEmail;
+  document.getElementById('lbl-links').textContent = t.lblLinks;
+  document.getElementById('btn-pdf-label').textContent = t.btnPdf;
+  document.getElementById('btn-docx-label').textContent = t.btnDocx;
+  document.getElementById('btn-email-label').textContent = t.btnEmail;
+  document.getElementById('tagline').innerHTML = t.tagline;
+  document.getElementById('cta-pdf').href = t.pdfFile;
+  document.getElementById('footer-echo').textContent = t.footerEcho;
+
+  // Section headers
+  document.getElementById('sec-profile').textContent = t.secProfile;
+  document.getElementById('sec-achievements').textContent = t.secAchievements;
+  document.getElementById('sec-proficiency').textContent = t.secProficiency;
+  document.getElementById('prof-meta').textContent = t.profMeta;
+  document.getElementById('sec-stack').textContent = t.secStack;
+  document.getElementById('sec-experience').textContent = t.secExperience;
+  document.getElementById('sec-languages').textContent = t.secLanguages;
+  document.getElementById('sec-education').textContent = t.secEducation;
+  document.getElementById('sec-soft').textContent = t.secSoft;
+  document.getElementById('sec-certs').textContent = t.secCerts;
+  document.getElementById('sec-honors').innerHTML = t.secHonors;
+
+  // Dynamic content
+  document.getElementById('profile-text').innerHTML = t.profileText;
+  document.getElementById('list-achievements').innerHTML = renderAchievements(t.achievements);
+  document.getElementById('list-skills').innerHTML = renderSkills(t.skills);
+  document.getElementById('list-stack').innerHTML = renderStack(t.stack);
+  document.getElementById('list-experience').innerHTML = renderExperience(t.experience);
+  document.getElementById('card-languages').innerHTML = renderLanguages(t.languages);
+  document.getElementById('card-education').innerHTML = renderEducation(t.education);
+  document.getElementById('list-soft').innerHTML = renderStack(t.soft);
+  document.getElementById('list-certs').innerHTML = renderStack(t.certs);
+  document.getElementById('list-honors').innerHTML = renderHonors(t.honors);
+
+  // Animate skill bars
+  setTimeout(() => {
+    document.querySelectorAll('.skill-bar-fill').forEach((f, i) => {
+      const target = f.style.width;
+      f.style.width = '0';
+      setTimeout(() => { f.style.width = target; }, 100 + i * 60);
+    });
+  }, 50);
+
+  // Document attributes
+  document.getElementById('html-root').lang = lang;
+
+  // Toggle buttons
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+
+  // Save preference
+  try { localStorage.setItem('cgaviria-lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let initLang = 'en';
+  try {
+    const saved = localStorage.getItem('cgaviria-lang');
+    if (saved === 'en' || saved === 'es') initLang = saved;
+    else if (navigator.language && navigator.language.toLowerCase().startsWith('es')) initLang = 'es';
+  } catch(e) {}
+
+  applyLang(initLang);
+
+  function switchTo(lang) {
+    const root = document.getElementById('content-root');
+    root.classList.add('fading');
+    setTimeout(() => {
+      applyLang(lang);
+      root.classList.remove('fading');
+    }, 180);
+  }
+
+  document.getElementById('btn-en').addEventListener('click', () => switchTo('en'));
+  document.getElementById('btn-es').addEventListener('click', () => switchTo('es'));
+});
+</script>
+
+</body>
+</html>
