@@ -192,6 +192,25 @@ section { margin-top: 32px; }
 .kv-table .val { color: #333; }
 .kv-table .level { color: #bbb; font-size: 12px; margin-left: 6px; }
 
+/* ── Skill bars ── */
+.skill-val { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.skill-detail { color: #333; font-size: 14px; }
+.skill-bar {
+  display: inline-block;
+  width: 80px;
+  height: 2px;
+  background: #ebebeb;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.skill-bar-fill {
+  display: block;
+  height: 100%;
+  background: #111;
+  border-radius: 2px;
+}
+.skill-level { color: #bbb; font-size: 11px; white-space: nowrap; }
+
 /* ── Experience ── */
 .job { margin-bottom: 28px; }
 .job:last-child { margin-bottom: 0; }
@@ -307,10 +326,6 @@ footer a:hover { color: #555; }
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span id="btn-pdf-label">Download PDF</span>
         </a>
-        <a href="cv.docx">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span id="btn-docx-label">Download DOCX</span>
-        </a>
         <a href="mailto:me@cgaviria.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <span id="btn-email-label">Email me</span>
@@ -388,7 +403,6 @@ const I18N = {
     title: 'Senior Site Reliability Engineer · Cloud, Telco & Security · AI-Augmented Infrastructure',
     location: 'Medellín, Colombia (GMT-5)',
     btnPdf: 'Download PDF',
-    btnDocx: 'Download DOCX',
     btnEmail: 'Email me',
     pdfFile: 'cv_en.pdf',
     secProfile: 'Profile',
@@ -411,16 +425,16 @@ const I18N = {
       'Champion of open-source technologies to cut operational costs — Kubernetes + Cilium + Ceph + Velero replacing proprietary alternatives; KVM, Proxmox, Apache CloudStack as cost-effective virtualization.'
     ],
     skills: [
-      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: '10/10' },
-      { label: '5G & Edge', detail: 'Unikraft · K8s-native', level: '10/10' },
-      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: '9/10' },
-      { label: 'AWS', detail: 'Solutions Architect Associate', level: '9/10' },
-      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: '9/10' },
-      { label: 'Linux & Virt.', detail: 'KVM · Proxmox · VMware', level: '9/10' },
-      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: '8/10' },
-      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: '8/10' },
-      { label: 'Observability', detail: 'Prometheus · Grafana · Loki · OTel', level: '8/10' },
-      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: '8/10' }
+      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: 10 },
+      { label: '5G & Edge', detail: 'Unikraft · K8s-native', level: 10 },
+      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: 9 },
+      { label: 'AWS', detail: 'Solutions Architect Associate', level: 9 },
+      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: 9 },
+      { label: 'Linux & Virt.', detail: 'KVM · Proxmox · VMware', level: 9 },
+      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: 8 },
+      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: 8 },
+      { label: 'Observability', detail: 'Prometheus · Grafana · Loki · OTel', level: 8 },
+      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: 8 }
     ],
     stack: [
       ['cloud', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, DigitalOcean; hybrid, private and public cloud'],
@@ -532,7 +546,6 @@ const I18N = {
     title: 'Senior Site Reliability Engineer · Cloud, Telco y Seguridad · Infraestructura con IA',
     location: 'Medellín, Colombia (GMT-5)',
     btnPdf: 'Descargar PDF',
-    btnDocx: 'Descargar DOCX',
     btnEmail: 'Escríbeme',
     pdfFile: 'cv_es.pdf',
     secProfile: 'Perfil',
@@ -555,16 +568,16 @@ const I18N = {
       'Promotor del uso de tecnologías open source para reducir costos operativos — Kubernetes con Cilium, Ceph y Velero como alternativa a soluciones propietarias; KVM, Proxmox y Apache CloudStack en entornos híbridos.'
     ],
     skills: [
-      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: '10/10' },
-      { label: '5G y Edge', detail: 'Unikraft · K8s-native', level: '10/10' },
-      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: '9/10' },
-      { label: 'AWS', detail: 'Solutions Architect Associate', level: '9/10' },
-      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: '9/10' },
-      { label: 'Linux y Virt.', detail: 'KVM · Proxmox · VMware', level: '9/10' },
-      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: '8/10' },
-      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: '8/10' },
-      { label: 'Observabilidad', detail: 'Prometheus · Grafana · Loki · OTel', level: '8/10' },
-      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: '8/10' }
+      { label: 'Networking', detail: 'BGP · IPv6 · GPON · ISP/MSP', level: 10 },
+      { label: '5G y Edge', detail: 'Unikraft · K8s-native', level: 10 },
+      { label: 'Kubernetes', detail: 'KCNA · Cilium · Ceph · Velero', level: 9 },
+      { label: 'AWS', detail: 'Solutions Architect Associate', level: 9 },
+      { label: 'IaC', detail: 'Terraform · Ansible · CloudFormation', level: 9 },
+      { label: 'Linux y Virt.', detail: 'KVM · Proxmox · VMware', level: 9 },
+      { label: 'Multi-cloud', detail: 'GCP · Azure · CIVO', level: 8 },
+      { label: 'CI/CD', detail: 'Jenkins · GitHub Actions · AWS', level: 8 },
+      { label: 'Observabilidad', detail: 'Prometheus · Grafana · Loki · OTel', level: 8 },
+      { label: 'DevSecOps', detail: 'GitGuardian · IAM · SSL/TLS', level: 8 }
     ],
     stack: [
       ['cloud', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, DigitalOcean; arquitecturas híbridas, privadas y públicas'],
@@ -679,7 +692,16 @@ function renderAchievements(items) {
 
 function renderSkills(items) {
   return `<table class="kv-table">${items.map(s =>
-    `<tr><td class="key">${s.label}</td><td class="val">${s.detail}<span class="level">${s.level}</span></td></tr>`
+    `<tr>
+      <td class="key">${s.label}</td>
+      <td class="val">
+        <div class="skill-val">
+          <span class="skill-detail">${s.detail}</span>
+          <span class="skill-bar"><span class="skill-bar-fill" style="width:${s.level * 10}%"></span></span>
+          <span class="skill-level">${s.level}/10</span>
+        </div>
+      </td>
+    </tr>`
   ).join('')}</table>`;
 }
 
@@ -721,7 +743,6 @@ function applyLang(lang) {
   document.getElementById('cv-title').textContent = t.title;
   document.getElementById('cv-location').textContent = t.location;
   document.getElementById('btn-pdf-label').textContent = t.btnPdf;
-  document.getElementById('btn-docx-label').textContent = t.btnDocx;
   document.getElementById('btn-email-label').textContent = t.btnEmail;
   document.getElementById('cta-pdf').href = t.pdfFile;
 
