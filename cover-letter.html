@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Christian Gaviria — Cover Letter</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: #fff;
+  color: #1a1a1a;
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 40px 80px;
+  transition: opacity 0.15s ease;
+}
+.page.fading { opacity: 0; }
+
+/* ── Language switch ── */
+.lang-switch {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  gap: 2px;
+  z-index: 100;
+}
+.lang-switch button {
+  background: none;
+  border: none;
+  border-bottom: 1.5px solid transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #bbb;
+  transition: all 0.12s;
+}
+.lang-switch button.active { color: #111; border-bottom-color: #111; }
+.lang-switch button:hover:not(.active) { color: #666; }
+
+/* ── Header ── */
+.cl-header {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 32px;
+}
+.cl-name {
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 700;
+  color: #0f0f0f;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+.cl-title {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+}
+.cl-contact {
+  font-size: 13px;
+  color: #555;
+}
+.cl-contact a { color: #555; text-decoration: none; }
+.cl-contact a:hover { color: #111; text-decoration: underline; }
+.cl-contact-sep { margin: 0 7px; color: #ccc; }
+
+/* ── Body ── */
+.cl-meta {
+  margin-bottom: 32px;
+}
+.cl-date {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 16px;
+}
+.cl-to {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
+}
+.cl-to strong { color: #111; }
+
+.cl-subject {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 28px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.cl-body p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.85;
+  margin-bottom: 20px;
+  text-align: justify;
+  hyphens: auto;
+}
+.cl-body p:last-child { margin-bottom: 0; }
+
+.cl-sign {
+  margin-top: 36px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.8;
+}
+.cl-sign strong { color: #111; font-weight: 600; }
+
+/* ── Placeholder highlight ── */
+.placeholder {
+  background: #fff8e1;
+  border-radius: 3px;
+  padding: 0 3px;
+  color: #b45309;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ── Footer ── */
+footer {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid #ebebeb;
+  font-size: 12px;
+  color: #bbb;
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .page { padding: 40px 20px 60px; }
+  .lang-switch { top: 14px; right: 16px; }
+}
+
+/* ── Print ── */
+@media print {
+  .lang-switch { display: none !important; }
+  body { font-size: 11px; }
+  .page { padding: 20px; max-width: 100%; }
+  .placeholder { background: none; color: #b45309; }
+}
+
+::selection { background: #111; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="lang-switch" role="group" aria-label="Language">
+  <button id="btn-en" class="active" type="button" aria-pressed="true">EN</button>
+  <button id="btn-es" type="button" aria-pressed="false">ES</button>
+</div>
+
+<div class="page" id="content-root">
+
+  <header class="cl-header">
+    <div class="cl-name">Christian Camilo Gaviria Castro</div>
+    <div class="cl-title" id="cl-title"></div>
+    <div class="cl-contact">
+      <a href="mailto:me@cgaviria.com">me@cgaviria.com</a>
+      <span class="cl-contact-sep">·</span>
+      <a href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener">linkedin.com/in/cgaviria44</a>
+      <span class="cl-contact-sep">·</span>
+      <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>
+      <span class="cl-contact-sep">·</span>
+      <span id="cl-location"></span>
+    </div>
+  </header>
+
+  <div class="cl-meta">
+    <div class="cl-date" id="cl-date"></div>
+    <div class="cl-to">
+      <strong id="cl-to-label"></strong><br>
+      <span class="placeholder">[Nombre del hiring manager o Recruiting Team]</span><br>
+      <span class="placeholder">[Nombre de la empresa]</span>
+    </div>
+  </div>
+
+  <div class="cl-subject" id="cl-subject"></div>
+
+  <div class="cl-body" id="cl-body"></div>
+
+  <div class="cl-sign" id="cl-sign"></div>
+
+  <footer id="cl-footer"></footer>
+
+</div>
+
+<script>
+const today = new Date();
+const enDate = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const esDate = today.toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const I18N = {
+  en: {
+    title: 'Sr. Site Reliability Engineer & Technical Leader',
+    location: 'Medellín, Colombia (GMT-5)',
+    date: enDate,
+    toLabel: 'To:',
+    subject: 'Re: Application for <span class="placeholder">[Role / Position]</span> at <span class="placeholder">[Company Name]</span>',
+    body: `
+      <p>Dear <span class="placeholder">[Hiring Manager's name]</span>,</p>
+      <p>I am writing to express my interest in the <span class="placeholder">[Role / Position]</span> role at <span class="placeholder">[Company Name]</span>. With over 9 years of experience designing, automating, and scaling cloud-native infrastructure — and currently serving as Sr. Site Reliability Engineer and technical leader at <strong>Cuemby</strong> — I believe my background aligns closely with what your team is looking for.</p>
+      <p>At Cuemby, I lead the reliability engineering and platform strategy for a hybrid cloud serving businesses across the Americas. My day-to-day involves advanced Kubernetes workloads (Cilium, Rook Ceph, Velero), multi-cloud environments (AWS, GCP, Azure), infrastructure automation with Terraform and Ansible, and end-to-end observability with Prometheus, Grafana, and OpenTelemetry. I also drive DevSecOps practices — vulnerability scanning, IAM hardening, secrets management — and integrate AI tooling into runbooks and postmortems to continuously raise the reliability bar.</p>
+      <p>Beyond the technical work, I have a strong track record of technical leadership: for 4 years I led a network and security research group at ITM, I have spoken at KCD Colombia 2025 and FLISOL Medellín, and I consistently serve as the bilingual (EN/ES) technical liaison between engineering teams and US-based stakeholders. <span class="placeholder">[Add 1-2 sentences about why this specific company/role excites you.]</span></p>
+      <p>I would welcome the opportunity to discuss how I can contribute to <span class="placeholder">[Company Name]</span>'s mission. My full CV is available at <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, and I am happy to provide any additional information.</p>
+      <p>Thank you for your time and consideration.</p>
+    `,
+    signOff: 'Sincerely,',
+    signName: 'Christian Camilo Gaviria Castro',
+    signContact: 'me@cgaviria.com · +57 · Medellín, Colombia',
+    footer: 'Cover letter template — customize highlighted fields before sending.'
+  },
+  es: {
+    title: 'Sr. Site Reliability Engineer y Líder Técnico',
+    location: 'Medellín, Colombia (GMT-5)',
+    date: esDate,
+    toLabel: 'Para:',
+    subject: 'Ref: Aplicación para <span class="placeholder">[Cargo / Posición]</span> en <span class="placeholder">[Nombre de la empresa]</span>',
+    body: `
+      <p>Estimado/a <span class="placeholder">[Nombre del hiring manager]</span>,</p>
+      <p>Me dirijo a usted para expresar mi interés en el cargo de <span class="placeholder">[Cargo / Posición]</span> en <span class="placeholder">[Nombre de la empresa]</span>. Con más de 9 años de experiencia diseñando, automatizando y escalando infraestructura cloud-native — y actualmente como Sr. Site Reliability Engineer y líder técnico en <strong>Cuemby</strong> — considero que mi perfil se alinea con lo que su equipo busca.</p>
+      <p>En Cuemby lidero la ingeniería de confiabilidad y la estrategia de plataforma de una nube híbrida que sirve a empresas en todo el continente americano. Mi trabajo diario involucra cargas avanzadas de Kubernetes (Cilium, Rook Ceph, Velero), entornos multi-cloud (AWS, GCP, Azure), automatización de infraestructura con Terraform y Ansible, y observabilidad integral con Prometheus, Grafana y OpenTelemetry. También impulso prácticas DevSecOps — escaneo de vulnerabilidades, hardening de IAM, gestión de secretos — e integro herramientas de IA en runbooks y postmortems para elevar continuamente el nivel de confiabilidad.</p>
+      <p>Más allá del trabajo técnico, tengo un sólido historial de liderazgo: durante 4 años lideré un semillero de investigación en redes y seguridad en el ITM, he sido ponente en KCD Colombia 2025 y FLISOL Medellín, y sirvo de forma constante como enlace técnico bilingüe (EN/ES) entre equipos de ingeniería y clientes en EE.UU. <span class="placeholder">[Agrega 1-2 frases sobre por qué esta empresa/rol te interesa específicamente.]</span></p>
+      <p>Me gustaría tener la oportunidad de conversar sobre cómo puedo contribuir a la misión de <span class="placeholder">[Nombre de la empresa]</span>. Mi CV completo está disponible en <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, y con gusto suministro información adicional.</p>
+      <p>Quedo atento a su respuesta y agradezco su tiempo y consideración.</p>
+    `,
+    signOff: 'Cordialmente,',
+    signName: 'Christian Camilo Gaviria Castro',
+    signContact: 'me@cgaviria.com · +57 · Medellín, Colombia',
+    footer: 'Plantilla de carta de presentación — personaliza los campos resaltados antes de enviar.'
+  }
+};
+
+function applyLang(lang) {
+  const t = I18N[lang];
+
+  document.getElementById('cl-title').textContent = t.title;
+  document.getElementById('cl-location').textContent = t.location;
+  document.getElementById('cl-date').textContent = t.date;
+  document.getElementById('cl-to-label').textContent = t.toLabel;
+  document.getElementById('cl-subject').innerHTML = t.subject;
+  document.getElementById('cl-body').innerHTML = t.body;
+  document.getElementById('cl-sign').innerHTML = `
+    <div>${t.signOff}</div>
+    <div style="margin-top:24px;"><strong>${t.signName}</strong></div>
+    <div style="color:#666; font-size:13px; margin-top:2px;">${t.signContact}</div>
+  `;
+  document.getElementById('cl-footer').textContent = t.footer;
+  document.getElementById('html-root').lang = lang;
+
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+
+  try { localStorage.setItem('cgaviria-cl-lang', lang); } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let initLang = 'en';
+  try {
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang === 'en' || urlLang === 'es') initLang = urlLang;
+    else {
+      const saved = localStorage.getItem('cgaviria-cl-lang');
+      if (saved === 'en' || saved === 'es') initLang = saved;
+      else if (navigator.language && navigator.language.toLowerCase().startsWith('es')) initLang = 'es';
+    }
+  } catch(e) {}
+
+  applyLang(initLang);
+
+  function switchTo(lang) {
+    const root = document.getElementById('content-root');
+    root.classList.add('fading');
+    setTimeout(() => { applyLang(lang); root.classList.remove('fading'); }, 150);
+  }
+
+  document.getElementById('btn-en').addEventListener('click', () => switchTo('en'));
+  document.getElementById('btn-es').addEventListener('click', () => switchTo('es'));
+});
+</script>
+
+</body>
+</html>
