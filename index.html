@@ -271,6 +271,32 @@ section { margin-top: 32px; }
 .simple-list .meta { color: #999; font-size: 13px; }
 .simple-list .sub { color: #666; font-size: 13px; margin-top: 2px; }
 
+/* ── References ── */
+.refs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 560px) { .refs-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+.refs-group-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 14px;
+}
+.ref-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 14px;
+}
+.ref-item:last-child { border-bottom: none; }
+.ref-name { font-weight: 600; color: #111; margin-bottom: 2px; }
+.ref-role { color: #666; font-size: 13px; margin-bottom: 2px; }
+.ref-contact { color: #888; font-size: 13px; }
+
 /* ── Footer ── */
 footer {
   margin-top: 56px;
@@ -334,10 +360,6 @@ footer a:hover { color: #555; }
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span id="btn-pdf-label">Download PDF</span>
         </a>
-        <a href="mailto:me@cgaviria.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span id="btn-email-label">Email me</span>
-        </a>
       </div>
     </div>
     <div class="avatar">
@@ -398,6 +420,11 @@ footer a:hover { color: #555; }
     <div id="list-soft"></div>
   </section>
 
+  <section>
+    <h2 class="section-title" id="sec-refs">References</h2>
+    <div id="list-refs"></div>
+  </section>
+
   <footer>
     <span>© 2026 Christian Camilo Gaviria Castro</span>
   </footer>
@@ -410,7 +437,6 @@ const I18N = {
     title: 'Senior Site Reliability Engineer · Cloud, Telco & Security · AI-Augmented Infrastructure',
     location: 'Medellín, Colombia (GMT-5)',
     btnPdf: 'Download PDF',
-    btnEmail: 'Email me',
     pdfFile: 'cv_en.pdf',
     secProfile: 'Profile',
     secAchievements: 'Key Achievements',
@@ -422,9 +448,12 @@ const I18N = {
     secCerts: 'Certifications',
     secHonors: 'Honors & Awards',
     secSoft: 'Soft Skills',
+    secRefs: 'References',
+    refsPersonalTitle: 'Personal',
+    refsWorkTitle: 'Professional',
     profileText: 'Sr. Site Reliability Engineer with 9+ years of experience designing, automating, and scaling cloud-native infrastructure for production environments. Specialized in Kubernetes, AWS, and GNU/Linux, with a strong background in networking, cloud security, and DevOps practices.<br><br>Currently at <strong>Cuemby</strong>, building and maintaining the reliability layer of a hybrid cloud platform serving businesses across the Americas — focused on high availability, infrastructure automation, and platform observability.<br><br>For 4 years, I led a research group on networking and communications security at ITM (Instituto Tecnológico Metropolitano), building a deep technical foundation and a passion for knowledge sharing that I bring to every team I work with.',
     achievements: [
-      'Architect and operate production hybrid cloud at US-based Cuemby — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal; 24/7 incident response with bilingual EN/ES client liaison.',
+      'Architect and operate production hybrid cloud at US-based Cuemby — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal; incident response with bilingual EN/ES client liaison.',
       'Production Kubernetes at telco scale — Cilium (eBPF networking), Rook Ceph (distributed storage), Velero (backup &amp; DR), KubeVirt; cluster lifecycle and security hardening.',
       'Deployed 5G and cellular core network functions on Kubernetes at production scale — running containerized network functions (CNFs) for high-performance workloads.',
       'Cloud-native edge optimization with Unikraft unikernels — deploying serverless applications as lightweight, single-purpose VMs for extreme performance at the edge.',
@@ -466,12 +495,12 @@ const I18N = {
     experience: [
       { title: 'Senior Site Reliability Engineer — Cloud & Security', company: 'Cuemby', location: 'Remote · US-based', period: 'Apr 2023 — Present · 3y 2m',
         bullets: [
-          'Architect and operate hybrid cloud platforms — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal — covering provisioning, network design, observability, security and 24/7 incident response.',
+          'Architect and operate hybrid cloud platforms — public (AWS, GCP, Azure, CIVO), private cloud and on-premise baremetal — covering provisioning, network design, observability, security and incident response.',
           'Run advanced Kubernetes workloads in production: Cilium-based networking (eBPF), Rook Ceph distributed storage, Velero backups and disaster recovery, ingress and service mesh, cluster lifecycle, etcd backups and security hardening.',
           'Deployed 5G and cellular core network functions on Kubernetes at production scale, running containerized network functions (CNFs) for high-performance workloads.',
           'Cloud-native edge optimization with Unikraft unikernels — packaging and deploying serverless applications as lightweight, single-purpose VMs for extreme performance at the edge.',
           'Manage virtualization across modern (KubeVirt on Kubernetes) and traditional stacks (KVM, Proxmox, VMware, Apache CloudStack); designed and automated baremetal installation pipelines across data centers.',
-          'Built reusable IaC modules with Terraform, CloudFormation and Ansible, and constructed CI/CD pipelines (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — including rollback, progressive delivery and blue/green deployments.',
+          'Built reusable IaC modules with Terraform, CloudFormation and Ansible, and constructed CI/CD pipelines (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — including rollback and blue/green deployments.',
           'Design data resilience strategy — distributed storage (Ceph), clustering, RAID, scheduled backups and disaster-recovery plans across multi-region setups.',
           'Lead observability strategy across distributed workloads — metrics (Prometheus, Grafana), logs (Loki), traces (OpenTelemetry, Jaeger, Tempo) — and drive root-cause analysis for production incidents.',
           'Drive DevSecOps practices: security audits, SSL/TLS, IAM hardening, secrets scanning (GitGuardian), vulnerability scanning, exposed port detection, and container image security across repositories and production environments.',
@@ -505,7 +534,7 @@ const I18N = {
           'Trained internal technicians on network device configuration and best practices.'
         ]
       },
-      { title: 'Support Coordinator & Engineer', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', period: 'Aug 2016 — Dec 2021 · 5y 5m',
+      { title: 'IT Support Coordinator', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', period: 'Aug 2016 — Dec 2021 · 5y 5m',
         bullets: [
           'Owned physical and logical design of telecommunications networks for ISP clients, including GPON deployments with Huawei, ZTE, TP-Link and CData OLTs/ONTs.',
           'Configured and operated core network devices (BGP routers, switches, OLTs) plus IP telephony (VoIP) and IPTV services.',
@@ -548,14 +577,24 @@ const I18N = {
       '<strong>2020</strong> — ITM Engineering Week, Graduate recognition footprint (Egresado Huella)',
       '<strong>2022</strong> — Speaker at FLISOL Medellín',
       '<strong>LACNIC 37</strong> — Participation'
-    ]
+    ],
+    refs: {
+      personal: [
+        { name: 'Cristian Barrientos Montoya', role: 'Software Architecture Manager', contact: '+57 300 358 7861 · Medellín' },
+        { name: 'Martín Elías Quintero Osorio', role: 'Systems Engineer · Co-founder & CTO, Guane Enterprises', contact: '+57 300 373 4413 · Medellín' },
+        { name: 'Héctor Alejandro Gaviria Marín', role: 'Jr. Database Analyst', contact: '+57 313 517 4371 · Medellín' }
+      ],
+      professional: [
+        { name: 'Jonathan Harrys García', role: 'Computer Engineer · Network Security Specialist', contact: '+57 312 297 8448 · Medellín' },
+        { name: 'Javier Mauricio Durán', role: 'Telecommunications Engineer · MSc in ICT & Information Security Specialist', contact: '+57 319 253 8052 · Medellín' }
+      ]
+    }
   },
 
   es: {
     title: 'Senior Site Reliability Engineer · Cloud, Telco y Seguridad · Infraestructura con IA',
     location: 'Medellín, Colombia (GMT-5)',
     btnPdf: 'Descargar PDF',
-    btnEmail: 'Escríbeme',
     pdfFile: 'cv_es.pdf',
     secProfile: 'Perfil',
     secAchievements: 'Logros Clave',
@@ -567,9 +606,12 @@ const I18N = {
     secCerts: 'Certificaciones',
     secHonors: 'Reconocimientos',
     secSoft: 'Habilidades Blandas',
+    secRefs: 'Referencias',
+    refsPersonalTitle: 'Personales',
+    refsWorkTitle: 'Laborales',
     profileText: 'Senior Site Reliability Engineer con más de 9 años de experiencia diseñando, automatizando y escalando infraestructura cloud-native para entornos de producción. Especializado en Kubernetes, AWS y GNU/Linux, con sólida base en redes, seguridad cloud y prácticas DevOps.<br><br>Actualmente en <strong>Cuemby</strong>, construyendo y manteniendo la capa de confiabilidad de una plataforma cloud híbrida que sirve a empresas en todo el continente americano — enfocado en alta disponibilidad, automatización de infraestructura y observabilidad de plataforma.<br><br>Durante 4 años lideré un semillero de investigación en seguridad de redes y comunicaciones en el ITM (Instituto Tecnológico Metropolitano), construyendo una base técnica sólida y una pasión por compartir conocimiento que llevo a cada equipo con el que trabajo.',
     achievements: [
-      'Diseño y opero nube híbrida en producción en Cuemby (EE.UU.) — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise; respuesta a incidentes 24/7 con enlace bilingüe EN/ES.',
+      'Diseño y opero nube híbrida en producción en Cuemby (EE.UU.) — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise; respuesta a incidentes con enlace bilingüe EN/ES.',
       'Kubernetes en producción a escala telco — Cilium (networking eBPF), Rook Ceph (almacenamiento distribuido), Velero (backup y DR), KubeVirt; ciclo de vida de clúster y hardening de seguridad.',
       'Despliegue de funciones de núcleo 5G y red celular sobre Kubernetes a escala de producción — ejecutando funciones de red contenerizadas (CNFs) para cargas de alto rendimiento.',
       'Optimización cloud-native en el borde con unikernels Unikraft — despliegue de aplicaciones serverless como VMs livianas y de propósito único para máximo rendimiento en el edge.',
@@ -611,12 +653,12 @@ const I18N = {
     experience: [
       { title: 'Senior Site Reliability Engineer — Cloud y Seguridad', company: 'Cuemby', location: 'Remoto · empresa basada en EE.UU.', period: 'Abr 2023 — Presente · 3a 2m',
         bullets: [
-          'Diseño y opero plataformas de nube híbrida — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise — cubriendo aprovisionamiento, diseño de red, observabilidad, seguridad y respuesta a incidentes 24/7.',
+          'Diseño y opero plataformas de nube híbrida — pública (AWS, GCP, Azure, CIVO), nube privada y baremetal on-premise — cubriendo aprovisionamiento, diseño de red, observabilidad, seguridad y respuesta a incidentes.',
           'Ejecuto cargas avanzadas de Kubernetes en producción: networking con Cilium (eBPF), almacenamiento distribuido con Rook Ceph, backups y DR con Velero, ingress y service mesh, ciclo de vida de clúster y hardening de seguridad.',
           'Despliegue de funciones de núcleo 5G y red celular sobre Kubernetes a escala de producción, ejecutando funciones de red contenerizadas (CNFs) para cargas de alto rendimiento.',
           'Optimización cloud-native en el borde con unikernels Unikraft — empaquetando y desplegando aplicaciones serverless como VMs livianas y de propósito único para máximo rendimiento en el edge.',
           'Administro virtualización moderna (KubeVirt sobre Kubernetes) y tradicional (KVM, Proxmox, VMware, Apache CloudStack); diseñé y automaticé pipelines de instalación baremetal entre centros de datos.',
-          'Construí módulos reutilizables de IaC con Terraform, CloudFormation y Ansible, y construí pipelines de CI/CD (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — incluyendo rollback, entrega progresiva y despliegues blue/green.',
+          'Construí módulos reutilizables de IaC con Terraform, CloudFormation y Ansible, y construí pipelines de CI/CD (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — incluyendo rollback y despliegues blue/green.',
           'Diseño la estrategia de resiliencia de datos — almacenamiento distribuido (Ceph), clustering, RAID, backups programados y planes de DR multi-región.',
           'Lidero la estrategia de observabilidad — métricas (Prometheus, Grafana), logs (Loki), trazas (OpenTelemetry, Jaeger, Tempo) — y conduzco el análisis de causa raíz de incidentes en producción.',
           'Impulso prácticas DevSecOps: auditorías de seguridad, SSL/TLS, hardening de IAM, escaneo de secretos (GitGuardian), escaneo de vulnerabilidades, detección de puertos expuestos y seguridad de imágenes de contenedores en repositorios y entornos de producción.',
@@ -650,7 +692,7 @@ const I18N = {
           'Capacitación interna a técnicos en configuración de dispositivos de red y buenas prácticas.'
         ]
       },
-      { title: 'Coordinador de Soporte e Ingeniero', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', period: 'Ago 2016 — Dic 2021 · 5a 5m',
+      { title: 'Coordinador de Soporte TI', company: 'PEG Soluciones – Teltic', location: 'Antioquia, Colombia', period: 'Ago 2016 — Dic 2021 · 5a 5m',
         bullets: [
           'Responsable del diseño físico y lógico de redes de telecomunicaciones para clientes ISP, incluyendo despliegues GPON con Huawei, ZTE, TP-Link y CData (OLTs/ONTs).',
           'Configuración y operación de equipos core de red (routers BGP, switches, OLTs) más servicios de VoIP e IPTV.',
@@ -693,9 +735,40 @@ const I18N = {
       '<strong>2020</strong> — Semana de la Ingeniería, reconocimiento como egresado huella (ITM)',
       '<strong>2022</strong> — Speaker en FLISOL Medellín',
       '<strong>LACNIC 37</strong> — Participación'
-    ]
+    ],
+    refs: {
+      personal: [
+        { name: 'Cristian Barrientos Montoya', role: 'Gerente de arquitectura de software', contact: '+57 300 358 7861 · Medellín' },
+        { name: 'Martín Elías Quintero Osorio', role: 'Ingeniero de sistemas · Cofundador y CTO en Guane Enterprises', contact: '+57 300 373 4413 · Medellín' },
+        { name: 'Héctor Alejandro Gaviria Marín', role: 'Analista JR de base de datos', contact: '+57 313 517 4371 · Medellín' }
+      ],
+      professional: [
+        { name: 'Jonathan Harrys García', role: 'Ingeniero informático · Especialista en seguridad de redes', contact: '+57 312 297 8448 · Medellín' },
+        { name: 'Javier Mauricio Durán', role: 'Ingeniero de telecomunicaciones · Magíster en TIC y especialista en seguridad informática', contact: '+57 319 253 8052 · Medellín' }
+      ]
+    }
   }
 };
+
+function renderReferences(refs, t) {
+  function group(title, items) {
+    return `
+      <div>
+        <div class="refs-group-title">${title}</div>
+        ${items.map(r => `
+          <div class="ref-item">
+            <div class="ref-name">${r.name}</div>
+            <div class="ref-role">${r.role}</div>
+            <div class="ref-contact">${r.contact}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+  return `<div class="refs-grid">
+    ${group(t.refsPersonalTitle, refs.personal)}
+    ${group(t.refsWorkTitle, refs.professional)}
+  </div>`;
+}
 
 function renderAchievements(items) {
   return items.map(text => `<li>${text}</li>`).join('');
@@ -754,7 +827,6 @@ function applyLang(lang) {
   document.getElementById('cv-title').textContent = t.title;
   document.getElementById('cv-location').textContent = t.location;
   document.getElementById('btn-pdf-label').textContent = t.btnPdf;
-  document.getElementById('btn-email-label').textContent = t.btnEmail;
   document.getElementById('cta-pdf').href = t.pdfFile;
 
   document.getElementById('sec-profile').textContent = t.secProfile;
@@ -767,6 +839,7 @@ function applyLang(lang) {
   document.getElementById('sec-certs').textContent = t.secCerts;
   document.getElementById('sec-honors').innerHTML = t.secHonors;
   document.getElementById('sec-soft').textContent = t.secSoft;
+  document.getElementById('sec-refs').textContent = t.secRefs;
 
   document.getElementById('profile-text').innerHTML = t.profileText;
   document.getElementById('list-achievements').innerHTML = renderAchievements(t.achievements);
@@ -778,6 +851,7 @@ function applyLang(lang) {
   document.getElementById('list-certs').innerHTML = renderStack(t.certs);
   document.getElementById('list-honors').innerHTML = renderAchievements(t.honors);
   document.getElementById('list-soft').innerHTML = renderStack(t.soft);
+  document.getElementById('list-refs').innerHTML = renderReferences(t.refs, t);
 
   document.getElementById('html-root').lang = lang;
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
