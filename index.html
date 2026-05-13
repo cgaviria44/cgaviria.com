@@ -271,6 +271,16 @@ section { margin-top: 32px; }
 .simple-list .meta { color: #999; font-size: 13px; }
 .simple-list .sub { color: #666; font-size: 13px; margin-top: 2px; }
 
+/* ── Talks ── */
+.talk-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.talk-item:last-child { border-bottom: none; }
+.talk-title { font-size: 15px; font-weight: 600; color: #111; margin-bottom: 2px; }
+.talk-event { font-size: 13px; color: #888; margin-bottom: 6px; }
+.talk-desc { font-size: 14px; color: #333; line-height: 1.65; text-align: justify; hyphens: auto; }
+
 /* ── References ── */
 .refs-grid {
   display: grid;
@@ -420,6 +430,11 @@ footer a:hover { color: #555; }
   </section>
 
   <section>
+    <h2 class="section-title" id="sec-talks">Talks</h2>
+    <div id="list-talks"></div>
+  </section>
+
+  <section>
     <h2 class="section-title" id="sec-soft">Soft Skills</h2>
     <div id="list-soft"></div>
   </section>
@@ -449,6 +464,7 @@ const I18N = {
     secLanguages: 'Languages',
     secCerts: 'Certifications',
     secHonors: 'Honors & Awards',
+    secTalks: 'Talks',
     secSoft: 'Soft Skills',
     secRefs: 'References',
     refsPersonalTitle: 'Personal',
@@ -583,6 +599,13 @@ const I18N = {
       '<strong>2022</strong> — Speaker at FLISOL Medellín',
       '<strong>LACNIC 37</strong> — Participation'
     ],
+    talks: [
+      {
+        title: 'From Bare Metal to Cloud: Automate Your Infrastructure with MAAS and Harvester',
+        event: 'KCD Colombia 2025',
+        desc: 'Live demo on deploying and orchestrating physical servers as cloud-like resources using MAAS and Harvester. Covering edge computing, hybrid environments, and 100% open source infrastructure automation.'
+      }
+    ],
     refs: {
       personal: [
         { name: 'Cristian Barrientos Montoya', role: 'Software Architecture Manager', contact: '+57 300 358 7861 · Medellín' },
@@ -609,6 +632,7 @@ const I18N = {
     secLanguages: 'Idiomas',
     secCerts: 'Certificaciones',
     secHonors: 'Reconocimientos',
+    secTalks: 'Charlas',
     secSoft: 'Habilidades Blandas',
     secRefs: 'Referencias',
     refsPersonalTitle: 'Personales',
@@ -743,6 +767,13 @@ const I18N = {
       '<strong>2022</strong> — Speaker en FLISOL Medellín',
       '<strong>LACNIC 37</strong> — Participación'
     ],
+    talks: [
+      {
+        title: 'From Bare Metal to Cloud: Automate Your Infrastructure with MAAS and Harvester',
+        event: 'KCD Colombia 2025',
+        desc: 'Demo en vivo sobre despliegue y orquestación de servidores físicos como recursos cloud usando MAAS y Harvester. Cubriendo edge computing, entornos híbridos y automatización de infraestructura 100% open source.'
+      }
+    ],
     refs: {
       personal: [
         { name: 'Cristian Barrientos Montoya', role: 'Gerente de arquitectura de software', contact: '+57 300 358 7861 · Medellín' },
@@ -776,6 +807,16 @@ function renderReferences(refs, t) {
     ${group(t.refsPersonalTitle, refs.personal)}
     ${group(t.refsWorkTitle, refs.professional)}
   </div>`;
+}
+
+function renderTalks(items) {
+  return items.map(t => `
+    <div class="talk-item">
+      <div class="talk-title">${t.title}</div>
+      <div class="talk-event">${t.event}</div>
+      <div class="talk-desc">${t.desc}</div>
+    </div>
+  `).join('');
 }
 
 function renderAchievements(items) {
@@ -844,6 +885,7 @@ function applyLang(lang) {
   document.getElementById('sec-languages').textContent = t.secLanguages;
   document.getElementById('sec-certs').textContent = t.secCerts;
   document.getElementById('sec-honors').innerHTML = t.secHonors;
+  document.getElementById('sec-talks').textContent = t.secTalks;
   document.getElementById('sec-soft').textContent = t.secSoft;
   document.getElementById('sec-refs').textContent = t.secRefs;
 
@@ -856,6 +898,7 @@ function applyLang(lang) {
   document.getElementById('card-languages').innerHTML = renderLanguages(t.languages);
   document.getElementById('list-certs').innerHTML = renderStack(t.certs);
   document.getElementById('list-honors').innerHTML = renderAchievements(t.honors);
+  document.getElementById('list-talks').innerHTML = renderTalks(t.talks);
   document.getElementById('list-soft').innerHTML = renderStack(t.soft);
   document.getElementById('list-refs').innerHTML = renderReferences(t.refs, t);
 
