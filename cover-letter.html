@@ -57,29 +57,52 @@ body {
 
 /* ── Header ── */
 .cl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
   padding-bottom: 24px;
   border-bottom: 1px solid #e8e8e8;
   margin-bottom: 32px;
 }
+.cl-header-main { flex: 1; min-width: 0; }
 .cl-name {
-  font-size: clamp(20px, 3.5vw, 26px);
+  font-size: clamp(22px, 4vw, 30px);
   font-weight: 700;
   color: #0f0f0f;
-  letter-spacing: -0.3px;
-  margin-bottom: 4px;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+  margin-bottom: 5px;
 }
 .cl-title {
-  font-size: 13px;
+  font-size: 14px;
   color: #666;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  font-weight: 400;
 }
 .cl-contact {
   font-size: 13px;
   color: #555;
+  line-height: 1.8;
 }
 .cl-contact a { color: #555; text-decoration: none; }
 .cl-contact a:hover { color: #111; text-decoration: underline; }
 .cl-contact-sep { margin: 0 7px; color: #ccc; }
+.avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #fff;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  display: block;
+}
 
 /* ── Body ── */
 .cl-meta {
@@ -169,11 +192,13 @@ footer {
 @media (max-width: 580px) {
   .page { padding: 40px 20px 60px; }
   .lang-switch { top: 14px; right: 16px; }
+  .cl-header { flex-direction: column-reverse; }
+  .avatar { width: 60px; height: 60px; }
 }
 
 /* ── Print ── */
 @media print {
-  .lang-switch { display: none !important; }
+  .lang-switch, .cl-download { display: none !important; }
   body { font-size: 11px; }
   .page { padding: 20px; max-width: 100%; }
   .placeholder { background: none; color: #b45309; }
@@ -192,26 +217,31 @@ footer {
 <div class="page" id="content-root">
 
   <header class="cl-header">
-    <div class="cl-name">Christian Camilo Gaviria Castro</div>
-    <div class="cl-title" id="cl-title"></div>
-    <div class="cl-contact">
-      <a href="mailto:me@cgaviria.com">me@cgaviria.com</a>
-      <span class="cl-contact-sep">·</span>
-      <a href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener">linkedin.com/in/cgaviria44</a>
-      <span class="cl-contact-sep">·</span>
-      <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>
-      <span class="cl-contact-sep">·</span>
-      <span id="cl-location"></span>
+    <div class="cl-header-main">
+      <div class="cl-name">Christian Camilo Gaviria Castro</div>
+      <div class="cl-title" id="cl-title"></div>
+      <div class="cl-contact">
+        <a href="mailto:me@cgaviria.com">me@cgaviria.com</a>
+        <span class="cl-contact-sep">·</span>
+        <a href="https://linkedin.com/in/cgaviria44" target="_blank" rel="noopener">linkedin.com/in/cgaviria44</a>
+        <span class="cl-contact-sep">·</span>
+        <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>
+        <span class="cl-contact-sep">·</span>
+        <span id="cl-location"></span>
+      </div>
+      <div class="cl-download" style="margin-top:14px;">
+        <a href="cover-letter_en.pdf" download="Christian_Gaviria_CoverLetter_EN.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF (EN)
+        </a>
+        <a href="cover-letter_es.pdf" download="Christian_Gaviria_CoverLetter_ES.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF (ES)
+        </a>
+      </div>
     </div>
-    <div class="cl-download" style="margin-top:12px;">
-      <a href="cover-letter_en.pdf" download="Christian_Gaviria_CoverLetter_EN.pdf">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        PDF (EN)
-      </a>
-      <a href="cover-letter_es.pdf" download="Christian_Gaviria_CoverLetter_ES.pdf">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        PDF (ES)
-      </a>
+    <div class="avatar">
+      <img src="photo.jpg" alt="Christian Camilo Gaviria Castro" />
     </div>
   </header>
 
@@ -241,7 +271,7 @@ const esDate = today.toLocaleDateString('es-CO', { year: 'numeric', month: 'long
 
 const I18N = {
   en: {
-    title: 'Sr. Site Reliability Engineer & Technical Leader',
+    title: 'Sr. Site Reliability Engineer & Technical Leader · Kubernetes · AWS · Cloud-Native · GNU/Linux · DevOps · Platform Engineering',
     location: 'Medellín, Colombia (GMT-5)',
     date: enDate,
     toLabel: 'To:',
@@ -260,7 +290,7 @@ const I18N = {
     footer: ''
   },
   es: {
-    title: 'Sr. Site Reliability Engineer y Líder Técnico',
+    title: 'Sr. Site Reliability Engineer y Líder Técnico · Kubernetes · AWS · Cloud-Native · GNU/Linux · DevOps · Platform Engineering',
     location: 'Medellín, Colombia (GMT-5)',
     date: esDate,
     toLabel: 'Para:',
