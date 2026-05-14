@@ -187,8 +187,8 @@ footer {
     <div class="cl-date" id="cl-date"></div>
     <div class="cl-to">
       <strong id="cl-to-label"></strong><br>
-      <span class="placeholder">[Nombre del hiring manager o Recruiting Team]</span><br>
-      <span class="placeholder">[Nombre de la empresa]</span>
+      <span class="placeholder">[Hiring Manager's name]</span><br>
+      Tailscale
     </div>
   </div>
 
@@ -213,38 +213,38 @@ const I18N = {
     location: 'Medellín, Colombia (GMT-5)',
     date: enDate,
     toLabel: 'To:',
-    subject: 'Re: Application for <span class="placeholder">[Role / Position]</span> at <span class="placeholder">[Company Name]</span>',
+    subject: 'Re: Application for Infrastructure Engineer at Tailscale',
     body: `
       <p>Dear <span class="placeholder">[Hiring Manager's name]</span>,</p>
-      <p>I am writing to express my interest in the <span class="placeholder">[Role / Position]</span> role at <span class="placeholder">[Company Name]</span>. With over 9 years of experience designing, automating, and scaling cloud-native infrastructure — and currently serving as Sr. Site Reliability Engineer and technical leader at <strong>Cuemby</strong> — I believe my background aligns closely with what your team is looking for.</p>
+      <p>I am writing to express my interest in the Infrastructure Engineer role at <strong>Tailscale</strong>. With over 9 years of experience designing, automating, and scaling cloud-native infrastructure — and currently serving as Sr. Site Reliability Engineer and technical leader at <strong>Cuemby</strong> — I believe my background aligns closely with what your team is looking for.</p>
       <p>At Cuemby, I lead the reliability engineering and platform strategy for a hybrid cloud serving businesses across the Americas. My day-to-day involves advanced Kubernetes workloads (Cilium, Rook Ceph, Velero), multi-cloud environments (AWS, GCP, Azure), infrastructure automation with Terraform and Ansible, and end-to-end observability with Prometheus, Grafana, and OpenTelemetry. I also drive DevSecOps practices — vulnerability scanning, IAM hardening, secrets management — and integrate AI tooling into runbooks and postmortems to continuously raise the reliability bar.</p>
-      <p>Beyond the technical work, I have a strong track record of technical leadership: for 4 years I led a network and security research group at ITM, I have spoken at KCD Colombia 2025 and FLISOL Medellín, and I consistently serve as the bilingual (EN/ES) technical liaison between engineering teams and US-based stakeholders. <span class="placeholder">[Add 1-2 sentences about why this specific company/role excites you.]</span></p>
-      <p>I would welcome the opportunity to discuss how I can contribute to <span class="placeholder">[Company Name]</span>'s mission. My full CV is available at <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, and I am happy to provide any additional information.</p>
+      <p>Beyond the technical work, I have a strong track record of technical leadership: for 4 years I led a network and security research group at ITM, I have spoken at KCD Colombia 2025 and FLISOL Medellín, and I consistently serve as the bilingual (EN/ES) technical liaison between engineering teams and US-based stakeholders. Tailscale's approach to networking — building a zero-trust mesh VPN on top of WireGuard that just works — resonates deeply with me. My background spans BGP, IPv6, network security, and cloud-native infrastructure, and I am excited by the challenge of building the internal systems that keep Tailscale's own infrastructure reliable and scalable.</p>
+      <p>I would welcome the opportunity to discuss how I can contribute to Tailscale's mission. My full CV is available at <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, and I am happy to provide any additional information.</p>
       <p>Thank you for your time and consideration.</p>
     `,
     signOff: 'Sincerely,',
     signName: 'Christian Camilo Gaviria Castro',
     signContact: 'me@cgaviria.com · +57 · Medellín, Colombia',
-    footer: 'Cover letter template — customize highlighted fields before sending.'
+    footer: ''
   },
   es: {
     title: 'Sr. Site Reliability Engineer y Líder Técnico',
     location: 'Medellín, Colombia (GMT-5)',
     date: esDate,
     toLabel: 'Para:',
-    subject: 'Ref: Aplicación para <span class="placeholder">[Cargo / Posición]</span> en <span class="placeholder">[Nombre de la empresa]</span>',
+    subject: 'Ref: Aplicación para Infrastructure Engineer en Tailscale',
     body: `
       <p>Estimado/a <span class="placeholder">[Nombre del hiring manager]</span>,</p>
-      <p>Me dirijo a usted para expresar mi interés en el cargo de <span class="placeholder">[Cargo / Posición]</span> en <span class="placeholder">[Nombre de la empresa]</span>. Con más de 9 años de experiencia diseñando, automatizando y escalando infraestructura cloud-native — y actualmente como Sr. Site Reliability Engineer y líder técnico en <strong>Cuemby</strong> — considero que mi perfil se alinea con lo que su equipo busca.</p>
+      <p>Me dirijo a usted para expresar mi interés en el cargo de Infrastructure Engineer en <strong>Tailscale</strong>. Con más de 9 años de experiencia diseñando, automatizando y escalando infraestructura cloud-native — y actualmente como Sr. Site Reliability Engineer y líder técnico en <strong>Cuemby</strong> — considero que mi perfil se alinea con lo que su equipo busca.</p>
       <p>En Cuemby lidero la ingeniería de confiabilidad y la estrategia de plataforma de una nube híbrida que sirve a empresas en todo el continente americano. Mi trabajo diario involucra cargas avanzadas de Kubernetes (Cilium, Rook Ceph, Velero), entornos multi-cloud (AWS, GCP, Azure), automatización de infraestructura con Terraform y Ansible, y observabilidad integral con Prometheus, Grafana y OpenTelemetry. También impulso prácticas DevSecOps — escaneo de vulnerabilidades, hardening de IAM, gestión de secretos — e integro herramientas de IA en runbooks y postmortems para elevar continuamente el nivel de confiabilidad.</p>
-      <p>Más allá del trabajo técnico, tengo un sólido historial de liderazgo: durante 4 años lideré un semillero de investigación en redes y seguridad en el ITM, he sido ponente en KCD Colombia 2025 y FLISOL Medellín, y sirvo de forma constante como enlace técnico bilingüe (EN/ES) entre equipos de ingeniería y clientes en EE.UU. <span class="placeholder">[Agrega 1-2 frases sobre por qué esta empresa/rol te interesa específicamente.]</span></p>
-      <p>Me gustaría tener la oportunidad de conversar sobre cómo puedo contribuir a la misión de <span class="placeholder">[Nombre de la empresa]</span>. Mi CV completo está disponible en <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, y con gusto suministro información adicional.</p>
+      <p>Más allá del trabajo técnico, tengo un sólido historial de liderazgo: durante 4 años lideré un semillero de investigación en redes y seguridad en el ITM, he sido ponente en KCD Colombia 2025 y FLISOL Medellín, y sirvo de forma constante como enlace técnico bilingüe (EN/ES) entre equipos de ingeniería y clientes en EE.UU. El enfoque de Tailscale en redes — construyendo una VPN mesh zero-trust sobre WireGuard que simplemente funciona — resuena profundamente con mi perfil. Mi experiencia abarca BGP, IPv6, seguridad de redes e infraestructura cloud-native, y me entusiasma el desafío de construir los sistemas internos que mantienen la infraestructura de Tailscale confiable y escalable.</p>
+      <p>Me gustaría tener la oportunidad de conversar sobre cómo puedo contribuir a la misión de Tailscale. Mi CV completo está disponible en <a href="https://cv.cgaviria.com" target="_blank" rel="noopener">cv.cgaviria.com</a>, y con gusto suministro información adicional.</p>
       <p>Quedo atento a su respuesta y agradezco su tiempo y consideración.</p>
     `,
     signOff: 'Cordialmente,',
     signName: 'Christian Camilo Gaviria Castro',
     signContact: 'me@cgaviria.com · +57 · Medellín, Colombia',
-    footer: 'Plantilla de carta de presentación — personaliza los campos resaltados antes de enviar.'
+    footer: ''
   }
 };
 
