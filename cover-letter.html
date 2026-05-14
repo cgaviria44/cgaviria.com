@@ -134,6 +134,26 @@ body {
   font-weight: 500;
 }
 
+/* ── Download ── */
+.cl-download {
+  margin-top: 36px;
+  display: flex;
+  gap: 10px;
+}
+.cl-download a {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 7px 16px;
+  border: 1.5px solid #111;
+  color: #111;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: background 0.12s, color 0.12s;
+}
+.cl-download a:hover { background: #111; color: #fff; }
+
 /* ── Footer ── */
 footer {
   margin-top: 48px;
@@ -141,6 +161,10 @@ footer {
   border-top: 1px solid #ebebeb;
   font-size: 12px;
   color: #bbb;
+}
+
+@media print {
+  .cl-download { display: none !important; }
 }
 
 /* ── Responsive ── */
@@ -197,6 +221,11 @@ footer {
   <div class="cl-body" id="cl-body"></div>
 
   <div class="cl-sign" id="cl-sign"></div>
+
+  <div class="cl-download">
+    <a href="cover-letter_en.pdf" download>Download PDF — EN</a>
+    <a href="cover-letter_es.pdf" download>Descargar PDF — ES</a>
+  </div>
 
   <footer id="cl-footer"></footer>
 
