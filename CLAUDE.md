@@ -35,3 +35,17 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Avoid literal translations in ES — adapt naturally
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate
+
+## Experience entries (current order in `index.html`)
+Listed most-recent first; ongoing freelance/project-based entries follow the main job:
+
+| # | EN title | Company | Period | Note |
+|---|----------|---------|--------|------|
+| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | main job |
+| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based |
+| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP |
+| 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
+| 5 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
+| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | |
+| 7 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | |
+| 8 | Network Administrator & Researcher — SISSI | ITM | Aug 2016 — Oct 2021 | |
