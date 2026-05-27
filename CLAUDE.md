@@ -6,7 +6,7 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 ## Structure
 - `index.html` — single file with all CV content inside the `I18N` JS object (two keys: `en` and `es`)
 - `cv_en.pdf` / `cv_es.pdf` — downloadable PDFs, must always match the HTML
-- `gen_pdf.mjs` — Node.js script to regenerate PDFs from the HTML
+- `gen_pdf.mjs` — Node.js script to regenerate PDFs from the HTML. **Has its own hardcoded header template** (not read from `index.html`) — any change to the header in `index.html` must also be applied manually in `gen_pdf.mjs` (`buildStaticHTML` function, lines ~113–121)
 - `cover-letter.html` — cover letter (separate file)
 
 ## Workflow: making changes
