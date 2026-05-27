@@ -113,6 +113,8 @@ function buildStaticHTML(lang) {
       <div class="cv-contact">
         <a href="mailto:me@cgaviria.com">me@cgaviria.com</a>
         <span class="cv-contact-sep">·</span>
+        <a href="https://wa.me/573003437758">+57 300 343 7758</a>
+        <span class="cv-contact-sep">·</span>
         <a href="https://linkedin.com/in/cgaviria44">linkedin.com/in/cgaviria44</a>
         <span class="cv-contact-sep">·</span>
         <a href="https://linktr.ee/cgaviria44">linktr.ee/cgaviria44</a>
