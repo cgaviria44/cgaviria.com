@@ -34,14 +34,14 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Keep EN and ES in sync — every change in one language must be mirrored in the other
 - Avoid literal translations in ES — adapt naturally
 - Salary expectation: $15,000,000 COP/month with all legal benefits
-- English level: B2 Upper Intermediate
+- English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
 
 ## Experience entries (current order in `index.html`)
 Listed most-recent first; ongoing freelance/project-based entries follow the main job:
 
 | # | EN title | Company | Period | Note |
 |---|----------|---------|--------|------|
-| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | main job |
+| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | main job — includes marketplace video tutorials bullet (n8n, OpenClaw, WordPress, MySQL, etc.) |
 | 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based |
 | 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP |
 | 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
