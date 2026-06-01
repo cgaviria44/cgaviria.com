@@ -35,7 +35,16 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Avoid literal translations in ES — adapt naturally
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
-- Security skills include: Firewalls, UTM, WAF, VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), GitGuardian, SSL/TLS, IAM hardening, audits, Cisco Cybersecurity Essentials
+- Security skills include: Firewalls, UTM, WAF (Cloudflare), VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/audits), Trivy, Kube-bench, GitGuardian, SSL/TLS, IAM hardening, Cisco Cybersecurity Essentials
+- Storage skills include: Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (object & block storage), Velero, DR/DRP
+- Compliance: Vanta (SOC 2, continuous compliance)
+- Baremetal provisioning: MAAS (Canonical), Tinkerbell, Seeder Harvester
+- Kubernetes distributions: Talos Linux; networking with Netris; remote dev with Telepresence
+- Self-hosted: Nextcloud
+- Virtualization: OpenStack added (alongside KVM, Proxmox, VMware vCenter, Apache CloudStack)
+- Alerting: AlertManager → Slack, Teams, PagerDuty
+- DNS: DNSSEC, DoH, DoT (Smart Town SAS)
+- CGNAT experience at PEG Soluciones
 
 ## Experience entries (current order in `index.html`)
 Listed most-recent first; ongoing freelance/project-based entries follow the main job:

@@ -498,17 +498,19 @@ const I18N = {
     ],
     stack: [
       ['cloud', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, Equinix Metal, DigitalOcean; hybrid, private and public cloud'],
-      ['kubernetes', 'KCNA (CNCF), Cilium (eBPF CNI), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, cluster lifecycle, etcd backups'],
+      ['kubernetes', 'KCNA (CNCF), Talos Linux, Cilium (eBPF CNI), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, load balancers, Telepresence, cluster lifecycle, etcd backups'],
       ['containers', 'Docker, Docker Compose, containerd, multi-stage builds'],
-      ['virtualization', 'KVM, Proxmox, VMware, KubeVirt, Apache CloudStack'],
-      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, PXE provisioning'],
+      ['virtualization', 'KVM, Proxmox, VMware vCenter, KubeVirt, OpenStack, Apache CloudStack'],
+      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, PXE provisioning, MAAS (Canonical), Tinkerbell, Seeder Harvester'],
       ['ci/cd', 'Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy, blue/green, canary, zero-downtime migrations'],
       ['source control', 'GitHub, GitLab, Bitbucket, Git workflows'],
       ['atlassian', 'Jira, Confluence, ticket hygiene, technical documentation'],
-      ['observability', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry'],
-      ['security', 'Firewalls, UTM, WAF, VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), GitGuardian, SSL/TLS, IAM hardening, audits, Cisco Cybersecurity Essentials'],
-      ['storage & dr/drp', 'Rook Ceph, RAID, clustering, scheduled backups, Velero, disaster recovery (DR), disaster recovery planning (DRP), multi-region'],
-      ['networking', 'BGP, OSPF, IPv4/IPv6, full OSI stack, Wireshark, tcpdump, MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
+      ['observability', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry, AlertManager (Slack · Teams · PagerDuty)'],
+      ['security', 'Firewalls, UTM, WAF (Cloudflare), VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/audits), Trivy, Kube-bench, GitGuardian, SSL/TLS, IAM hardening, Cisco Cybersecurity Essentials'],
+      ['compliance', 'Vanta (SOC 2, security posture, continuous compliance, evidence automation)'],
+      ['storage & dr/drp', 'Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (object &amp; block storage), RAID, clustering, scheduled backups, Velero, disaster recovery (DR), disaster recovery planning (DRP), multi-region'],
+      ['self-hosted', 'Nextcloud (installation, configuration, administration)'],
+      ['networking', 'BGP, OSPF, IPv4/IPv6, DNS/DNSSEC/DoH/DoT, full OSI stack, Wireshark, tcpdump, Netris (network fabric), MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
       ['wireless', 'Enterprise Wi-Fi, MikroTik Hotspot, CCTV / IP surveillance'],
       ['telco', '5G core on Kubernetes, Unikraft unikernels, GPON (Huawei, ZTE, TP-Link, CData), IPTV, IP telephony (Asterisk, Elastix, Issabel)'],
       ['databases', 'PostgreSQL, MySQL, SQL Server, Amazon Aurora (administration, backups, performance)'],
@@ -520,17 +522,20 @@ const I18N = {
       { title: 'Senior Site Reliability Engineer — Cloud & Security', company: 'Cuemby', location: 'Remote · US-based', period: 'Apr 2023 — Present · 3y 2m',
         bullets: [
           'Lead the architecture and operation of hybrid cloud platforms — public (AWS, GCP, Azure, CIVO, Equinix Metal), private cloud and on-premise baremetal — driving decisions on provisioning, network design, observability, security and incident response.',
-          'Lead advanced Kubernetes workloads in production: Cilium-based networking (eBPF), Rook Ceph distributed storage, Velero backups, disaster recovery (DR) and disaster recovery planning (DRP), ingress and service mesh, cluster lifecycle, etcd backups and security hardening.',
+          'Lead advanced Kubernetes workloads in production across multiple distributions including Talos Linux: Cilium-based networking (eBPF), Rook Ceph distributed storage, Velero backups, disaster recovery (DR) and disaster recovery planning (DRP), ingress, service mesh and load balancers, cluster lifecycle, etcd backups and security hardening.',
           'Deployed 5G and cellular core network functions on Kubernetes at production scale, running containerized network functions (CNFs) for high-performance workloads.',
           'Cloud-native edge optimization with Unikraft unikernels — packaging and deploying serverless applications as lightweight, single-purpose VMs for extreme performance at the edge.',
-          'Lead virtualization strategy across modern (KubeVirt on Kubernetes) and traditional stacks (KVM, Proxmox, VMware, Apache CloudStack); designed and automated baremetal installation pipelines across data centers.',
-          'Built reusable IaC modules with Terraform, CloudFormation and Ansible, and constructed CI/CD pipelines (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — including rollback and blue/green deployments; applied Git best practices with GitHub and GitLab for versioning, code review and change control across all IaC repositories.',
+          'Lead virtualization strategy across modern (KubeVirt, OpenStack) and traditional stacks (KVM, Proxmox, VMware, Apache CloudStack); designed and automated baremetal installation and mass OS provisioning pipelines using MAAS (Canonical), Tinkerbell and Seeder Harvester across data centers.',
+          'Built reusable IaC modules with Terraform, CloudFormation and Ansible, and constructed CI/CD pipelines (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — including rollback and blue/green deployments; applied Git best practices with GitHub and GitLab for versioning, code review and change control across all IaC repositories; maintained technical documentation using GitHub Issues and Projects, and produced SWOT analysis matrices for infrastructure decisions.',
           'Automated operational and infrastructure workflows with Ansible across multi-environment deployments; delivered a Kubernetes automation project for the Colombian Air Force (FAC), covering deployment pipelines and cluster lifecycle management.',
           'Developed Python and Bash scripts to automate routine Linux tasks — reducing manual toil and improving operational consistency across environments.',
-          'Design data resilience strategy — distributed storage (Ceph), clustering, RAID, scheduled backups and disaster-recovery plans across multi-region setups.',
-          'Lead observability strategy across distributed workloads — metrics (Prometheus, Grafana), logs (Loki), traces (OpenTelemetry, Jaeger, Tempo) — and drive root-cause analysis for production incidents.',
-          'Drive DevSecOps practices: security audits, SSL/TLS, IAM hardening, secrets scanning (GitGuardian), vulnerability scanning, exposed port detection, and container image security across repositories and production environments.',
+          'Design data resilience strategy — distributed and software-defined storage (Rook Ceph, TrueNAS, OpenEBS, Mayastor), object and block storage with MinIO, clustering, RAID, scheduled backups and disaster-recovery plans across multi-region setups.',
+          'Lead observability strategy across distributed workloads — metrics (Prometheus, Grafana), logs (Loki), traces (OpenTelemetry, Jaeger, Tempo), alerting (AlertManager → Slack, Teams, PagerDuty) — and drive root-cause analysis for production incidents.',
+          'Drive DevSecOps practices: internal security audits (Wazuh), SSL/TLS, IAM hardening, secrets scanning (GitGuardian), container vulnerability scanning (Trivy), Kubernetes security benchmarking (Kube-bench), Cloudflare WAF and CDN, exposed port detection, and container image security across repositories and production environments.',
           'Integrate AI tooling (Claude Code, ChatGPT) with structured prompt engineering into runbooks, IaC reviews and postmortems; lead architecture negotiations and live incident response with US-based clients as bilingual (EN/ES) technical liaison.',
+          'Implemented Vanta for compliance automation — centralizing security controls, evidence collection and continuous compliance monitoring across infrastructure and engineering processes.',
+          'Managed network fabric and BGP automation with Netris across bare-metal deployments on Equinix Metal; configured and operated load balancers for Kubernetes and on-premise environments.',
+          'Deployed Telepresence for seamless remote developer access to production Kubernetes clusters; installed, configured and administered Nextcloud as a self-hosted collaboration and file-sharing platform.',
           'Contributed to the development of an internal marketplace integrating top community tools with one-click install — including n8n, OpenClaw, MySQL, PostgreSQL, WordPress, and others — enabling clients to deploy production-ready applications instantly on the platform.',
           'Produced video tutorials for installing and setting up marketplace applications — including AI tools (n8n, OpenClaw), WordPress, MySQL, and others — guiding clients through deploying and configuring applications on the platform.'
         ]
@@ -541,7 +546,8 @@ const I18N = {
           'Led migration and optimization of legacy infrastructure to AWS, focusing on cost, resilience and security.',
           'Database administration across PostgreSQL, MySQL, SQL Server and Amazon Aurora.',
           'Conducted infrastructure and security audits for client companies, identifying vulnerabilities and delivering actionable remediation plans.',
-          'Applied version control best practices with GitHub and GitLab for Ansible and Terraform codebases — enforcing branching strategies, code review workflows and change traceability.'
+          'Applied version control best practices with GitHub and GitLab for Ansible and Terraform codebases — enforcing branching strategies, code review workflows and change traceability.',
+          'Designed and implemented backup and disaster recovery (DR) strategies for client cloud workloads — including scheduled backups, point-in-time restoration and multi-region resilience planning.'
         ]
       },
       { title: 'Infrastructure Engineer', company: 'Smart Town SAS', location: 'Remote', period: '2019 — Present · ~7y · freelance',
@@ -549,7 +555,8 @@ const I18N = {
           'Design, deploy, and manage the full ISP technology stack — dual-stack IPv4/IPv6 networking, security hardening, and day-to-day operations of the service provider infrastructure.',
           'Administer GPON fiber-optic infrastructure for FTTH delivery — OLT/ONT provisioning, troubleshooting and capacity planning.',
           'Design and operate wireless radio link networks for distribution and last-mile connectivity.',
-          'Provide technical consulting to client companies on network architecture, ISP infrastructure modernization and security posture.'
+          'Provide technical consulting to client companies on network architecture, ISP infrastructure modernization and security posture.',
+          'Deployed and administered a DNS server with DNSSEC validation and privacy-preserving resolution protocols — DNS over HTTPS (DoH) and DNS over TLS (DoT) — for the ISP infrastructure.'
         ]
       },
       { title: 'Infrastructure Engineer', company: 'TikAcademy', location: 'Remote', period: 'Mar 2021 — Dec 2023 · 2y 9m · project-based',
@@ -569,7 +576,8 @@ const I18N = {
         bullets: [
           'Designed wired networks, enterprise Wi-Fi and CCTV / IP-surveillance systems for hotels and corporate customers.',
           'Deployed and operated MSP-scale environments with MikroTik, UniFi, Cisco and Elastix/Issabel PBX (VoIP).',
-          'Trained internal technicians on network device configuration and best practices.'
+          'Trained internal technicians on network device configuration and best practices.',
+          'Managed VMware vCenter environments — handling virtual machine migrations, infrastructure upgrades and backup configuration for virtualized workloads.'
         ]
       },
       { title: 'IT Support Coordinator', company: 'PEG Soluciones – Teltic', location: 'On-site & Remote · Antioquia, Colombia', period: 'Aug 2016 — Dec 2021 · 5y 5m',
@@ -577,7 +585,8 @@ const I18N = {
           'Led the physical and logical design of telecommunications networks for ISP clients, including GPON deployments with Huawei, ZTE, TP-Link and CData OLTs/ONTs.',
           'Led the configuration and operation of core network devices (BGP routers, switches, OLTs) plus IP telephony (VoIP) and IPTV services.',
           'Led technical documentation efforts and mentored support technicians on MikroTik, Ubiquiti and major-vendor GPON equipment.',
-          'Conducted network and infrastructure audits for client companies, assessing equipment, topology and security posture to identify gaps and recommend improvements.'
+          'Conducted network and infrastructure audits for client companies, assessing equipment, topology and security posture to identify gaps and recommend improvements.',
+          'Designed and operated CGNAT (Carrier-Grade NAT) solutions for ISP address management — configuring port block allocations to expose client network services while conserving public IPv4 resources.'
         ]
       },
       { title: 'Network Administrator & Researcher — Information Security Group (SISSI)', company: 'ITM — Instituto Tecnológico Metropolitano', location: 'On-site & Remote · Medellín, Colombia', period: 'Aug 2016 — Oct 2021 · 5y 3m',
@@ -690,17 +699,19 @@ const I18N = {
     ],
     stack: [
       ['cloud', 'AWS (Solutions Architect Associate, Cloud Practitioner), GCP, Azure, CIVO, Equinix Metal, DigitalOcean; arquitecturas híbridas, privadas y públicas'],
-      ['kubernetes', 'KCNA (CNCF), Cilium (CNI eBPF), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, ciclo de vida de clúster, backups de etcd'],
+      ['kubernetes', 'KCNA (CNCF), Talos Linux, Cilium (CNI eBPF), Rook Ceph, Velero, KubeVirt, Helm, ingress controllers, service mesh, load balancers, Telepresence, ciclo de vida de clúster, backups de etcd'],
       ['contenedores', 'Docker, Docker Compose, containerd, builds multi-stage'],
-      ['virtualización', 'KVM, Proxmox, VMware, KubeVirt, Apache CloudStack'],
-      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, aprovisionamiento PXE'],
+      ['virtualización', 'KVM, Proxmox, VMware vCenter, KubeVirt, OpenStack, Apache CloudStack'],
+      ['iac', 'Terraform, Ansible, CloudFormation, cloud-init, aprovisionamiento PXE, MAAS (Canonical), Tinkerbell, Seeder Harvester'],
       ['ci/cd', 'Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy, blue/green, canary, migraciones sin downtime'],
       ['control versiones', 'GitHub, GitLab, Bitbucket, flujos Git'],
       ['atlassian', 'Jira, Confluence, higiene de tickets, documentación técnica'],
-      ['observabilidad', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry'],
-      ['seguridad', 'Firewalls, UTM, WAF, VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), GitGuardian, SSL/TLS, hardening de IAM, auditorías, Cisco Cybersecurity Essentials'],
-      ['almacenamiento & dr/drp', 'Rook Ceph, RAID, clustering, backups programados, Velero, recuperación ante desastres (DR), planificación de recuperación ante desastres (DRP), multi-región'],
-      ['networking', 'BGP, OSPF, IPv4/IPv6, pila OSI completa, Wireshark, tcpdump, MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
+      ['observabilidad', 'Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry, AlertManager (Slack · Teams · PagerDuty)'],
+      ['seguridad', 'Firewalls, UTM, WAF (Cloudflare), VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/auditorías), Trivy, Kube-bench, GitGuardian, SSL/TLS, hardening de IAM, Cisco Cybersecurity Essentials'],
+      ['cumplimiento', 'Vanta (SOC 2, postura de seguridad, cumplimiento continuo, automatización de evidencias)'],
+      ['almacenamiento & dr/drp', 'Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (objetos y bloques), RAID, clustering, backups programados, Velero, recuperación ante desastres (DR), planificación de recuperación ante desastres (DRP), multi-región'],
+      ['self-hosted', 'Nextcloud (instalación, configuración y administración)'],
+      ['networking', 'BGP, OSPF, IPv4/IPv6, DNS/DNSSEC/DoH/DoT, pila OSI completa, Wireshark, tcpdump, Netris (fabric de red), MikroTik (MTCNA · MTCTCE · MTCSE · MTCIPv6E), Cisco CCNA, Ubiquiti UniFi'],
       ['wireless', 'Wi-Fi empresarial, MikroTik Hotspot, CCTV / videovigilancia IP'],
       ['telco', 'Funciones núcleo 5G sobre Kubernetes, unikernels Unikraft, GPON (Huawei, ZTE, TP-Link, CData), IPTV, telefonía IP (Asterisk, Elastix, Issabel)'],
       ['bases de datos', 'PostgreSQL, MySQL, SQL Server, Amazon Aurora (administración, backups, rendimiento)'],
@@ -712,17 +723,20 @@ const I18N = {
       { title: 'Senior Site Reliability Engineer — Cloud y Seguridad', company: 'Cuemby', location: 'Remoto · empresa basada en EE.UU.', period: 'Abr 2023 — Presente · 3a 2m',
         bullets: [
           'Lidero la arquitectura y operación de plataformas de nube híbrida — pública (AWS, GCP, Azure, CIVO, Equinix Metal), nube privada y baremetal on-premise — tomando decisiones sobre aprovisionamiento, diseño de red, observabilidad, seguridad y respuesta a incidentes.',
-          'Lidero cargas avanzadas de Kubernetes en producción: networking con Cilium (eBPF), almacenamiento distribuido con Rook Ceph, backups, DR y DRP con Velero, ingress y service mesh, ciclo de vida de clúster y hardening de seguridad.',
+          'Lidero cargas avanzadas de Kubernetes en producción en múltiples distribuciones incluyendo Talos Linux: networking con Cilium (eBPF), almacenamiento distribuido con Rook Ceph, backups, DR y DRP con Velero, ingress, service mesh y load balancers, ciclo de vida de clúster y hardening de seguridad.',
           'Despliegue de funciones de núcleo 5G y red celular sobre Kubernetes a escala de producción, ejecutando funciones de red contenerizadas (CNFs) para cargas de alto rendimiento.',
           'Optimización cloud-native en el borde con unikernels Unikraft — empaquetando y desplegando aplicaciones serverless como VMs livianas y de propósito único para máximo rendimiento en el edge.',
-          'Lidero la estrategia de virtualización moderna (KubeVirt sobre Kubernetes) y tradicional (KVM, Proxmox, VMware, Apache CloudStack); diseñé y automaticé pipelines de instalación baremetal entre centros de datos.',
-          'Construí módulos reutilizables de IaC con Terraform, CloudFormation y Ansible, y construí pipelines de CI/CD (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — incluyendo rollback y despliegues blue/green; apliqué buenas prácticas de Git con GitHub y GitLab para versionado, revisión de código y control de cambios en todos los repositorios de IaC.',
+          'Lidero la estrategia de virtualización moderna (KubeVirt, OpenStack) y tradicional (KVM, Proxmox, VMware, Apache CloudStack); diseñé y automaticé pipelines de instalación baremetal e instalación masiva de sistemas operativos con MAAS (Canonical), Tinkerbell y Seeder Harvester entre centros de datos.',
+          'Construí módulos reutilizables de IaC con Terraform, CloudFormation y Ansible, y construí pipelines de CI/CD (Jenkins, GitHub Actions, AWS CodePipeline/CodeBuild) — incluyendo rollback y despliegues blue/green; apliqué buenas prácticas de Git con GitHub y GitLab para versionado, revisión de código y control de cambios en todos los repositorios de IaC; mantuve documentación técnica mediante GitHub Issues y Projects, y elaboré matrices DOFA para decisiones de infraestructura.',
           'Automaticé flujos operativos y de infraestructura con Ansible en despliegues multi-entorno; realicé un proyecto de automatización con Kubernetes para la Fuerza Aérea Colombiana (FAC), abarcando pipelines de despliegue y gestión del ciclo de vida de clústeres.',
           'Desarrollé scripts en Python y Bash para automatizar tareas rutinarias en Linux — reduciendo trabajo manual y mejorando la consistencia operativa entre entornos.',
-          'Diseño la estrategia de resiliencia de datos — almacenamiento distribuido (Ceph), clustering, RAID, backups programados y planes de DR/DRP multi-región.',
-          'Lidero la estrategia de observabilidad — métricas (Prometheus, Grafana), logs (Loki), trazas (OpenTelemetry, Jaeger, Tempo) — y conduzco el análisis de causa raíz de incidentes en producción.',
-          'Impulso prácticas DevSecOps: auditorías de seguridad, SSL/TLS, hardening de IAM, escaneo de secretos (GitGuardian), escaneo de vulnerabilidades, detección de puertos expuestos y seguridad de imágenes de contenedores en repositorios y entornos de producción.',
+          'Diseño la estrategia de resiliencia de datos — almacenamiento distribuido y definido por software (Rook Ceph, TrueNAS, OpenEBS, Mayastor), almacenamiento de objetos y bloques con MinIO, clustering, RAID, backups programados y planes de DR/DRP multi-región.',
+          'Lidero la estrategia de observabilidad — métricas (Prometheus, Grafana), logs (Loki), trazas (OpenTelemetry, Jaeger, Tempo), alertas (AlertManager → Slack, Teams, PagerDuty) — y conduzco el análisis de causa raíz de incidentes en producción.',
+          'Impulso prácticas DevSecOps: auditorías internas de seguridad (Wazuh), SSL/TLS, hardening de IAM, escaneo de secretos (GitGuardian), escaneo de vulnerabilidades en contenedores (Trivy), benchmarking de seguridad Kubernetes (Kube-bench), WAF y CDN con Cloudflare, detección de puertos expuestos y seguridad de imágenes de contenedores en repositorios y entornos de producción.',
           'Integro herramientas de IA (Claude Code, ChatGPT) con prompt engineering estructurado en runbooks, revisiones de IaC y postmortems; lidero negociaciones de arquitectura e incidentes en vivo con clientes en EE.UU. como contacto técnico bilingüe (EN/ES).',
+          'Implementé Vanta para automatización de cumplimiento normativo — centralizando controles de seguridad, recopilación de evidencias y monitoreo continuo de cumplimiento en toda la infraestructura.',
+          'Gestioné automatización de fabric de red y BGP con Netris en despliegues baremetal sobre Equinix Metal; configuré y operé load balancers para entornos Kubernetes y on-premise.',
+          'Desplegué Telepresence para acceso remoto de desarrolladores a clústeres de Kubernetes en producción; instalé, configuré y administré Nextcloud como plataforma de colaboración y almacenamiento de archivos self-hosted.',
           'Contribuí al desarrollo de un marketplace interno con las herramientas más usadas por la comunidad y despliegue en un clic — incluyendo n8n, OpenClaw, MySQL, PostgreSQL, WordPress, entre otras — permitiendo a los clientes desplegar aplicaciones listas para producción de forma inmediata en la plataforma.',
           'Produje videotutoriales de instalación y configuración de aplicaciones del marketplace — incluyendo herramientas de IA (n8n, OpenClaw), WordPress, MySQL y otras — para guiar a los clientes en el despliegue y configuración de aplicaciones en la plataforma.'
         ]
@@ -733,7 +747,8 @@ const I18N = {
           'Lideré migración y optimización de infraestructura legacy a AWS, enfocado en costo, resiliencia y seguridad.',
           'Administración de bases de datos PostgreSQL, MySQL, SQL Server y Amazon Aurora.',
           'Realicé auditorías de infraestructura y seguridad a empresas clientes, identificando vulnerabilidades y entregando planes de remediación accionables.',
-          'Apliqué buenas prácticas de control de versiones con GitHub y GitLab para repositorios de Ansible y Terraform — estableciendo estrategias de branching, flujos de revisión de código y trazabilidad de cambios.'
+          'Apliqué buenas prácticas de control de versiones con GitHub y GitLab para repositorios de Ansible y Terraform — estableciendo estrategias de branching, flujos de revisión de código y trazabilidad de cambios.',
+          'Diseñé e implementé estrategias de backup y recuperación ante desastres (DR) para cargas de trabajo cloud de clientes — incluyendo backups programados, restauración a punto en el tiempo y planificación de resiliencia multi-región.'
         ]
       },
       { title: 'Ingeniero de Infraestructura', company: 'Smart Town SAS', location: 'Remoto', period: '2019 — Presente · ~7a · freelance',
@@ -741,7 +756,8 @@ const I18N = {
           'Diseño, despliegue y administración del stack tecnológico completo del ISP — redes dual-stack IPv4/IPv6, hardening de seguridad y operación diaria de la infraestructura del proveedor de servicios.',
           'Administración de infraestructura de fibra óptica GPON para despliegues FTTH — aprovisionamiento de OLTs/ONTs, resolución de fallas y planificación de capacidad.',
           'Diseño y operación de redes de radioenlaces para distribución y conectividad de última milla.',
-          'Asesoría técnica a empresas clientes en arquitectura de red, modernización de infraestructura ISP y postura de seguridad.'
+          'Asesoría técnica a empresas clientes en arquitectura de red, modernización de infraestructura ISP y postura de seguridad.',
+          'Desplegué y administré un servidor DNS con validación DNSSEC y protocolos de resolución con privacidad mejorada — DNS sobre HTTPS (DoH) y DNS sobre TLS (DoT) — para la infraestructura del ISP.'
         ]
       },
       { title: 'Infrastructure Engineer', company: 'TikAcademy', location: 'Remoto', period: 'Mar 2021 — Dic 2023 · 2a 9m · por proyectos',
@@ -761,7 +777,8 @@ const I18N = {
         bullets: [
           'Diseño de redes cableadas, Wi-Fi empresarial y sistemas de CCTV / videovigilancia IP para hoteles y clientes corporativos.',
           'Despliegue y operación de entornos a escala MSP con MikroTik, UniFi, Cisco y PBX Elastix/Issabel (VoIP).',
-          'Capacitación interna a técnicos en configuración de dispositivos de red y buenas prácticas.'
+          'Capacitación interna a técnicos en configuración de dispositivos de red y buenas prácticas.',
+          'Administré entornos VMware vCenter — realizando migraciones de máquinas virtuales, actualizaciones de infraestructura y configuración de backups para cargas de trabajo virtualizadas.'
         ]
       },
       { title: 'Coordinador de Soporte TI', company: 'PEG Soluciones – Teltic', location: 'Presencial y Remoto · Antioquia, Colombia', period: 'Ago 2016 — Dic 2021 · 5a 5m',
@@ -769,7 +786,8 @@ const I18N = {
           'Lideré el diseño físico y lógico de redes de telecomunicaciones para clientes ISP, incluyendo despliegues GPON con Huawei, ZTE, TP-Link y CData (OLTs/ONTs).',
           'Lideré la configuración y operación de equipos core de red (routers BGP, switches, OLTs) más servicios de VoIP e IPTV.',
           'Lideré la generación de documentación técnica y runbooks de procesos, y mentoricé a técnicos de soporte.',
-          'Realicé auditorías de red e infraestructura a empresas clientes, evaluando equipos, topología y postura de seguridad para identificar brechas y recomendar mejoras.'
+          'Realicé auditorías de red e infraestructura a empresas clientes, evaluando equipos, topología y postura de seguridad para identificar brechas y recomendar mejoras.',
+          'Diseñé y operé soluciones CGNAT (Carrier-Grade NAT) para la gestión de direcciones IP del ISP — configurando asignación de bloques de puertos para exponer servicios de red de clientes preservando el espacio de IPv4 público.'
         ]
       },
       { title: 'Administrador de Red e Investigador — Semillero de Seguridad (SISSI)', company: 'ITM — Instituto Tecnológico Metropolitano', location: 'Presencial y Remoto · Medellín, Colombia', period: 'Ago 2016 — Oct 2021 · 5a 3m',
