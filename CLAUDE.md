@@ -35,27 +35,38 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Avoid literal translations in ES — adapt naturally
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
-- Security skills include: Firewalls, UTM, WAF (Cloudflare), VPNs (site-to-site, client-to-site, IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/audits), Trivy, Kube-bench, GitGuardian, SSL/TLS, IAM hardening, Cisco Cybersecurity Essentials
-- Storage skills include: Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (object & block storage), Velero, DR/DRP
-- Compliance: Vanta (SOC 2, continuous compliance)
-- Baremetal provisioning: MAAS (Canonical), Tinkerbell, Seeder Harvester
-- Kubernetes distributions: Talos Linux; networking with Netris; remote dev with Telepresence
-- Self-hosted: Nextcloud
-- Virtualization: OpenStack added (alongside KVM, Proxmox, VMware vCenter, Apache CloudStack)
-- Alerting: AlertManager → Slack, Teams, PagerDuty
-- DNS: DNSSEC, DoH, DoT (Smart Town SAS)
-- CGNAT experience at PEG Soluciones
+
+## Technical skills reference (for accurate CV updates)
+
+| Area | Tools / Technologies |
+|------|---------------------|
+| Cloud | AWS (SAA-C03, CLF), GCP, Azure, CIVO, Equinix Metal, DigitalOcean |
+| Kubernetes | Talos Linux, Cilium (eBPF), Rook Ceph, Velero, KubeVirt, Helm, ingress, service mesh, load balancers, Telepresence, etcd |
+| Virtualization | KVM, Proxmox, VMware vCenter, OpenStack, KubeVirt, Apache CloudStack |
+| Baremetal provisioning | MAAS (Canonical), Tinkerbell, Seeder Harvester, PXE, cloud-init |
+| IaC / Automation | Terraform, Ansible, CloudFormation, ArgoCD, GitOps, Walrus, Sveltos |
+| CI/CD | Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy |
+| Observability | Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry, AlertManager (→ Slack, Teams, PagerDuty) |
+| Security | Firewalls, UTM, WAF (Cloudflare), VPNs (IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/audits), Trivy, Kube-bench, GitGuardian, SSL/TLS, IAM hardening, Cisco Cybersecurity Essentials |
+| Compliance | Vanta (SOC 2, continuous compliance, evidence automation) |
+| Storage & DR | Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (object & block), RAID, Velero, DR/DRP multi-region |
+| Self-hosted | Nextcloud (installation, configuration, administration) |
+| Networking | BGP, OSPF, IPv4/IPv6, DNS/DNSSEC/DoH/DoT, Netris (network fabric), Wireshark, tcpdump, MikroTik (MTCNA/MTCTCE/MTCSE/MTCIPv6E), Cisco CCNA, Ubiquiti UniFi |
+| Telco | 5G core on K8s, Unikraft unikernels, GPON (Huawei, ZTE, TP-Link, CData), IPTV, Asterisk/Elastix/Issabel |
+| Databases | PostgreSQL, MySQL, SQL Server, Amazon Aurora |
+| Scripting | Python, Bash |
+| AI | Claude Code, ChatGPT, GitHub Copilot, prompt engineering |
 
 ## Experience entries (current order in `index.html`)
 Listed most-recent first; ongoing freelance/project-based entries follow the main job:
 
-| # | EN title | Company | Period | Note |
-|---|----------|---------|--------|------|
-| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | main job — includes marketplace video tutorials bullet (n8n, OpenClaw, WordPress, MySQL, etc.) |
-| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based |
-| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP |
+| # | EN title | Company | Period | Key bullets added / notes |
+|---|----------|---------|--------|--------------------------|
+| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
+| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based; backup & DR strategy bullet |
+| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP; DNS server with DNSSEC, DoH, DoT |
 | 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
 | 5 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
-| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | |
-| 7 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | |
+| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups |
+| 7 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | CGNAT, port block allocation for exposing network services |
 | 8 | Network Administrator & Researcher — SISSI | ITM | Aug 2016 — Oct 2021 | |
