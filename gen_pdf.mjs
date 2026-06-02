@@ -77,20 +77,6 @@ function renderTalks(items) {
     </div>`).join('');
 }
 
-function renderReferences(refs, t) {
-  const group = (title, items) => `
-    <div>
-      <div class="refs-group-title">${title}</div>
-      ${items.map(r => `
-        <div class="ref-item">
-          <div class="ref-name">${r.name}</div>
-          <div class="ref-role">${r.role}</div>
-          <div class="ref-contact">${r.contact}</div>
-        </div>`).join('')}
-    </div>`;
-  return `<div class="refs-grid">${group(t.refsPersonalTitle, refs.personal)}${group(t.refsWorkTitle, refs.professional)}</div>`;
-}
-
 function buildStaticHTML(lang) {
   const t = I18N[lang];
   return `<!DOCTYPE html>
@@ -183,11 +169,6 @@ function buildStaticHTML(lang) {
   <section>
     <h2 class="section-title">${t.secSoft}</h2>
     <div>${renderStack(t.soft)}</div>
-  </section>
-
-  <section>
-    <h2 class="section-title">${t.secRefs}</h2>
-    <div>${renderReferences(t.refs, t)}</div>
   </section>
 
   <footer>

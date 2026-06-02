@@ -281,32 +281,6 @@ section { margin-top: 32px; }
 .talk-event { font-size: 13px; color: #888; margin-bottom: 6px; }
 .talk-desc { font-size: 14px; color: #333; line-height: 1.65; text-align: justify; hyphens: auto; }
 
-/* ── References ── */
-.refs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-@media (max-width: 560px) { .refs-grid { grid-template-columns: 1fr; gap: 24px; } }
-
-.refs-group-title {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #bbb;
-  margin-bottom: 14px;
-}
-.ref-item {
-  padding: 8px 0;
-  border-bottom: 1px solid #f5f5f5;
-  font-size: 14px;
-}
-.ref-item:last-child { border-bottom: none; }
-.ref-name { font-weight: 600; color: #111; margin-bottom: 2px; }
-.ref-role { color: #666; font-size: 13px; margin-bottom: 2px; }
-.ref-contact { color: #888; font-size: 13px; }
-
 /* ── Footer ── */
 footer {
   margin-top: 56px;
@@ -442,11 +416,6 @@ footer a:hover { color: #555; }
     <div id="list-soft"></div>
   </section>
 
-  <section>
-    <h2 class="section-title" id="sec-refs">References</h2>
-    <div id="list-refs"></div>
-  </section>
-
   <footer>
     <span>© 2026 Christian Camilo Gaviria Castro</span>
   </footer>
@@ -469,9 +438,6 @@ const I18N = {
     secHonors: 'Honors & Awards',
     secTalks: 'Talks',
     secSoft: 'Soft Skills',
-    secRefs: 'References',
-    refsPersonalTitle: 'Personal',
-    refsWorkTitle: 'Professional',
     profileText: 'Sr. Site Reliability Engineer and technical leader with 9+ years of experience designing, automating, and scaling cloud-native infrastructure for production environments. Specialized in Kubernetes, AWS, and GNU/Linux, with a strong background in networking, cloud security, and DevOps/DevSecOps practices.<br><br>Currently at <strong>Cuemby</strong>, leading the reliability engineering and platform strategy for a hybrid cloud serving businesses across the Americas — driving high availability, infrastructure automation, and platform observability at scale.<br><br>For 4 years, I led a research group on networking and communications security at ITM (Instituto Tecnológico Metropolitano), building a deep technical foundation and a passion for knowledge sharing and mentorship that I bring to every team I work with.',
     achievements: [
       'Architect and operate production hybrid cloud at US-based Cuemby — public (AWS, GCP, Azure, CIVO, Equinix Metal), private cloud and on-premise baremetal; incident response with bilingual EN/ES client liaison.',
@@ -642,18 +608,6 @@ const I18N = {
         desc: 'Talk on containerization with Docker and cloud fundamentals for the open source community at the Latin American Free Software Installation Festival.'
       }
     ],
-    refs: {
-      personal: [
-        { name: 'Cristian Barrientos Montoya', role: 'Software Architecture Manager', contact: '+57 300 358 7861 · Medellín' },
-        { name: 'Martín Elías Quintero Osorio', role: 'Systems Engineer · Co-founder & CTO, Guane Enterprises', contact: '+57 300 373 4413 · Medellín' },
-        { name: 'Héctor Alejandro Gaviria Marín', role: 'Jr. Database Analyst', contact: '+57 313 517 4371 · Medellín' }
-      ],
-      professional: [
-        { name: 'Jonathan Harrys García', role: 'Computer Engineer · Network Security Specialist', contact: '+57 312 297 8448 · Medellín' },
-        { name: 'Javier Mauricio Durán', role: 'Telecommunications Engineer · MSc in ICT & Information Security Specialist', contact: '+57 319 253 8052 · Medellín' },
-        { name: 'Pedro Enrique Guerrero Zuluaga', role: 'Electronic Engineer · MSc in ICT', contact: '+57 301 496 5979 · Medellín' }
-      ]
-    }
   },
 
   es: {
@@ -670,9 +624,6 @@ const I18N = {
     secHonors: 'Reconocimientos',
     secTalks: 'Charlas',
     secSoft: 'Habilidades Blandas',
-    secRefs: 'Referencias',
-    refsPersonalTitle: 'Personales',
-    refsWorkTitle: 'Laborales',
     profileText: 'Senior Site Reliability Engineer y líder técnico con más de 9 años de experiencia diseñando, automatizando y escalando infraestructura cloud-native para entornos de producción. Especializado en Kubernetes, AWS y GNU/Linux, con sólida base en redes, seguridad cloud y prácticas DevOps/DevSecOps.<br><br>Actualmente en <strong>Cuemby</strong>, liderando la ingeniería de confiabilidad y la estrategia de plataforma de una nube híbrida que sirve a empresas en todo el continente americano — impulsando alta disponibilidad, automatización de infraestructura y observabilidad a escala.<br><br>Durante 4 años lideré un semillero de investigación en seguridad de redes y comunicaciones en el ITM (Instituto Tecnológico Metropolitano), construyendo una base técnica sólida y una pasión por compartir conocimiento y la mentoría que llevo a cada equipo con el que trabajo.',
     achievements: [
       'Diseño y opero nube híbrida en producción en Cuemby (EE.UU.) — pública (AWS, GCP, Azure, CIVO, Equinix Metal), nube privada y baremetal on-premise; respuesta a incidentes con enlace bilingüe EN/ES.',
@@ -843,40 +794,8 @@ const I18N = {
         desc: 'Charla sobre contenedorización con Docker y fundamentos de cloud para la comunidad de software libre en el Festival Latinoamericano de Instalación de Software Libre.'
       }
     ],
-    refs: {
-      personal: [
-        { name: 'Cristian Barrientos Montoya', role: 'Gerente de arquitectura de software', contact: '+57 300 358 7861 · Medellín' },
-        { name: 'Martín Elías Quintero Osorio', role: 'Ingeniero de sistemas · Cofundador y CTO en Guane Enterprises', contact: '+57 300 373 4413 · Medellín' },
-        { name: 'Héctor Alejandro Gaviria Marín', role: 'Analista JR de base de datos', contact: '+57 313 517 4371 · Medellín' }
-      ],
-      professional: [
-        { name: 'Jonathan Harrys García', role: 'Ingeniero informático · Especialista en seguridad de redes', contact: '+57 312 297 8448 · Medellín' },
-        { name: 'Javier Mauricio Durán', role: 'Ingeniero de telecomunicaciones · Magíster en TIC y especialista en seguridad informática', contact: '+57 319 253 8052 · Medellín' },
-        { name: 'Pedro Enrique Guerrero Zuluaga', role: 'Ingeniero electrónico · Magíster en TIC', contact: '+57 301 496 5979 · Medellín' }
-      ]
-    }
   }
 };
-
-function renderReferences(refs, t) {
-  function group(title, items) {
-    return `
-      <div>
-        <div class="refs-group-title">${title}</div>
-        ${items.map(r => `
-          <div class="ref-item">
-            <div class="ref-name">${r.name}</div>
-            <div class="ref-role">${r.role}</div>
-            <div class="ref-contact">${r.contact}</div>
-          </div>
-        `).join('')}
-      </div>`;
-  }
-  return `<div class="refs-grid">
-    ${group(t.refsPersonalTitle, refs.personal)}
-    ${group(t.refsWorkTitle, refs.professional)}
-  </div>`;
-}
 
 function renderTalks(items) {
   return items.map(t => `
@@ -956,7 +875,6 @@ function applyLang(lang) {
   document.getElementById('sec-honors').innerHTML = t.secHonors;
   document.getElementById('sec-talks').textContent = t.secTalks;
   document.getElementById('sec-soft').textContent = t.secSoft;
-  document.getElementById('sec-refs').textContent = t.secRefs;
 
   document.getElementById('profile-text').innerHTML = t.profileText;
   document.getElementById('list-achievements').innerHTML = renderAchievements(t.achievements);
@@ -969,7 +887,6 @@ function applyLang(lang) {
   document.getElementById('list-honors').innerHTML = renderAchievements(t.honors);
   document.getElementById('list-talks').innerHTML = renderTalks(t.talks);
   document.getElementById('list-soft').innerHTML = renderStack(t.soft);
-  document.getElementById('list-refs').innerHTML = renderReferences(t.refs, t);
 
   document.getElementById('html-root').lang = lang;
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
