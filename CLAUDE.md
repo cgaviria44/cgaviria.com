@@ -6,7 +6,7 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 ## Structure
 - `index.html` — single file with all CV content inside the `I18N` JS object (two keys: `en` and `es`)
 - `cv_en.pdf` / `cv_es.pdf` — downloadable PDFs, must always match the HTML
-- `gen_pdf.mjs` — Node.js script to regenerate PDFs from the HTML. **Has its own hardcoded header template** (not read from `index.html`) — any change to the header in `index.html` must also be applied manually in `gen_pdf.mjs` (`buildStaticHTML` function, lines ~113–121)
+- `gen_pdf.mjs` — Node.js script to regenerate PDFs from the HTML. **Has its own hardcoded header template** (not read from `index.html`) — any change to the header in `index.html` must also be applied manually in `gen_pdf.mjs` (`buildStaticHTML` function, lines ~94–110). The `cv-title` div IS dynamic (`${t.title}`), so header keyword changes only need updating in the I18N `title` fields.
 - `cover-letter.html` — cover letter (separate file)
 
 ## Workflow: making changes
@@ -35,6 +35,8 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Avoid literal translations in ES — adapt naturally
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
+- **References section removed** — not standard for US market; available on request
+- **Header title (same for EN and ES):** `Sr. Cloud & Security Reliability Engineer & Technical Leader · DevSecOps · Kubernetes · AWS · Cloud-Native · Linux · Windows · Platform Engineering · GitOps · Terraform · IPv6`
 
 ## Technical skills reference (for accurate CV updates)
 
@@ -47,6 +49,7 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 | IaC / Automation | Terraform, Ansible, CloudFormation, ArgoCD, GitOps, Walrus, Sveltos |
 | CI/CD | Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy |
 | Observability | Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry, AlertManager (→ Slack, Teams, PagerDuty) |
+| Windows / Microsoft | Windows Server, Active Directory, DNS, GPOs, disk quotas, remote access (RDP/VPN), AD migrations, Entra ID (Azure AD), Microsoft Security, firewall, hardening |
 | Security | Firewalls, UTM, WAF (Cloudflare), VPNs (IPsec, WireGuard, OpenVPN, Tailscale, mesh), Wazuh (SIEM/audits), Trivy, Kube-bench, GitGuardian, SSL/TLS, IAM hardening, Cisco Cybersecurity Essentials |
 | Compliance | Vanta (SOC 2, continuous compliance, evidence automation) |
 | Storage & DR | Rook Ceph, TrueNAS, OpenEBS, Mayastor, MinIO (object & block), RAID, Velero, DR/DRP multi-region |
@@ -62,11 +65,11 @@ Listed most-recent first; ongoing freelance/project-based entries follow the mai
 
 | # | EN title | Company | Period | Key bullets added / notes |
 |---|----------|---------|--------|--------------------------|
-| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — Present | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
+| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — May 2026 (**finished**) | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
 | 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based; backup & DR strategy bullet |
 | 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP; DNS server with DNSSEC, DoH, DoT |
 | 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
 | 5 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
-| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups |
+| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups; Windows Server, AD, DNS, GPOs, disk quotas, remote access, AD migrations, Entra ID, Microsoft Security, firewall, hardening |
 | 7 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | CGNAT, port block allocation for exposing network services |
 | 8 | Network Administrator & Researcher — SISSI | ITM | Aug 2016 — Oct 2021 | |
