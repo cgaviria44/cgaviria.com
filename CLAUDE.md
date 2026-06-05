@@ -66,8 +66,8 @@ Listed most-recent first; ongoing freelance/project-based entries follow the mai
 | # | EN title | Company | Period | Key bullets added / notes |
 |---|----------|---------|--------|--------------------------|
 | 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — May 2026 (**finished**) | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
-| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Present | project-based; backup & DR strategy bullet |
-| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Present | freelance ISP; DNS server with DNSSEC, DoH, DoT |
+| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Dec 2025 (**finished**) | project-based; backup & DR strategy bullet |
+| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Dec 2025 (**finished**) | freelance ISP; DNS server with DNSSEC, DoH, DoT |
 | 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
 | 5 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
 | 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups; Windows Server, AD, DNS, GPOs, disk quotas, remote access, AD migrations, Entra ID, Microsoft Security, firewall, hardening |
