@@ -7,7 +7,9 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - `index.html` — single file with all CV content inside the `I18N` JS object (two keys: `en` and `es`)
 - `cv_en.pdf` / `cv_es.pdf` — downloadable PDFs, must always match the HTML
 - `gen_pdf.mjs` — Node.js script to regenerate PDFs from the HTML. **Has its own hardcoded header template** (not read from `index.html`) — any change to the header in `index.html` must also be applied manually in `gen_pdf.mjs` (`buildStaticHTML` function, lines ~94–110). The `cv-title` div IS dynamic (`${t.title}`), so header keyword changes only need updating in the I18N `title` fields.
-- `cover-letter.html` — cover letter (separate file)
+- `cover-letter.html` — cover letter (separate file, bilingual EN/ES via its own `I18N` object). **Generic / not company-specific** — no recipient company named, subject is a generic "Cover Letter — Sr. Site Reliability / Cloud & Security Engineer", and the body presents Cuemby as the **most recent (past)** role, not a current one.
+- `cover-letter_en.pdf` / `cover-letter_es.pdf` — downloadable cover letter PDFs, must match `cover-letter.html`
+- `gen_cover_pdf.mjs` — Node.js script (mirrors `gen_pdf.mjs`) to regenerate the cover letter PDFs from `cover-letter.html`
 
 ## Workflow: making changes
 **Every change must be applied to BOTH `en` and `es` blocks in `index.html`, then PDFs must be regenerated.**
@@ -24,6 +26,15 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 - Chrome flags: `--print-to-pdf-no-header --no-pdf-header-footer` to suppress URL footer
 - `gen_pdf.mjs` reads `index.html`, extracts I18N, renders both languages to `/tmp/cv_en_static.html` and `/tmp/cv_es_static.html`, then generates PDFs
 
+### If Node.js is NOT installed (no `node` on PATH)
+The `.mjs` scripts can't run. Regenerate PDFs with Chrome + Python instead (Chrome and `python3` are available):
+- **CV** (`cv_en.pdf` / `cv_es.pdf`): let Chrome execute the page JS and dump the rendered DOM, then print that. For each `lang` in `en`/`es`:
+  1. `chrome --headless=new --no-sandbox --virtual-time-budget=8000 --dump-dom "file://$PWD/index.html?lang=$lang" > /tmp/cv_${lang}_dump.html`
+  2. With Python, strip `<script>…</script>` (so print won't re-render) and replace `src="photo.jpg"` with an absolute `file://` path → `/tmp/cv_${lang}_render.html`
+  3. `chrome --headless=new --no-sandbox --print-to-pdf="cv_${lang}.pdf" --print-to-pdf-no-header --no-pdf-header-footer "file:///tmp/cv_${lang}_render.html"`
+  4. Sanity-check: page count must stay **8** (compare `git show HEAD:cv_en.pdf`). The `.lang-switch`/`.cv-actions` UI is hidden by `@media print`, so it won't appear.
+- **Cover letter** (`cover-letter_en.pdf` / `cover-letter_es.pdf`): a Python script extracts the CSS + I18N fields straight from `cover-letter.html`, builds `/tmp/cover-letter_${lang}_static.html`, then Chrome prints with the same flags.
+
 ## Git
 - Branch: `main`
 - Remote: https://github.com/cgaviria44/cgaviria.com.git
@@ -33,6 +44,7 @@ Bilingual CV site (EN/ES) for Christian Camilo Gaviria Castro, deployed on Cloud
 ## CV content guidelines
 - Keep EN and ES in sync — every change in one language must be mirrored in the other
 - Avoid literal translations in ES — adapt naturally
+- **Years of experience: 10+ years** — used in the CV profile (`profileText`, EN/ES) and the cover letter body ("over 10 years" / "más de 10 años"); keep all four in sync
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
 - **References section removed** — not standard for US market; available on request
