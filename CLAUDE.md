@@ -32,7 +32,7 @@ The `.mjs` scripts can't run. Regenerate PDFs with Chrome + Python instead (Chro
   1. `chrome --headless=new --no-sandbox --virtual-time-budget=8000 --dump-dom "file://$PWD/index.html?lang=$lang" > /tmp/cv_${lang}_dump.html`
   2. With Python, strip `<script>…</script>` (so print won't re-render) and replace `src="photo.jpg"` with an absolute `file://` path → `/tmp/cv_${lang}_render.html`
   3. `chrome --headless=new --no-sandbox --print-to-pdf="cv_${lang}.pdf" --print-to-pdf-no-header --no-pdf-header-footer "file:///tmp/cv_${lang}_render.html"`
-  4. Sanity-check: page count must stay **8** (compare `git show HEAD:cv_en.pdf`). The `.lang-switch`/`.cv-actions` UI is hidden by `@media print`, so it won't appear.
+  4. Sanity-check: page count is currently **9** (compare `git show HEAD:cv_en.pdf`). The `.lang-switch`/`.cv-actions` UI is hidden by `@media print`, so it won't appear.
 - **Cover letter** (`cover-letter_en.pdf` / `cover-letter_es.pdf`): a Python script extracts the CSS + I18N fields straight from `cover-letter.html`, builds `/tmp/cover-letter_${lang}_static.html`, then Chrome prints with the same flags.
 
 ## Git
@@ -44,6 +44,7 @@ The `.mjs` scripts can't run. Regenerate PDFs with Chrome + Python instead (Chro
 ## CV content guidelines
 - Keep EN and ES in sync — every change in one language must be mirrored in the other
 - Avoid literal translations in ES — adapt naturally
+- **Current role: GFT Technologies** (Cloud Specialist / Cloud Engineer, DevOps team, since Jul 2026, Hybrid · Medellín, on the "Garantías y Cartera" financial-services initiative). The `profileText` (EN/ES) must lead with GFT as the **current** role and present **Cuemby** as the **previous** role. Keep both languages in sync.
 - **Years of experience: 10+ years** — used in the CV profile (`profileText`, EN/ES) and the cover letter body ("over 10 years" / "más de 10 años"); keep all four in sync
 - Salary expectation: $15,000,000 COP/month with all legal benefits
 - English level: B2 Upper Intermediate — EF SET certificate 59/100, awarded 2026-05-27 (https://cert.efset.org/es/XndquY)
@@ -58,7 +59,7 @@ The `.mjs` scripts can't run. Regenerate PDFs with Chrome + Python instead (Chro
 | Kubernetes | Talos Linux, Cilium (eBPF), Rook Ceph, Velero, KubeVirt, Helm, ingress, service mesh, load balancers, Telepresence, etcd |
 | Virtualization | KVM, Proxmox, VMware vCenter, OpenStack, KubeVirt, Apache CloudStack |
 | Baremetal provisioning | MAAS (Canonical), Tinkerbell, Seeder Harvester, PXE, cloud-init |
-| IaC / Automation | Terraform, Ansible, CloudFormation, ArgoCD, GitOps, Walrus, Sveltos |
+| IaC / Automation | Terraform, OpenTofu, Terragrunt, Ansible, CloudFormation, ArgoCD, GitOps, Walrus, Sveltos |
 | CI/CD | Jenkins, GitHub Actions, GitLab CI, AWS CodePipeline/CodeBuild/CodeDeploy |
 | Observability | Prometheus, Grafana, Loki, Jaeger, Tempo, OpenTelemetry, AlertManager (→ Slack, Teams, PagerDuty) |
 | Windows / Microsoft | Windows Server, Active Directory, DNS, GPOs, disk quotas, remote access (RDP/VPN), AD migrations, Entra ID (Azure AD), Microsoft Security, firewall, hardening |
@@ -77,11 +78,12 @@ Listed most-recent first; ongoing freelance/project-based entries follow the mai
 
 | # | EN title | Company | Period | Key bullets added / notes |
 |---|----------|---------|--------|--------------------------|
-| 1 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — May 2026 (**finished**) | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
-| 2 | Cloud Engineer | Negocios NEX | Oct 2019 — Dec 2025 (**finished**) | project-based; backup & DR strategy bullet |
-| 3 | Infrastructure Engineer | Smart Town SAS | 2019 — Dec 2025 (**finished**) | freelance ISP; DNS server with DNSSEC, DoH, DoT |
-| 4 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
-| 5 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
-| 6 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups; Windows Server, AD, DNS, GPOs, disk quotas, remote access, AD migrations, Entra ID, Microsoft Security, firewall, hardening |
-| 7 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | CGNAT, port block allocation for exposing network services |
-| 8 | Network Administrator & Researcher — SISSI | ITM | Aug 2016 — Oct 2021 | |
+| 1 | Cloud Specialist / Cloud Engineer — DevOps | GFT Technologies | Jul 2026 — Present (**current role**) | Hybrid · Medellín; DevOps team on the "Garantías y Cartera" (guarantees & loan-portfolio) financial-services initiative. Stack: AWS, Kubernetes, OpenTofu, Terraform, Terragrunt, CI/CD |
+| 2 | Senior Site Reliability Engineer — Cloud & Security | Cuemby | Apr 2023 — May 2026 (**finished**) | Talos Linux, OpenStack, MAAS/Tinkerbell/Harvester, TrueNAS/OpenEBS/Mayastor/MinIO, Wazuh/Trivy/Kube-bench, AlertManager→Slack/Teams/PagerDuty, Vanta, Netris, Telepresence, Nextcloud, GitHub Issues/Projects + DOFA matrices, marketplace video tutorials (n8n, OpenClaw, WordPress, MySQL, etc.) |
+| 3 | Cloud Engineer | Negocios NEX | Oct 2019 — Dec 2025 (**finished**) | project-based; backup & DR strategy bullet |
+| 4 | Infrastructure Engineer | Smart Town SAS | 2019 — Dec 2025 (**finished**) | freelance ISP; DNS server with DNSSEC, DoH, DoT |
+| 5 | Infrastructure Engineer | TikAcademy | Mar 2021 — Dec 2023 | project-based |
+| 6 | Cloud Engineer | Droptek | Jan 2022 — Jul 2023 | |
+| 7 | Sysadmin · Network · Wireless · Cloud Engineer | EJ Soluciones | Sep 2019 — Dec 2021 | VMware vCenter, migrations, backups; Windows Server, AD, DNS, GPOs, disk quotas, remote access, AD migrations, Entra ID, Microsoft Security, firewall, hardening |
+| 8 | IT Support Coordinator | PEG Soluciones – Teltic | Aug 2016 — Dec 2021 | CGNAT, port block allocation for exposing network services |
+| 9 | Network Administrator & Researcher — SISSI | ITM | Aug 2016 — Oct 2021 | |
