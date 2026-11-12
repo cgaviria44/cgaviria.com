@@ -8,7 +8,7 @@
 #   docker   Docker CE (repo oficial)
 #   tailscale  Tailscale (repo oficial)
 #   claude   Claude Code (instalador nativo, canal estable; el login es manual)
-#   cloudtools  AWS CLI v2, kubectl y k9s (binarios oficiales arm64, con checksum)
+#   cloudtools  AWS CLI v2, session-manager-plugin, kubectl, k9s, gh, yq, croc, mtr y nmap
 #   wireguard  cliente WireGuard (wireguard-tools); importa un .conf a NetworkManager si pasas WG_CONF
 #   network  puente br0 sobre eth0 con IP fija (acceso de emergencia por cable)
 #   chr      MikroTik CHR arm64 en KVM con 2 WAN: cable (ether1) y wifi/NAT (ether2)
@@ -331,7 +331,7 @@ step_claude() {
 
 # ---------- cloudtools ----------
 step_cloudtools() {
-  say "AWS CLI v2, kubectl y k9s"
+  say "Herramientas cloud y de red (aws, ssm, kubectl, k9s, gh, yq, croc, mtr, nmap)"
   local d v; d="$(mktemp -d)"
   if have aws; then ok "ya instalado: $(aws --version 2>&1 | head -1)"; else
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq unzip curl >/dev/null
@@ -355,6 +355,41 @@ step_cloudtools() {
     tar -xzf "$d/k9s_Linux_arm64.tar.gz" -C "$d" k9s
     sudo install -m 0755 "$d/k9s" /usr/local/bin/k9s
     ok "k9s $(k9s version -s 2>/dev/null | awk '/Version/{print $2}')"
+  fi
+  # apt: mtr y nmap (croc si la distro lo trae)
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq mtr-tiny nmap >/dev/null
+  ok "mtr $(mtr --version | awk '{print $2}'), nmap $(nmap --version | awk '/version/{print $3}')"
+  if have session-manager-plugin; then ok "ya instalado: session-manager-plugin"; else
+    curl -fsSL https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb -o "$d/smp.deb" || die "no pude bajar session-manager-plugin"
+    sudo dpkg -i "$d/smp.deb" >/dev/null
+    ok "session-manager-plugin $(session-manager-plugin --version)"
+  fi
+  if have gh; then ok "ya instalado: $(gh --version | head -1)"; else
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=arm64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |
+      sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+    sudo apt-get update -qq
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gh >/dev/null
+    ok "$(gh --version | head -1)"
+  fi
+  if have yq && yq --version 2>&1 | grep -q mikefarah; then ok "ya instalado: $(yq --version)"; else
+    # el paquete 'yq' de apt es otra herramienta (envoltorio de jq): se usa el binario de mikefarah
+    sudo curl -fsSL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64 -o /usr/local/bin/yq || die "no pude bajar yq"
+    sudo chmod 755 /usr/local/bin/yq
+    ok "$(yq --version)"
+  fi
+  if have croc; then ok "ya instalado: $(croc --version)"; else
+    if apt-cache policy croc | grep -q 'Candidate: [0-9]'; then
+      sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq croc >/dev/null
+    else
+      local url; url="$(curl -fsSL https://api.github.com/repos/schollz/croc/releases/latest | jq -r '.assets[]|select(.name|test("Linux-ARM64.tar.gz$"))|.browser_download_url')"
+      [ -n "$url" ] || die "no encontre croc para arm64"
+      curl -fsSL "$url" -o "$d/croc.tgz"; tar -xzf "$d/croc.tgz" -C "$d" croc
+      sudo install -m 0755 "$d/croc" /usr/local/bin/croc
+    fi
+    ok "$(croc --version)"
   fi
   rm -rf "$d"
   warn "credenciales: 'aws configure' y kubeconfig en ~/.kube/config (copialo o usa 'aws eks update-kubeconfig')"
