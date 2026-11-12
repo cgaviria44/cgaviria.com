@@ -17,6 +17,7 @@ cómoda y un **MikroTik CHR arm64** corriendo en KVM con dos WAN.
 | `shell` | `zsh` + oh-my-zsh + [starship](https://starship.rs) + `fzf`, `bat`, `ripgrep`, `fd`, `eza`, `tmux`, `btop` |
 | `docker` | Docker CE desde el repo oficial, con logs acotados |
 | `tailscale` | Tailscale desde el repo oficial; imprime el enlace para autorizar el equipo |
+| `claude` | Claude Code por el instalador nativo, canal **estable** (se actualiza solo); el login es manual con `claude` |
 | `wireguard` | Cliente WireGuard (`wireguard-tools`); importa un `.conf` a NetworkManager **apagado** si pasas `WG_CONF` |
 | `network` | Puente `br0` sobre `eth0` con **IP fija** (acceso de emergencia por cable, sin DHCP server) |
 | `chr` | libvirt/QEMU, redes `wired` y `wifi-nat`, VM **MikroTik CHR** y su aprovisionamiento por consola serie |

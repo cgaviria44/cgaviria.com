@@ -7,6 +7,7 @@
 #   shell    zsh + oh-my-zsh + starship + utilidades de terminal
 #   docker   Docker CE (repo oficial)
 #   tailscale  Tailscale (repo oficial)
+#   claude   Claude Code (instalador nativo, canal estable; el login es manual)
 #   wireguard  cliente WireGuard (wireguard-tools); importa un .conf a NetworkManager si pasas WG_CONF
 #   network  puente br0 sobre eth0 con IP fija (acceso de emergencia por cable)
 #   chr      MikroTik CHR arm64 en KVM con 2 WAN: cable (ether1) y wifi/NAT (ether2)
@@ -35,7 +36,7 @@ WG_CONF="${WG_CONF:-}"                       # ruta a un .conf de WireGuard a im
 PI5_DIR=/etc/pi5                             # secretos root-only (clave de admin de CHR)
 CHR_PWFILE="$PI5_DIR/chr_admin_pass"
 
-STEPS_ALL=(base tuning ssh shell docker tailscale wireguard network chr)
+STEPS_ALL=(base tuning ssh shell docker tailscale claude wireguard network chr)
 
 # ---------- Utilidades ----------
 say()  { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
@@ -312,6 +313,19 @@ step_tailscale() {
     say "Autoriza este dispositivo abriendo el enlace que aparece abajo (espero hasta 10 min)"
     sudo tailscale up --hostname="$TS_HOSTNAME" --timeout=10m ${TS_AUTHKEY:+--auth-key="$TS_AUTHKEY"} || warn "no se completo el login; repite: sudo tailscale up --hostname=$TS_HOSTNAME"
   fi
+}
+
+# ---------- claude ----------
+step_claude() {
+  say "Claude Code (canal estable)"
+  export PATH="$HOME/.local/bin:$PATH"
+  if have claude; then
+    ok "ya instalado: $(claude --version 2>/dev/null | head -1)"
+  else
+    curl -fsSL https://claude.ai/install.sh | bash -s stable >/dev/null || die "no pude instalar Claude Code"
+    ok "Claude Code $(claude --version 2>/dev/null | head -1)"
+  fi
+  warn "inicia sesion una vez: ejecuta 'claude' (la Pi no tiene navegador: abre la URL en tu equipo y pega el codigo)"
 }
 
 # ---------- wireguard ----------
