@@ -270,6 +270,20 @@ Usa `api.ipify.org` / `api6.ipify.org`: `ifconfig.co` devuelve un desafío de Cl
 Para comparar un túnel dudoso, mide el mismo conjunto de pruebas con otro túnel bueno: así sabes si el fallo está
 en la Pi o en el servidor.
 
+## Apagar la Pi correctamente
+
+No cortes la corriente de golpe: el sistema está en una tarjeta SD y CHR corre en una VM KVM.
+
+1. Por SSH: `sudo systemctl poweroff` (equivale a `sudo shutdown -h now`; la sesión se cae sola).
+2. El servicio `chr-graceful` apaga antes CHR con `/system shutdown` por la consola (7-8 s), porque CHR arm64 no
+   responde al apagado ACPI. No uses `virsh destroy` salvo como último recurso.
+3. Espera unos 15-20 s. La Pi 5 queda en `plymouth-poweroff.service` **sin cortar la corriente**: desenchúfala solo
+   cuando el LED verde haya dejado de parpadear (queda fijo el rojo o apagado).
+4. Para encenderla, desenchufa y vuelve a enchufar, o usa el botón de power. CHR y los contenedores con autostart
+   arrancan solos (los detenidos a mano con `docker stop` no).
+
+Comprobar que `chr-graceful` está activo: `systemctl is-enabled chr-graceful`.
+
 ## Probado en
 
 Raspberry Pi 5 (8 GB):
