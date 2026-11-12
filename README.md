@@ -95,6 +95,36 @@ El paso `tailscale` imprime un enlace; ábrelo y aprueba el dispositivo (o pasa 
 Pon el Ethernet del portátil en **IP manual `172.30.77.2`, máscara `255.255.255.0`, sin router**, y entra con
 `ssh usuario@172.30.77.1`. CHR queda en `172.30.77.10`: en Winbox usa *Connect To* `172.30.77.10`.
 
+## Cambiar de red Wi-Fi
+
+La Pi usa NetworkManager: guarda las redes y se reconecta sola a la última disponible. Los perfiles que crea el
+Imager se llaman `netplan-wlan0-NOMBRE_DE_LA_RED`.
+
+```bash
+sudo nmcli dev wifi list                                  # ver redes disponibles (rescan: nmcli dev wifi rescan)
+sudo nmcli dev wifi connect "NOMBRE" password "CLAVE"     # conectar y guardar
+sudo nmcli dev wifi connect "NOMBRE" password "CLAVE" hidden yes   # red con SSID oculto
+nmcli con show                                            # redes guardadas
+sudo nmcli con up "NOMBRE_GUARDADO"                       # cambiar a una guardada
+sudo nmcli con modify "NOMBRE_GUARDADO" connection.autoconnect-priority 10   # preferirla (mayor = antes)
+sudo nmcli con delete "NOMBRE_GUARDADO"                   # olvidar una red
+nmcli -f IN-USE,SSID,SIGNAL dev wifi                      # cuál está en uso (marcada con *) y su señal
+ip -4 -br a show wlan0                                    # IP que recibió
+```
+
+Cosas a tener en cuenta:
+
+- **Cambiar de Wi-Fi por una sesión SSH que va por ese mismo Wi-Fi la corta.** Hazlo por el **cable de emergencia**
+  (`ssh usuario@172.30.77.1`, ver [Portátil por cable](#5-portátil-por-cable)), por Tailscale o desde la consola.
+- **La IP cambia** en cada red nueva (DHCP). Para encontrarla: la IP de Tailscale (`tailscale ip -4` en la Pi, no
+  cambia), `usuario@HOSTNAME.local` (mDNS, si tu red y tu equipo lo permiten) o la lista de clientes del router.
+- **Quedan fuera** las redes con *portal cautivo* (hoteles, aeropuertos: piden iniciar sesión en un navegador) y las
+  empresariales *WPA-Enterprise*; requieren más configuración.
+- El Wi-Fi es la salida a internet de la Pi y también la de la WAN wifi de CHR (NAT de libvirt, que no fija
+  interfaz y sigue la ruta por defecto activa). Debería seguir funcionando al cambiar de red, pero **no está probado**:
+  tras cambiar, comprueba con `sudo chr-console '/ping 1.1.1.1 count=3'`.
+- Los túneles WireGuard no arrancan solos al cambiar de red (ver [WireGuard](#wireguard-cliente)).
+
 ## Variables de entorno
 
 | Variable | Por defecto | Para qué |
