@@ -8,6 +8,7 @@
 #   docker   Docker CE (repo oficial)
 #   tailscale  Tailscale (repo oficial)
 #   claude   Claude Code (instalador nativo, canal estable; el login es manual)
+#   cloudtools  AWS CLI v2, kubectl y k9s (binarios oficiales arm64, con checksum)
 #   wireguard  cliente WireGuard (wireguard-tools); importa un .conf a NetworkManager si pasas WG_CONF
 #   network  puente br0 sobre eth0 con IP fija (acceso de emergencia por cable)
 #   chr      MikroTik CHR arm64 en KVM con 2 WAN: cable (ether1) y wifi/NAT (ether2)
@@ -36,7 +37,7 @@ WG_CONF="${WG_CONF:-}"                       # ruta a un .conf de WireGuard a im
 PI5_DIR=/etc/pi5                             # secretos root-only (clave de admin de CHR)
 CHR_PWFILE="$PI5_DIR/chr_admin_pass"
 
-STEPS_ALL=(base tuning ssh shell docker tailscale claude wireguard network chr)
+STEPS_ALL=(base tuning ssh shell docker tailscale claude cloudtools wireguard network chr)
 
 # ---------- Utilidades ----------
 say()  { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
@@ -326,6 +327,37 @@ step_claude() {
     ok "Claude Code $(claude --version 2>/dev/null | head -1)"
   fi
   warn "inicia sesion una vez: ejecuta 'claude' (la Pi no tiene navegador: abre la URL en tu equipo y pega el codigo)"
+}
+
+# ---------- cloudtools ----------
+step_cloudtools() {
+  say "AWS CLI v2, kubectl y k9s"
+  local d v; d="$(mktemp -d)"
+  if have aws; then ok "ya instalado: $(aws --version 2>&1 | head -1)"; else
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq unzip curl >/dev/null
+    curl -fsSL https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip -o "$d/awscliv2.zip" || die "no pude bajar AWS CLI"
+    unzip -q "$d/awscliv2.zip" -d "$d"
+    sudo "$d/aws/install" >/dev/null
+    ok "$(aws --version 2>&1 | head -1)"
+  fi
+  if have kubectl; then ok "ya instalado: kubectl $(kubectl version --client 2>/dev/null | head -1)"; else
+    v="$(curl -fsSL https://dl.k8s.io/release/stable.txt)"
+    curl -fsSL "https://dl.k8s.io/release/$v/bin/linux/arm64/kubectl" -o "$d/kubectl"
+    echo "$(curl -fsSL "https://dl.k8s.io/release/$v/bin/linux/arm64/kubectl.sha256")  $d/kubectl" | sha256sum -c - >/dev/null || die "checksum de kubectl incorrecto"
+    sudo install -m 0755 "$d/kubectl" /usr/local/bin/kubectl
+    ok "kubectl $v"
+  fi
+  if have k9s; then ok "ya instalado: k9s $(k9s version -s 2>/dev/null | awk '/Version/{print $2}')"; else
+    local base=https://github.com/derailed/k9s/releases/latest/download
+    curl -fsSL "$base/k9s_Linux_arm64.tar.gz" -o "$d/k9s_Linux_arm64.tar.gz"
+    curl -fsSL "$base/checksums.sha256" -o "$d/checksums.sha256"
+    (cd "$d" && grep ' k9s_Linux_arm64.tar.gz$' checksums.sha256 | sha256sum -c - >/dev/null) || die "checksum de k9s incorrecto"
+    tar -xzf "$d/k9s_Linux_arm64.tar.gz" -C "$d" k9s
+    sudo install -m 0755 "$d/k9s" /usr/local/bin/k9s
+    ok "k9s $(k9s version -s 2>/dev/null | awk '/Version/{print $2}')"
+  fi
+  rm -rf "$d"
+  warn "credenciales: 'aws configure' y kubeconfig en ~/.kube/config (copialo o usa 'aws eks update-kubeconfig')"
 }
 
 # ---------- wireguard ----------
