@@ -80,7 +80,7 @@ preflight() {
   CODENAME="${VERSION_CODENAME:-}"
   case "$CODENAME" in trixie|bookworm) ok "Debian $CODENAME" ;; *) warn "Debian '$CODENAME' no probado; probado en trixie y bookworm" ;; esac
   grep -q "Raspberry Pi 5" /proc/device-tree/model 2>/dev/null && ok "Raspberry Pi 5" || warn "no parece una Raspberry Pi 5 ($(tr -d '\0' </proc/device-tree/model 2>/dev/null))"
-  sudo -n true 2>/dev/null || sudo -v || die "se necesita sudo"
+  sudo -n true 2>/dev/null || sudo -v || die "sudo pide contrasena y no hay terminal: ejecutalo en una sesion interactiva (ssh -t) o da sudo sin clave a tu usuario (ver README)"
   ok "usuario $USER con sudo"
 }
 
@@ -506,8 +506,8 @@ step_chr() {
     if ! virsh_ net-info "$n" >/dev/null 2>&1; then
       if [ "$n" = wired ]; then xml="<network><name>wired</name><forward mode='bridge'/><bridge name='br0'/></network>"
       else xml="<network><name>wifi-nat</name><forward mode='nat'/><bridge name='virbr-nat' stp='off' delay='0'/><ip address='${NAT_NET}.1' netmask='255.255.255.0'><dhcp><range start='${NAT_NET}.10' end='${NAT_NET}.50'/></dhcp></ip></network>"; fi
-      echo "$xml" | sudo tee "/tmp/$n.xml" >/dev/null
-      virsh_ net-define "/tmp/$n.xml" >/dev/null; rm -f "/tmp/$n.xml"
+      f="$(mktemp)"; echo "$xml" >"$f"        # archivo del usuario: un 'sudo tee' en /tmp (sticky) no se podria borrar luego
+      virsh_ net-define "$f" >/dev/null; rm -f "$f"
     fi
     virsh_ net-start "$n" >/dev/null 2>&1 || true
     virsh_ net-autostart "$n" >/dev/null

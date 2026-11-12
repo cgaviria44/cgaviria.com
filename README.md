@@ -61,6 +61,14 @@ less pi5-setup.sh
 chmod +x pi5-setup.sh
 ```
 
+> **`sudo` pide contraseña** en los usuarios que crea el Imager, y el script necesita muchos `sudo`. Dos opciones:
+> ejecutarlo en una sesión interactiva (`ssh -t …`) y escribir la contraseña cuando la pida, o dar `sudo` sin clave a
+> tu usuario (una vez, desde tu terminal; `visudo -cf` valida la regla antes de instalarla):
+> ```bash
+> ssh -t usuario@IP 'echo "usuario ALL=(ALL) NOPASSWD:ALL" > /tmp/nopw && sudo visudo -cf /tmp/nopw && sudo install -m 440 /tmp/nopw /etc/sudoers.d/010_usuario-nopasswd; rm -f /tmp/nopw'
+> ```
+> Con `NOPASSWD`, quien tenga tu llave SSH tiene root: úsalo solo si lo aceptas (y pon passphrase a la llave).
+
 ### 3. Ejecutar (dos pasadas)
 ```bash
 ./pi5-setup.sh          # 1.ª pasada: todo menos chr; termina pidiendo reinicio
@@ -126,7 +134,9 @@ Pon el Ethernet del portátil en **IP manual `172.30.77.2`, máscara `255.255.25
 ## Terminal
 
 - **Fuente:** el prompt usa iconos; instala una *Nerd Font* (p. ej. `MesloLGS NF`) en la terminal del cliente.
-- **Terminfo de Ghostty** (si usas [Ghostty](https://ghostty.org) en el cliente), una vez, desde tu equipo:
+- **Terminfo de Ghostty** (si usas [Ghostty](https://ghostty.org) en el cliente), una vez, desde tu equipo.
+  Sin él `htop` falla con `Error opening terminal: xterm-ghostty` y `Ctrl+L` no limpia la pantalla; hay que repetirlo
+  tras cada reinstalación (no lo puede hacer el script: el terminfo vive en el cliente):
   ```bash
   infocmp -x xterm-ghostty | ssh usuario@IP 'tic -x -'
   ```
