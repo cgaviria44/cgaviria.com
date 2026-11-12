@@ -18,7 +18,7 @@ cómoda y un **MikroTik CHR arm64** corriendo en KVM con dos WAN.
 | `docker` | Docker CE desde el repo oficial, con logs acotados |
 | `tailscale` | Tailscale desde el repo oficial; imprime el enlace para autorizar el equipo |
 | `claude` | Claude Code por el instalador nativo, canal **estable** (se actualiza solo); el login es manual con `claude` |
-| `cloudtools` | AWS CLI v2, `session-manager-plugin`, `kubectl`, `k9s`, `gh`, `yq` (mikefarah), `croc`, `mtr` y `nmap`; `kubectl` y `k9s` con checksum; credenciales y kubeconfig a mano |
+| `cloudtools` | AWS CLI v2, `session-manager-plugin`, `kubectl`, `k9s`, `gh`, `yq` (mikefarah), `croc`, `mtr`, `nmap`, `ansible`, `gping`, `tree`, `bandwhich` (binario de GitHub; corre con `sudo`) y `graphviz` + `diagrams` (venv en `~/.venvs/diagrams`); `kubectl` y `k9s` con checksum; credenciales y kubeconfig a mano |
 | `wireguard` | Cliente WireGuard (`wireguard-tools`); importa un `.conf` a NetworkManager **apagado** si pasas `WG_CONF` |
 | `network` | Puente `br0` sobre `eth0` con **IP fija** (acceso de emergencia por cable, sin DHCP server) |
 | `chr` | libvirt/QEMU, redes `wired` y `wifi-nat`, VM **MikroTik CHR** y su aprovisionamiento por consola serie |

@@ -8,7 +8,8 @@
 #   docker   Docker CE (repo oficial)
 #   tailscale  Tailscale (repo oficial)
 #   claude   Claude Code (instalador nativo, canal estable; el login es manual)
-#   cloudtools  AWS CLI v2, session-manager-plugin, kubectl, k9s, gh, yq, croc, mtr y nmap
+#   cloudtools  AWS CLI v2, session-manager-plugin, kubectl, k9s, gh, yq, croc, mtr, nmap, ansible,
+#               gping, tree, bandwhich y graphviz + 'diagrams' (venv en ~/.venvs/diagrams)
 #   wireguard  cliente WireGuard (wireguard-tools); importa un .conf a NetworkManager si pasas WG_CONF
 #   network  puente br0 sobre eth0 con IP fija (acceso de emergencia por cable)
 #   chr      MikroTik CHR arm64 en KVM con 2 WAN: cable (ether1) y wifi/NAT (ether2)
@@ -331,7 +332,7 @@ step_claude() {
 
 # ---------- cloudtools ----------
 step_cloudtools() {
-  say "Herramientas cloud y de red (aws, ssm, kubectl, k9s, gh, yq, croc, mtr, nmap)"
+  say "Herramientas cloud y de red (aws, ssm, kubectl, k9s, gh, yq, croc, mtr, nmap, ansible, gping, tree, bandwhich, graphviz)"
   local d v; d="$(mktemp -d)"
   if have aws; then ok "ya instalado: $(aws --version 2>&1 | head -1)"; else
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq unzip curl >/dev/null
@@ -359,6 +360,25 @@ step_cloudtools() {
   # apt: mtr y nmap (croc si la distro lo trae)
   sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq mtr-tiny nmap >/dev/null
   ok "mtr $(mtr --version | awk '{print $2}'), nmap $(nmap --version | awk '/version/{print $3}')"
+  # apt: ansible, gping, tree y graphviz (+ python3-venv para 'diagrams')
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ansible gping tree graphviz python3-venv >/dev/null
+  ok "ansible $(ansible --version | awk 'NR==1{print $3}' | tr -d ']'), gping $(gping --version | head -1 | awk '{print $2}'), tree $(tree --version | awk '{print $2}'), graphviz $(dot -V 2>&1 | awk '{print $5}')"
+  # 'diagrams' (esquemas tipo AWS en Python) va en un venv: pip de sistema esta bloqueado en trixie (PEP 668)
+  if [ -x "$HOME/.venvs/diagrams/bin/python" ]; then ok "ya instalado: diagrams $("$HOME/.venvs/diagrams/bin/pip" show diagrams | awk '/^Version/{print $2}')"; else
+    python3 -m venv "$HOME/.venvs/diagrams"
+    "$HOME/.venvs/diagrams/bin/pip" install -q diagrams
+    ok "diagrams $("$HOME/.venvs/diagrams/bin/pip" show diagrams | awk '/^Version/{print $2}') (usar ~/.venvs/diagrams/bin/python)"
+  fi
+  # bandwhich no esta en apt: binario aarch64-gnu de GitHub (no el de android); necesita sudo para correr
+  if have bandwhich; then ok "ya instalado: $(bandwhich --version)"; else
+    curl -fsSL https://github.com/imsnif/bandwhich/releases/latest/download/bandwhich-aarch64-unknown-linux-gnu.tar.gz -o "$d/bw.tgz" 2>/dev/null || {
+      local bwurl; bwurl="$(curl -fsSL https://api.github.com/repos/imsnif/bandwhich/releases/latest | jq -r '.assets[]|select(.name|test("aarch64-unknown-linux-gnu.tar.gz$"))|.browser_download_url')"
+      [ -n "$bwurl" ] || die "no encontre bandwhich para arm64"
+      curl -fsSL "$bwurl" -o "$d/bw.tgz"; }
+    tar -xzf "$d/bw.tgz" -C "$d" bandwhich
+    sudo install -m 0755 "$d/bandwhich" /usr/local/bin/bandwhich
+    ok "$(bandwhich --version)"
+  fi
   if have session-manager-plugin; then ok "ya instalado: session-manager-plugin"; else
     curl -fsSL https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb -o "$d/smp.deb" || die "no pude bajar session-manager-plugin"
     sudo dpkg -i "$d/smp.deb" >/dev/null
