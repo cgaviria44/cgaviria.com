@@ -7,6 +7,7 @@
 #   shell    zsh + oh-my-zsh + starship + utilidades de terminal
 #   docker   Docker CE (repo oficial)
 #   tailscale  Tailscale (repo oficial)
+#   wireguard  cliente WireGuard (wireguard-tools); importa un .conf a NetworkManager si pasas WG_CONF
 #   network  puente br0 sobre eth0 con IP fija (acceso de emergencia por cable)
 #   chr      MikroTik CHR arm64 en KVM con 2 WAN: cable (ether1) y wifi/NAT (ether2)
 #
@@ -30,10 +31,11 @@ TS_HOSTNAME="${TS_HOSTNAME:-pi5}"
 TS_AUTHKEY="${TS_AUTHKEY:-}"                 # opcional: auth key de Tailscale (si no, imprime un enlace)
 RECREATE_CHR="${RECREATE_CHR:-0}"            # 1 = destruir y recrear la VM
 FORCE_NET="${FORCE_NET:-0}"                  # 1 = permitir el paso network aunque entres por eth0
+WG_CONF="${WG_CONF:-}"                       # ruta a un .conf de WireGuard a importar (opcional; el nombre del archivo = nombre del tunel)
 PI5_DIR=/etc/pi5                             # secretos root-only (clave de admin de CHR)
 CHR_PWFILE="$PI5_DIR/chr_admin_pass"
 
-STEPS_ALL=(base tuning ssh shell docker tailscale network chr)
+STEPS_ALL=(base tuning ssh shell docker tailscale wireguard network chr)
 
 # ---------- Utilidades ----------
 say()  { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
@@ -309,6 +311,33 @@ step_tailscale() {
   else
     say "Autoriza este dispositivo abriendo el enlace que aparece abajo (espero hasta 10 min)"
     sudo tailscale up --hostname="$TS_HOSTNAME" --timeout=10m ${TS_AUTHKEY:+--auth-key="$TS_AUTHKEY"} || warn "no se completo el login; repite: sudo tailscale up --hostname=$TS_HOSTNAME"
+  fi
+}
+
+# ---------- wireguard ----------
+step_wireguard() {
+  say "WireGuard (cliente)"
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq wireguard-tools >/dev/null
+  # el modulo viene en el kernel de Raspberry Pi OS; si no carga, el cliente no sirve
+  sudo modprobe wireguard 2>/dev/null && ok "wireguard-tools $(wg --version | awk '{print $2}') (modulo del kernel cargado)" ||
+    warn "wireguard-tools instalado, pero el modulo del kernel no carga"
+
+  [ -n "$WG_CONF" ] || { ok "sin WG_CONF: no se importa ningun tunel (ver README, seccion WireGuard)"; return 0; }
+
+  # Importar un .conf a NetworkManager SIN dejarlo activo: 'nmcli connection import' ACTIVA el tunel al instante
+  # (nace con autoconnect=yes) y uno completo (0.0.0.0/0) desviaria todo el trafico de la Pi y el NAT de CHR.
+  [ -f "$WG_CONF" ] || die "WG_CONF: no existe el archivo '$WG_CONF'"
+  local name; name="$(basename "$WG_CONF" .conf)"
+  [[ "$name" =~ ^[A-Za-z0-9_=+.-]{1,15}$ ]] || die "nombre de tunel invalido '$name': 1-15 caracteres [A-Za-z0-9_=+.-] (el nombre del .conf es el de la interfaz)"
+  if nmcli -t -f NAME con show | grep -qx "$name"; then
+    ok "el perfil '$name' ya existe en NetworkManager; no lo toco"
+  else
+    sudo install -D -m 600 -o root -g root "$WG_CONF" "/etc/wireguard/$name.conf"
+    sudo nmcli connection import type wireguard file "/etc/wireguard/$name.conf" >/dev/null
+    sudo nmcli connection modify "$name" connection.autoconnect no
+    sudo nmcli connection down "$name" >/dev/null 2>&1 || true
+    ok "tunel '$name' importado: autoconnect desactivado y tunel abajo (subir: sudo nmcli connection up $name)"
+    warn "el perfil de NetworkManager guarda otra copia de la clave privada (root, 600); borra la que no uses"
   fi
 }
 
@@ -604,6 +633,7 @@ summary() {
     echo "  Apagado limpio                 : sudo systemctl poweroff   (chr-graceful apaga CHR antes)"
   fi
   want docker && echo "  Docker sin sudo                : cierra y abre la sesion SSH"
+  want wireguard && echo "  WireGuard                      : sudo nmcli connection up NOMBRE ; sudo wg show ; ping -6 -c3 ipv6.google.com"
   return 0
 }
 

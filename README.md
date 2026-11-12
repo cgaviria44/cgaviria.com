@@ -17,11 +17,12 @@ cómoda y un **MikroTik CHR arm64** corriendo en KVM con dos WAN.
 | `shell` | `zsh` + oh-my-zsh + [starship](https://starship.rs) + `fzf`, `bat`, `ripgrep`, `fd`, `eza`, `tmux`, `btop` |
 | `docker` | Docker CE desde el repo oficial, con logs acotados |
 | `tailscale` | Tailscale desde el repo oficial; imprime el enlace para autorizar el equipo |
+| `wireguard` | Cliente WireGuard (`wireguard-tools`); importa un `.conf` a NetworkManager **apagado** si pasas `WG_CONF` |
 | `network` | Puente `br0` sobre `eth0` con **IP fija** (acceso de emergencia por cable, sin DHCP server) |
 | `chr` | libvirt/QEMU, redes `wired` y `wifi-nat`, VM **MikroTik CHR** y su aprovisionamiento por consola serie |
 
-**No** instala Kali (queda para después), ni configura adaptadores USB wifi. **WireGuard (cliente)** es un extra
-manual: ver [WireGuard](#wireguard-cliente).
+**No** instala Kali (queda para después), ni configura adaptadores USB wifi. Para WireGuard ver
+[WireGuard](#wireguard-cliente).
 
 ## Diseño de red
 
@@ -107,6 +108,7 @@ Pon el Ethernet del portátil en **IP manual `172.30.77.2`, máscara `255.255.25
 | `RECREATE_CHR` | `0` | `1` destruye y recrea la VM |
 | `TS_HOSTNAME` / `TS_AUTHKEY` | `pi5` / vacío | nombre en la tailnet y auth key opcional |
 | `FORCE_NET` | `0` | permite el paso `network` aunque entres por `eth0` |
+| `WG_CONF` | vacío | ruta (en la Pi) a un `.conf` de WireGuard a importar; el nombre del archivo es el del túnel (máx. 15 caracteres) |
 
 ## MikroTik CHR
 
@@ -149,12 +151,23 @@ Pon el Ethernet del portátil en **IP manual `172.30.77.2`, máscara `255.255.25
 
 ## WireGuard (cliente)
 
-El script **no lo instala**: es un extra manual. Los nombres de abajo son genéricos (`NOMBRE` = nombre de la
-interfaz, máx. 15 caracteres); no subas nunca claves privadas ni tus `.conf` al repositorio.
+El paso `wireguard` del script instala `wireguard-tools` (el módulo ya viene en el kernel de Raspberry Pi OS) y, si
+pasas `WG_CONF`, **importa el túnel a NetworkManager dejándolo apagado y sin autoarranque**. Los nombres de abajo son
+genéricos (`NOMBRE` = nombre de la interfaz, máx. 15 caracteres); no subas nunca claves privadas ni tus `.conf` al
+repositorio.
 
-### Instalar
+### Con el script
 ```bash
-sudo apt install wireguard-tools      # el módulo wireguard ya viene en el kernel de Raspberry Pi OS
+scp NOMBRE.conf usuario@IP:~/                          # el nombre del archivo = nombre del túnel
+./pi5-setup.sh --only wireguard                        # solo instala las herramientas
+WG_CONF=~/NOMBRE.conf ./pi5-setup.sh --only wireguard  # además importa el túnel (apagado)
+shred -u ~/NOMBRE.conf                                 # borra tu copia: queda en /etc/wireguard (root, 600)
+```
+Es idempotente: si el perfil ya existe, no lo toca. Lo que sigue es lo mismo a mano, por si prefieres no usar el script.
+
+### Instalar (a mano)
+```bash
+sudo apt install wireguard-tools
 ```
 
 ### Guardar la configuración
@@ -163,7 +176,7 @@ Desde tu equipo, sin archivos temporales en la Pi, con dueño root y permisos 60
 cat NOMBRE.conf | ssh usuario@IP 'sudo install -D -m 600 -o root -g root /dev/stdin /etc/wireguard/NOMBRE.conf'
 ```
 
-### Importarla a NetworkManager (recomendado)
+### Importarla a NetworkManager (a mano; recomendado frente a `wg-quick`)
 Si el `.conf` trae `DNS=`, `wg-quick up` falla con `resolvconf: command not found` (no se instala `resolvconf` a
 propósito: puede chocar con NetworkManager). NetworkManager gestiona el DNS por su cuenta:
 ```bash
@@ -234,6 +247,8 @@ Raspberry Pi 5 (8 GB):
   redes de libvirt y CHR arrancan solos, `chr-graceful` apaga CHR en 7 s) y actualización de la EEPROM.
 - **Raspberry Pi OS (Debian 12 «bookworm»):** pasos `tuning`, `ssh`, `shell`, `docker`, `tailscale`, `network` y
   `chr` (aprovisionamiento desde una imagen CHR nueva y apagado limpio).
+- **Paso `wireguard`:** probado con un túnel de prueba (claves nuevas, sin tráfico real): instalación, importación
+  apagada, idempotencia, rechazo de archivo inexistente y de nombre demasiado largo.
 - **No probado todavía:** el cable directo al portátil con Winbox sobre esta instalación, y el soporte de
   `eza` en bookworm (solo existe en trixie; el script lo trata como opcional).
 
@@ -249,5 +264,4 @@ Raspberry Pi 5 (8 GB):
 
 ## Pendiente
 
-Kali (contenedor), adaptador USB wifi con modo monitor, red aislada de laboratorio, backups/snapshots del disco,
-y añadir WireGuard (`wireguard-tools`) como paso opcional del script.
+Kali (contenedor), adaptador USB wifi con modo monitor, red aislada de laboratorio, backups/snapshots del disco.
