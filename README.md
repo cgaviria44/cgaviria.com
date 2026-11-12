@@ -20,7 +20,8 @@ cómoda y un **MikroTik CHR arm64** corriendo en KVM con dos WAN.
 | `network` | Puente `br0` sobre `eth0` con **IP fija** (acceso de emergencia por cable, sin DHCP server) |
 | `chr` | libvirt/QEMU, redes `wired` y `wifi-nat`, VM **MikroTik CHR** y su aprovisionamiento por consola serie |
 
-**No** instala Kali (queda para después), ni configura adaptadores USB wifi.
+**No** instala Kali (queda para después), ni configura adaptadores USB wifi. **WireGuard (cliente)** es un extra
+manual: ver [WireGuard](#wireguard-cliente).
 
 ## Diseño de red
 
@@ -146,12 +147,95 @@ Pon el Ethernet del portátil en **IP manual `172.30.77.2`, máscara `255.255.25
   `64;46;15M…` al hacer scroll cuando un programa muere sin restaurarlo.
 - El `.zshrc` anterior se respalda una vez en `~/.zshrc.pre-pi5`.
 
+## WireGuard (cliente)
+
+El script **no lo instala**: es un extra manual. Los nombres de abajo son genéricos (`NOMBRE` = nombre de la
+interfaz, máx. 15 caracteres); no subas nunca claves privadas ni tus `.conf` al repositorio.
+
+### Instalar
+```bash
+sudo apt install wireguard-tools      # el módulo wireguard ya viene en el kernel de Raspberry Pi OS
+```
+
+### Guardar la configuración
+Desde tu equipo, sin archivos temporales en la Pi, con dueño root y permisos 600:
+```bash
+cat NOMBRE.conf | ssh usuario@IP 'sudo install -D -m 600 -o root -g root /dev/stdin /etc/wireguard/NOMBRE.conf'
+```
+
+### Importarla a NetworkManager (recomendado)
+Si el `.conf` trae `DNS=`, `wg-quick up` falla con `resolvconf: command not found` (no se instala `resolvconf` a
+propósito: puede chocar con NetworkManager). NetworkManager gestiona el DNS por su cuenta:
+```bash
+sudo nmcli connection import type wireguard file /etc/wireguard/NOMBRE.conf \
+  && sudo nmcli connection modify NOMBRE connection.autoconnect no \
+  && sudo nmcli connection down NOMBRE
+```
+> ⚠️ **`import` activa el túnel al instante** (nace con `autoconnect yes`), por eso el `down` al final.
+> Con un túnel completo (`AllowedIPs = 0.0.0.0/0, ::/0`) **todo** el tráfico de la Pi sale por él mientras esté
+> arriba, incluido el NAT de la WAN wifi de CHR.
+
+### Conectar, desconectar y estado
+```bash
+sudo nmcli connection up NOMBRE
+sudo wg show                           # "latest handshake" debe ser de hace segundos
+sudo nmcli connection down NOMBRE
+nmcli connection show                  # perfiles guardados
+sudo nmcli connection delete NOMBRE    # eliminar el perfil
+```
+- **No arrancan solos:** con `autoconnect no`, tras apagar y encender la Pi solo arranca Tailscale.
+- **Uno a la vez** si comparten `ListenPort` (por ejemplo `51820`).
+- El perfil de NetworkManager guarda **otra copia de la clave privada** (root, 600); borra la que no uses.
+- **Red de seguridad** antes de probar un túnel completo, sobre todo si entras por SSH remoto o Tailscale: lo baja
+  solo a los 5 minutos (¡también si lo estás usando!). Cancélala si todo va bien:
+  ```bash
+  sudo systemd-run --on-active=300 --unit=wg-seguridad nmcli connection down NOMBRE
+  sudo systemctl stop wg-seguridad.timer
+  ```
+
+### Probar IPv6
+La Pi por Wi-Fi o cable normalmente **no tiene IPv6 global** (solo `fe80::`; compruébalo con `ip -6 -br a`),
+así que con un túnel todo el IPv6 que veas sale por él. **Espera ~30 s tras subirlo antes de medir.**
+
+Prueba rápida (`ipv6.google.com` tiene solo registro AAAA, sin IPv4, así que prueba DNS AAAA y alcance IPv6):
+```bash
+ping -6 -c3 ipv6.google.com
+```
+
+Prueba completa:
+```bash
+sudo wg show                                  # handshake reciente y "transfer" creciendo en ambos sentidos
+ip -6 -br a show NOMBRE                       # dirección IPv6 del túnel
+curl -4 -s https://api.ipify.org; echo        # IPv4 de salida
+curl -6 -s https://api6.ipify.org; echo       # IPv6 de salida: debe ser global
+ping -6 -c20 -i0.2 2606:4700:4700::1111       # pérdida hacia Cloudflare por IPv6
+curl -6 -I https://www.google.com             # navegación por IPv6
+curl -6 -o /dev/null -w 'bytes=%{size_download} t=%{time_total}s vel=%{speed_download} B/s\n' \
+  'https://speed.cloudflare.com/__down?bytes=1000000'
+```
+
+| Resultado | Qué significa |
+|---|---|
+| La IPv6 de salida es **global** (`2xxx:`/`3xxx:`) | El túnel da IPv6 real |
+| Empieza por `fd`/`fc` (ULA) o no responde | El servidor no enruta ese prefijo ni hace NAT66: IPv6 no sale a internet |
+| `ping` bien, pero `curl` cuelga ~10 s o descarga 0 bytes | Se pierden paquetes grandes o falla el retorno en el servidor (MTU/MSS, rutas, saturación). Prueba `sudo nmcli connection modify NOMBRE wireguard.mtu 1280` y vuelve a subir (`0` = automático); si no cambia nada, el problema está en el servidor |
+| El ping a las direcciones internas del servidor no responde | Normal si filtra ICMP; no implica fallo. Algunos destinos (p. ej. `2001:4860:4860::8888`) también lo filtran: usa más de uno |
+
+Usa `api.ipify.org` / `api6.ipify.org`: `ifconfig.co` devuelve un desafío de Cloudflare a muchas IPs de VPN.
+Para comparar un túnel dudoso, mide el mismo conjunto de pruebas con otro túnel bueno: así sabes si el fallo está
+en la Pi o en el servidor.
+
 ## Probado en
 
-Raspberry Pi 5 (8 GB) con **Raspberry Pi OS (Debian 12 «bookworm»)**: pasos `tuning`, `ssh`, `shell`, `docker`,
-`tailscale`, `network` y `chr` (incluido aprovisionamiento desde una imagen CHR nueva y apagado limpio).
-**Debian 13 «trixie» aún no se ha probado de punta a punta**; solo se verificó que existan los repos de
-Docker, Tailscale y Raspberry Pi para `trixie`. Si algo falla en trixie, abre el script: cada paso es una función.
+Raspberry Pi 5 (8 GB):
+
+- **Raspberry Pi OS Lite (Debian 13 «trixie», kernel 6.18):** instalación limpia con Raspberry Pi Imager y el
+  script en dos pasadas (con el reinicio del kernel de 4K entre ellas), más un arranque en frío posterior (`br0`,
+  redes de libvirt y CHR arrancan solos, `chr-graceful` apaga CHR en 7 s) y actualización de la EEPROM.
+- **Raspberry Pi OS (Debian 12 «bookworm»):** pasos `tuning`, `ssh`, `shell`, `docker`, `tailscale`, `network` y
+  `chr` (aprovisionamiento desde una imagen CHR nueva y apagado limpio).
+- **No probado todavía:** el cable directo al portátil con Winbox sobre esta instalación, y el soporte de
+  `eza` en bookworm (solo existe en trixie; el script lo trata como opcional).
 
 ## Seguridad
 
@@ -165,4 +249,5 @@ Docker, Tailscale y Raspberry Pi para `trixie`. Si algo falla en trixie, abre el
 
 ## Pendiente
 
-Kali (contenedor), adaptador USB wifi con modo monitor, red aislada de laboratorio, backups/snapshots del disco.
+Kali (contenedor), adaptador USB wifi con modo monitor, red aislada de laboratorio, backups/snapshots del disco,
+y añadir WireGuard (`wireguard-tools`) como paso opcional del script.
