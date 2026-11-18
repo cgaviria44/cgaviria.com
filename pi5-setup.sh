@@ -187,6 +187,13 @@ step_shell() {
   local rc="$HOME/.zshrc" new; new="$(mktemp)"
   cat >"$new" <<'EOF'
 # pi5-setup managed — se regenera con ./pi5-setup.sh --only shell (tu original: ~/.zshrc.pre-pi5)
+
+# al entrar por SSH, abrir (o volver a) la sesion tmux "main"; sobrevive a cortes de red.
+# Ctrl+b d sale y deja todo corriendo. Saltarlo: ssh -t pi5 'NOTMUX=1 zsh'
+if [[ -o interactive && -n $SSH_TTY && -z $TMUX && -z $NOTMUX && $TERM_PROGRAM != vscode ]] && command -v tmux >/dev/null; then
+  tmux new -A -s main && exit
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=""
 # autosuggestions/highlighting desactivados: en algunas terminales por SSH el redibujado sale roto
@@ -216,6 +223,42 @@ EOF
     install -m 644 "$new" "$rc"
   fi
   rm -f "$new"
+
+  cat >"$HOME/.tmux.conf" <<'EOF'
+# pi5-setup managed — se regenera con ./pi5-setup.sh --only shell
+# Prefijo: Ctrl+b (por defecto)
+
+# dividir como en Ghostty, abriendo en la misma carpeta
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+# moverse entre paneles sin prefijo: Alt+flechas
+bind -n M-Left  select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up    select-pane -U
+bind -n M-Down  select-pane -D
+
+# raton: clic para elegir panel, arrastrar bordes, scroll del historial
+set -g mouse on
+set -g history-limit 50000
+
+# respuesta rapida a Esc (Claude Code, vim) y teclas extendidas (Shift+Enter)
+set -sg escape-time 10
+set -g focus-events on
+set -s extended-keys on
+set -as terminal-features 'xterm*:extkeys:RGB'
+set -g default-terminal "tmux-256color"
+
+# numerar desde 1 y renumerar al cerrar
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+
+# recargar config: Ctrl+b r
+bind r source-file ~/.tmux.conf \; display "tmux.conf recargado"
+EOF
+  ok "tmux: auto-attach por SSH a la sesion 'main' + ~/.tmux.conf"
 
   mkdir -p "$HOME/.config"
   cat >"$HOME/.config/starship.toml" <<'EOF'
