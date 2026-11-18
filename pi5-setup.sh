@@ -172,6 +172,10 @@ step_shell() {
   [ -d "$HOME/.oh-my-zsh" ] || git clone -q --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
   ok "oh-my-zsh"
 
+  local zas="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  [ -d "$zas" ] || git clone -q --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$zas"
+  ok "zsh-autosuggestions"
+
   # starship: binario oficial arm64 con verificacion de hash
   if ! [ -x "$HOME/.local/bin/starship" ]; then
     local t base=https://github.com/starship/starship/releases/latest/download f=starship-aarch64-unknown-linux-musl.tar.gz
@@ -196,8 +200,8 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=""
-# autosuggestions/highlighting desactivados: en algunas terminales por SSH el redibujado sale roto
-plugins=(git z history)
+# syntax-highlighting desactivado: en algunas terminales por SSH el redibujado sale roto
+plugins=(git z history zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.local/bin:$PATH"
