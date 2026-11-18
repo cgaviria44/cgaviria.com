@@ -155,6 +155,12 @@ step_ssh() {
 PasswordAuthentication no
 KbdInteractiveAuthentication no
 EOF
+  # cortar conexiones muertas (~90 s): si no, la sesion tmux sigue "en uso"
+  # tras un corte de red y al reconectar se abre otra en vez de retomarla
+  put_root /etc/ssh/sshd_config.d/20-keepalive.conf <<'EOF' && { sudo sshd -t && sudo systemctl reload ssh; ok "keepalive SSH (30 s x 3)"; } || ok "keepalive SSH ya configurado"
+ClientAliveInterval 30
+ClientAliveCountMax 3
+EOF
   else
     warn "no hay llaves en ~/.ssh/authorized_keys: NO desactivo la contrasena (te dejaria fuera)"
     warn "pon tu llave publica con Raspberry Pi Imager o 'ssh-copy-id' y vuelve a ejecutar: $0 --only ssh"
@@ -192,10 +198,19 @@ step_shell() {
   cat >"$new" <<'EOF'
 # pi5-setup managed — se regenera con ./pi5-setup.sh --only shell (tu original: ~/.zshrc.pre-pi5)
 
-# al entrar por SSH, abrir (o volver a) la sesion tmux "main"; sobrevive a cortes de red.
+# al entrar por SSH, retomar una sesion tmux libre (sin nadie conectado),
+# empezando por "main"; si todas estan en uso, abrir una nueva. Asi cada
+# pestana es independiente y tras un corte de red se vuelve a la misma.
 # Ctrl+b d sale y deja todo corriendo. Saltarlo: ssh -t pi5 'NOTMUX=1 zsh'
 if [[ -o interactive && -n $SSH_TTY && -z $TMUX && -z $NOTMUX && $TERM_PROGRAM != vscode ]] && command -v tmux >/dev/null; then
-  tmux new -A -s main && exit
+  _free=$(tmux ls -F '#{session_attached} #{session_name}' 2>/dev/null | awk '$1==0{print ($2=="main" ? 0 : 1), $2}' | sort | awk 'NR==1{print $2}')
+  if [[ -n $_free ]]; then
+    tmux attach -t "$_free" && exit
+  elif ! tmux has -t main 2>/dev/null; then
+    tmux new -s main && exit
+  else
+    tmux new && exit
+  fi
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -236,6 +251,23 @@ EOF
 bind | split-window -h -c "#{pane_current_path}"
 bind - split-window -v -c "#{pane_current_path}"
 bind c new-window -c "#{pane_current_path}"
+# Igual que el menu del clic derecho: h = lado a lado, v = arriba/abajo
+bind h split-window -h -c "#{pane_current_path}"
+bind v split-window -v -c "#{pane_current_path}"
+# Mismo atajo si se deja Ctrl apretado tras el prefijo,
+# y Ctrl+H / Ctrl+V sin prefijo (el borrado de Termius manda ^?, no ^H;
+# Ctrl+V deja de pegar literal en zsh/vim)
+bind C-h split-window -h -c "#{pane_current_path}"
+bind C-v split-window -v -c "#{pane_current_path}"
+bind -n C-h split-window -h -c "#{pane_current_path}"
+bind -n C-v split-window -v -c "#{pane_current_path}"
+
+# Ctrl+L limpia solo el panel actual y redibuja todo (otros paneles quedan
+# intactos). Termius trae Ctrl+L como atajo propio que borra su pantalla
+# entera sin pasarlo a tmux: hay que quitarlo en los ajustes de Termius
+bind -n C-l send-keys C-l \; run-shell -b 'sleep 0.2; tmux refresh-client -t "#{client_name}"'
+# Si la pantalla queda corrupta: Ctrl+b R la redibuja entera
+bind R refresh-client
 
 # moverse entre paneles sin prefijo: Alt+flechas
 bind -n M-Left  select-pane -L
@@ -251,7 +283,9 @@ set -g history-limit 50000
 set -sg escape-time 10
 set -g focus-events on
 set -s extended-keys on
-set -as terminal-features 'xterm*:extkeys:RGB'
+# Sin extkeys: Termius manda mal Ctrl+b en ese modo y el prefijo deja de
+# funcionar dentro de Claude Code (Shift+Enter: usar Ctrl+J o \ + Enter)
+set -as terminal-features 'xterm*:RGB'
 set -g default-terminal "tmux-256color"
 
 # numerar desde 1 y renumerar al cerrar
@@ -262,7 +296,7 @@ set -g renumber-windows on
 # recargar config: Ctrl+b r
 bind r source-file ~/.tmux.conf \; display "tmux.conf recargado"
 EOF
-  ok "tmux: auto-attach por SSH a la sesion 'main' + ~/.tmux.conf"
+  ok "tmux: por SSH retoma una sesion libre (o abre otra) + ~/.tmux.conf"
 
   mkdir -p "$HOME/.config"
   cat >"$HOME/.config/starship.toml" <<'EOF'

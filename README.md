@@ -13,8 +13,8 @@ cómoda y un **MikroTik CHR arm64** corriendo en KVM con dos WAN.
 |---|---|
 | `base` | `apt full-upgrade` y paquetes base (`curl`, `git`, `jq`, `python3`, …) |
 | `tuning` | journald persistente (50 MB), zram si no existe, kernel de **4K** (`kernel=kernel8.img`) y cgroup de memoria |
-| `ssh` | SSH **solo con llave** (solo si ya hay una en `authorized_keys`, para no dejarte fuera) |
-| `shell` | `zsh` + oh-my-zsh (con `zsh-autosuggestions`) + [starship](https://starship.rs) + `fzf`, `bat`, `ripgrep`, `fd`, `eza`, `btop` y `tmux` (al entrar por SSH abre o retoma la sesión `main`; `Ctrl+b \|`/`-` divide, `Ctrl+b d` sale sin cerrar nada) |
+| `ssh` | SSH **solo con llave** (solo si ya hay una en `authorized_keys`, para no dejarte fuera) y corte de conexiones muertas a los ~90 s |
+| `shell` | `zsh` + oh-my-zsh (con `zsh-autosuggestions`) + [starship](https://starship.rs) + `fzf`, `bat`, `ripgrep`, `fd`, `eza`, `btop` y `tmux` (cada conexión SSH retoma una sesión libre, empezando por `main`, o abre otra; `Ctrl+H`/`Ctrl+V` dividen lado a lado / arriba-abajo, `Ctrl+L` limpia solo el panel actual —en Termius hay que quitarle ese atajo—, `Ctrl+b d` sale sin cerrar nada) |
 | `docker` | Docker CE desde el repo oficial, con logs acotados |
 | `tailscale` | Tailscale desde el repo oficial; imprime el enlace para autorizar el equipo |
 | `claude` | Claude Code por el instalador nativo, canal **estable** (se actualiza solo); el login es manual con `claude` |
